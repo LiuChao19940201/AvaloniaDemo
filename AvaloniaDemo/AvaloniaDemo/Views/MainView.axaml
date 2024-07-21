@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AvaloniaDemo.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="AvaloniaDemo.Views.MainView"
 			 xmlns:u="https://irihi.tech/ursa"
              x:DataType="vm:MainViewModel">
@@ -19,8 +19,9 @@
 			<Button Content="World" />
 		</u:ButtonGroup>
 		<ToggleSwitch Content="Smooth" Name="smooth"/>
-		<u:Clock Width="200" Height="200" IsSmooth="{Binding #smooth.IsChecked}" Time="{Binding Time}" Margin="0 0 0 30"/>
-		<Button Content="按钮" Classes="Success Warning" Theme="{DynamicResource SolidButton}" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<u:Clock Width="200" Height="200" IsSmooth="{Binding #smooth.IsChecked}" Time="{Binding Time}" Margin="0 0 0 50"/>
+		<Button Content="按钮" Classes="Success Warning" Theme="{DynamicResource SolidButton}" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 50"/>
+		<Button  Content="Success" Classes="Success" Theme="{DynamicResource SolidButton}" Click="InfoButton_OnClick" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 	</StackPanel>
 
 </UserControl>
