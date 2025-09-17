@@ -16,7 +16,7 @@ namespace AvaloniaDemo.ViewModels
 
 
         private DateTime _time;
-        //PropertyChanging
+
         public DateTime Time
         {
             get { return _time; }
