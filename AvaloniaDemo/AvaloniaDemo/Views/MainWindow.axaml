@@ -8,5 +8,9 @@
         x:Class="AvaloniaDemo.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="AvaloniaDemo">
-        <views:MainView />
+<Design.DataContext>
+	<vm:MainViewModel />
+</Design.DataContext>
+
+	<views:MainView />
 </Window>
