@@ -18,6 +18,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.6" />
     <PackageReference Include="Irihi.Ursa" Version="1.13.0" />
     <PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.13.0" />
+    <PackageReference Include="Quick.AvaloniaFonts.Roboto" Version="1.0.0" />
     <PackageReference Include="Semi.Avalonia" Version="11.2.1.10" />
   </ItemGroup>
 </Project>

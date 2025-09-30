@@ -21,7 +21,7 @@
 		<ToggleSwitch Content="Smooth" Name="smooth"/>
 		<u:Clock Width="200" Height="200" IsSmooth="{Binding #smooth.IsChecked}" Time="{Binding Time}" Margin="0 0 0 50"/>
 		<Button Content="按钮12345" Classes="Success Warning" Theme="{DynamicResource SolidButton}" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 50"/>
-		<Button  Content="Success" Classes="Success" Theme="{DynamicResource SolidButton}" Click="InfoButton_OnClick" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<Button  Content="成功按钮" Classes="Success" Theme="{DynamicResource SolidButton}" Click="InfoButton_OnClick" Width="150" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 	</StackPanel>
 
 </UserControl>

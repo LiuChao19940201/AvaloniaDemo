@@ -6,8 +6,28 @@
 			 xmlns:u-semi="https://irihi.tech/ursa/themes/semi"
              RequestedThemeVariant="Default">
 
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary>
+					<!-- 定义全局字体 -->
+					<FontFamily x:Key="CustomFontFamily">avares://AvaloniaDemo/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi</FontFamily>
+				</ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+
     <Application.Styles>
 		<semi:SemiTheme Locale="zh-cn" />
 		<u-semi:SemiTheme Locale="zh-CN"/>
+
+		<!-- 引入Fonts字体 -->
+		<Style Selector="ContentPresenter">
+			<!--<Setter Property="FontFamily" Value="avares://Quick.AvaloniaFonts.Roboto/Assets/Fonts#Roboto"/>-->
+			<Setter Property="FontFamily" Value="{StaticResource CustomFontFamily}"/>
+			<Setter Property="FontSize" Value="14"/>
+		</Style>
 	</Application.Styles>
+
+	
 </Application>

@@ -29,6 +29,7 @@ namespace AvaloniaDemo.Desktop
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .WithInterFont()
+                // .WithFont_Roboto() //Roboto字体
                 .LogToTrace()
                 .UseReactiveUI();
     }

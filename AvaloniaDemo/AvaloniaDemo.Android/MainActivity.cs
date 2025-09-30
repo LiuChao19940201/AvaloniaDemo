@@ -18,6 +18,7 @@ namespace AvaloniaDemo.Android
         {
             return base.CustomizeAppBuilder(builder)
                 .WithInterFont()
+                //.WithFont_Roboto()
                 .UseReactiveUI();
         }
     }
