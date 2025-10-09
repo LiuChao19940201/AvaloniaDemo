@@ -1,26 +1,31 @@
 ﻿using ReactiveUI;
-using System.Reactive;
-using System.Timers;
 using System;
+using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 
 namespace AvaloniaDemo.ViewModels
 {
     public class MainViewModel : ViewModelBase, IDisposable
     {
-        public string Greeting => "Welcome to Avalonia!";
+        private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
         public ReactiveCommand<Unit, Unit> TestCommand { get; }
 
-
-        private Timer _timer;
-
-
-        private DateTime _time;
+        private DateTime time;
 
         public DateTime Time
         {
-            get { return _time; }
-            set { this.RaiseAndSetIfChanged(ref _time, value); }
+            get { return time; }
+            set { this.RaiseAndSetIfChanged(ref time, value); }
+        }
+
+        private string? timeStr;
+
+        public string? TimeStr
+        {
+            get { return timeStr; }
+            set { this.RaiseAndSetIfChanged(ref timeStr, value); }
         }
 
 
@@ -32,28 +37,41 @@ namespace AvaloniaDemo.ViewModels
                 MessageBus.Current.SendMessage<string>("Hello from MainViewModel!");
             });
 
+            // 订阅命令执行结果（可选）
+            TestCommand
+                .Execute()
+                .Subscribe()
+                .DisposeWith(_disposables);
+
             //注册消息监听
             MessageBus.Current.Listen<string>().Subscribe((msg) =>
             {
                 Console.WriteLine($"接收消息：{msg}");
             });
 
+            // 使用响应式定时器替代传统Timer
+            // Observable.Interval创建一个定期发射值的可观察序列
+            Observable.Interval(TimeSpan.FromSeconds(1))
+                      //.Take(5)  // 只执行5次
+                      //.Delay(TimeSpan.FromSeconds(2))  // 延迟2秒启动
+                      .ObserveOn(RxApp.MainThreadScheduler)  // 自动切换到 UI 线程
+                      .Subscribe(_ =>
+                      {
+                          Time = DateTime.Now; // 更新时间属性
+                          TimeStr = Time.ToString("HH:mm:ss");
+                      })
+                      .DisposeWith(_disposables); // 自动管理订阅生命周期
+
+            // 初始时间设置
             Time = DateTime.Now;
-            _timer = new Timer(1000);
-            _timer.Elapsed += TimerOnElapsed;
-            _timer.Start();
+            TimeStr = Time.ToString("HH:mm:ss");
+
         }
 
-        private void TimerOnElapsed(object? sender, ElapsedEventArgs e)
-        {
-            Time = DateTime.Now;
-        }
-
+        // 实现IDisposable接口，清理所有订阅和资源
         public void Dispose()
         {
-            _timer.Stop();
-            _timer.Elapsed -= TimerOnElapsed;
-            _timer.Dispose();
+            _disposables.Dispose();
         }
     }
 }
