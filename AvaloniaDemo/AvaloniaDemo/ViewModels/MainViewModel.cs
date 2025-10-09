@@ -59,13 +59,13 @@ namespace AvaloniaDemo.ViewModels
                       .Subscribe(_ =>
                       {
                           Time = DateTime.Now; // 更新时间属性
-                          TimeStr = Time.ToString("HH:mm:ss");
+                          TimeStr = Time.ToString();
                       })
                       .DisposeWith(_disposables); // 自动管理订阅生命周期
 
             // 初始时间设置
             Time = DateTime.Now;
-            TimeStr = Time.ToString("HH:mm:ss");
+            TimeStr = Time.ToString();
 
         }
 
