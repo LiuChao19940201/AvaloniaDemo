@@ -3,18 +3,18 @@ using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using AvaloniaDemo.ViewModels;
+using AvaloniaDemo.ViewModels.UserControls;
 using ReactiveUI;
 using System;
 using System.Reactive.Disposables;
 
-namespace AvaloniaDemo.Views
+namespace AvaloniaDemo.Views.UserControls
 {
-    public partial class MainView : ReactiveUserControl<MainViewModel>
+    public partial class HomeUserControl : ReactiveUserControl<HomeViewModel>
     {
         private WindowNotificationManager? _manager;
 
-        public MainView()
+        public HomeUserControl()
         {
             InitializeComponent();
 

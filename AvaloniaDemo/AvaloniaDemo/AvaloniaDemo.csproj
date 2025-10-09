@@ -21,4 +21,10 @@
     <PackageReference Include="Quick.AvaloniaFonts.Roboto" Version="1.0.0" />
     <PackageReference Include="Semi.Avalonia" Version="11.2.1.10" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\UserControls\HomeUserControl.axaml.cs">
+      <DependentUpon>HomeUserControl.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

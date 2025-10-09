@@ -1,12 +1,13 @@
-﻿using ReactiveUI;
+﻿using AvaloniaDemo.ViewModels.Windows;
+using ReactiveUI;
 using System;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
-namespace AvaloniaDemo.ViewModels
+namespace AvaloniaDemo.ViewModels.UserControls
 {
-    public class MainViewModel : ViewModelBase, IDisposable
+    public class HomeViewModel : MainViewModel, IDisposable
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
@@ -29,7 +30,7 @@ namespace AvaloniaDemo.ViewModels
         }
 
 
-        public MainViewModel()
+        public HomeViewModel()
         {
             TestCommand = ReactiveCommand.Create(() =>
             {
