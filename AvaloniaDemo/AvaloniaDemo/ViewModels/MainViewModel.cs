@@ -37,17 +37,18 @@ namespace AvaloniaDemo.ViewModels
                 MessageBus.Current.SendMessage<string>("Hello from MainViewModel!");
             });
 
-            // 订阅命令执行结果（可选）
-            TestCommand
-                .Execute()
-                .Subscribe()
-                .DisposeWith(_disposables);
 
             //注册消息监听
             MessageBus.Current.Listen<string>().Subscribe((msg) =>
             {
                 Console.WriteLine($"接收消息：{msg}");
             });
+
+            // 订阅命令执行结果（可选）
+            TestCommand
+                .Execute()
+                .Subscribe()
+                .DisposeWith(_disposables);
 
             // 使用响应式定时器替代传统Timer
             // Observable.Interval创建一个定期发射值的可观察序列

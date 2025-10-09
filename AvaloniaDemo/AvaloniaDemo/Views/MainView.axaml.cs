@@ -35,22 +35,28 @@ namespace AvaloniaDemo.Views
                 //    .DisposeWith(disposables);
             });
 
+            //注册消息监听
+            MessageBus.Current.Listen<string>().Subscribe((msg) =>
+            {
+                Console.WriteLine($"接收消息：{msg}");
+                _manager?.Show(new Notification("提示：", $"接收消息：{msg}", NotificationType.Error));
+            });
+
         }
 
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
         {
             base.OnAttachedToVisualTree(e);
-            var topLevel = TopLevel.GetTopLevel(this);
-            _manager = new WindowNotificationManager(topLevel) { MaxItems = 3 };
+            //var topLevel = TopLevel.GetTopLevel(this);
+            _manager = new WindowNotificationManager(TopLevel.GetTopLevel(this)) { MaxItems = 3 };
         }
 
         private void InfoButton_OnClick(object? sender, RoutedEventArgs e)
         {
             if (sender is Button b && b.Content is string s)
             {
-                _manager?.Show(Enum.TryParse<NotificationType>(s, out NotificationType t)
-                    ? new Notification(t.ToString(), "This is message", t)
-                    : new Notification(s, "This is message"));
+                //显示通知弹框
+                _manager?.Show(new Notification("提示：", "This is message", NotificationType.Success));
             }
         }
 
