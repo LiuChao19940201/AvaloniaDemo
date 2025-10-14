@@ -1,12 +1,10 @@
 using Avalonia.Controls;
 using AvaloniaDemo.ViewModels.UserControls;
-using AvaloniaDemo.ViewModels.Windows;
-using AvaloniaDemo.Views.Windows;
 using System.Threading.Tasks;
 
-namespace Ursa.Demo.Views;
+namespace AvaloniaDemo.Views.Windows;
 
-public partial class SplashWindow : Controls.SplashWindow
+public partial class SplashWindow : Ursa.Controls.SplashWindow
 {
     public SplashWindow()
     {

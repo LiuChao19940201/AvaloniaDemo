@@ -1,4 +1,3 @@
-using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using AvaloniaDemo.ViewModels.Windows;
 

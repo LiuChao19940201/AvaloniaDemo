@@ -5,7 +5,6 @@ using AvaloniaDemo.ViewModels.UserControls;
 using AvaloniaDemo.ViewModels.Windows;
 using AvaloniaDemo.Views.UserControls;
 using AvaloniaDemo.Views.Windows;
-using Ursa.Demo.Views;
 
 namespace AvaloniaDemo
 {
