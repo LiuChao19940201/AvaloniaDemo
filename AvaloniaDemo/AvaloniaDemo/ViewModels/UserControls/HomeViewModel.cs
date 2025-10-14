@@ -1,5 +1,4 @@
-﻿using AvaloniaDemo.ViewModels.Windows;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
@@ -8,7 +7,7 @@ using System.Reactive.Linq;
 
 namespace AvaloniaDemo.ViewModels.UserControls
 {
-    public class HomeViewModel : ReactiveObject, IDisposable
+    public partial class HomeViewModel : ReactiveObject, IDisposable
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 

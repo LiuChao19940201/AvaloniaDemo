@@ -2,7 +2,7 @@
 
 namespace AvaloniaDemo.ViewModels.Windows
 {
-    public class MainViewModel : ReactiveObject
+    public partial class MainViewModel : ReactiveObject
     {
     }
 }
