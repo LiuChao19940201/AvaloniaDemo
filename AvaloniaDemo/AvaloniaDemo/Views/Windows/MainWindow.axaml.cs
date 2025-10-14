@@ -1,15 +1,13 @@
-using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
-using AvaloniaDemo.ViewModels.UserControls;
+using AvaloniaDemo.ViewModels.Windows;
 
 namespace AvaloniaDemo.Views.Windows
 {
-    public partial class MainWindow : ReactiveWindow<HomeViewModel>
+    public partial class MainWindow : ReactiveWindow<MainViewModel>
     {
         public MainWindow()
         {
-            //InitializeComponent();
-            AvaloniaXamlLoader.Load(this);
+            InitializeComponent();
         }
     }
 }
