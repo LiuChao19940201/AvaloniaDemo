@@ -37,8 +37,8 @@ namespace AvaloniaDemo.Views.UserControls
                 //    .DisposeWith(disposables);
 
                 //绑定按钮Command命令，注意：此种方式绑定后，在Android上运行软件会闪退，在Desktop上运行正常
-                this.BindCommand(ViewModel, vm => vm.AddTaskCommand, view => view.addTaskBtn)
-                    .DisposeWith(disposables);
+                //this.BindCommand(ViewModel, vm => vm.AddTaskCommand, view => view.addTaskBtn)
+                //    .DisposeWith(disposables);
 
             });
 
