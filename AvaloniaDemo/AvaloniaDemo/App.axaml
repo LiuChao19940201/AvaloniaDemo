@@ -20,11 +20,12 @@
     <Application.Styles>
 		<semi:SemiTheme Locale="zh-cn" />
 		<u-semi:SemiTheme Locale="zh-CN"/>
+		<semi:SemiPopupAnimations /><!-- 开启弹窗框动画 -->
 
-		<!-- 引入Fonts字体 -->
+		<!-- 引入Fonts字体，两种字体方式选择其一 -->
 		<Style Selector="ContentPresenter">
-			<!--<Setter Property="FontFamily" Value="avares://Quick.AvaloniaFonts.Roboto/Assets/Fonts#Roboto"/>-->
-			<Setter Property="FontFamily" Value="{StaticResource CustomFontFamily}"/>
+			<Setter Property="FontFamily" Value="avares://Quick.AvaloniaFonts.Roboto/Assets/Fonts#Roboto"/>
+			<!--<Setter Property="FontFamily" Value="{StaticResource CustomFontFamily}"/>-->
 			<Setter Property="FontSize" Value="14"/>
 		</Style>
 	</Application.Styles>

@@ -22,4 +22,14 @@ namespace AvaloniaDemo.Android
                 .UseReactiveUI();
         }
     }
+
+    /*
+        
+         # 清理项目
+         dotnet clean TestAva.Android.csproj -c Release
+
+         # 构建并打包 Android 项目（以 net8.0-android 为例）
+         dotnet build AvaloniaDemo.Android.csproj -c Release -f:net8.0-android -r android-arm64 -p:AndroidPackageFormat=apk --self-contained false
+    
+     */
 }

@@ -1,6 +1,7 @@
 ﻿using AvaloniaDemo.ViewModels.Windows;
 using ReactiveUI;
 using System;
+using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -39,9 +40,25 @@ namespace AvaloniaDemo.ViewModels.UserControls
             set => this.RaiseAndSetIfChanged(ref _newTaskTitle, value);
         }
 
+        private ObservableCollection<string>? strColl;
+
+        public ObservableCollection<string>? StrColl
+        {
+            get => strColl;
+            set => this.RaiseAndSetIfChanged(ref strColl, value);
+        }
 
         public HomeViewModel()
         {
+            StrColl =
+            [
+                "任务一",
+                "任务二",
+                "任务三",
+                "任务四",
+                "任务五"
+            ];
+
             TestCommand = ReactiveCommand.Create(() =>
             {
                 // 发送消息到消息总线
