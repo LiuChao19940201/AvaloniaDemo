@@ -13,6 +13,9 @@ namespace AvaloniaDemo.ViewModels.UserControls
 
         public ReactiveCommand<Unit, Unit> TestCommand { get; }
 
+        // 响应式命令
+        public ReactiveCommand<Unit, Unit> AddTaskCommand { get; }
+
         private DateTime time;
 
         public DateTime Time
@@ -29,6 +32,13 @@ namespace AvaloniaDemo.ViewModels.UserControls
             set { this.RaiseAndSetIfChanged(ref timeStr, value); }
         }
 
+        private string? _newTaskTitle;
+        public string? NewTaskTitle
+        {
+            get => _newTaskTitle;
+            set => this.RaiseAndSetIfChanged(ref _newTaskTitle, value);
+        }
+
 
         public HomeViewModel()
         {
@@ -38,6 +48,14 @@ namespace AvaloniaDemo.ViewModels.UserControls
                 MessageBus.Current.SendMessage<string>("Hello from MainViewModel!");
             });
 
+            // 命令定义与启用条件
+            // AddTaskCommand：标题不为空且不超过5字符时可用
+            var canAddTask = this.WhenAnyValue(
+                x => x.NewTaskTitle,
+                title => !string.IsNullOrWhiteSpace(title) && title.Length <= 5
+            );
+
+            AddTaskCommand = ReactiveCommand.Create(AddTask, canAddTask);
 
             //注册消息监听
             MessageBus.Current.Listen<string>().Subscribe((msg) =>
@@ -46,10 +64,7 @@ namespace AvaloniaDemo.ViewModels.UserControls
             });
 
             // 订阅命令执行结果（可选）
-            TestCommand
-                .Execute()
-                .Subscribe()
-                .DisposeWith(_disposables);
+            TestCommand.Execute().Subscribe().DisposeWith(_disposables);
 
             // 使用响应式定时器替代传统Timer
             // Observable.Interval创建一个定期发射值的可观察序列
@@ -68,6 +83,11 @@ namespace AvaloniaDemo.ViewModels.UserControls
             Time = DateTime.Now;
             TimeStr = Time.ToString();
 
+        }
+
+        private void AddTask()
+        {
+            NewTaskTitle = string.Empty; // 清空输入
         }
 
         // 实现IDisposable接口，清理所有订阅和资源
