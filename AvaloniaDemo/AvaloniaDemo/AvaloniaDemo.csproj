@@ -26,5 +26,8 @@
     <Compile Update="Views\UserControls\HomeUserControl.axaml.cs">
       <DependentUpon>HomeUserControl.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Windows\SplashWindow.axaml.cs">
+      <DependentUpon>SplashWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

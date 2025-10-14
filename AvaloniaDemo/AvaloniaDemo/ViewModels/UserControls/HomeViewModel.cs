@@ -8,7 +8,7 @@ using System.Reactive.Linq;
 
 namespace AvaloniaDemo.ViewModels.UserControls
 {
-    public class HomeViewModel : MainViewModel, IDisposable
+    public class HomeViewModel : ReactiveObject, IDisposable
     {
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
