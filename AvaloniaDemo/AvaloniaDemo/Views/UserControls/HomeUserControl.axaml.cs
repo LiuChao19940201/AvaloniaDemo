@@ -33,11 +33,6 @@ namespace AvaloniaDemo.Views.UserControls
                 //this.WhenAnyValue(x => x.ViewModel.TimeStr)
                 //    .BindTo(this, x => x.TimeTextBlock.Text)
                 //    .DisposeWith(disposables);
-
-                //绑定按钮Command命令
-                this.BindCommand(ViewModel, vm => vm.AddTaskCommand, view => view.addTaskBtn)
-                    .DisposeWith(disposables);
-
             });
 
             //注册消息监听
