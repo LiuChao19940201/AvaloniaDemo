@@ -1,4 +1,3 @@
-using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using AvaloniaDemo.ViewModels.UserControls;
 
@@ -8,8 +7,7 @@ namespace AvaloniaDemo.Views.Windows
     {
         public MainWindow()
         {
-            //InitializeComponent();
-            AvaloniaXamlLoader.Load(this);
+            InitializeComponent();
         }
     }
 }

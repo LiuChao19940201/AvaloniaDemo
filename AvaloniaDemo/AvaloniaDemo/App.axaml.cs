@@ -19,11 +19,6 @@ namespace AvaloniaDemo
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                //desktop.MainWindow = new MainWindow
-                //{
-                //    DataContext = new HomeViewModel()
-                //};
-
                 desktop.MainWindow = new SplashWindow()
                 {
                     DataContext = new SplashViewModel()
