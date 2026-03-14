@@ -66,7 +66,7 @@ namespace AvaloniaDemo.Views.UserControls
                 // 找到最外层 Grid 设置 Margin
                 if (this.Content is Grid grid)
                 {
-                    grid.Margin = new Thickness(10, height, 10, 10);
+                    grid.Margin = new Thickness(10, height, 10, height);
                 }
             }
 
