@@ -6,6 +6,9 @@ using AndroidX.Core.View;
 using Avalonia;
 using Avalonia.Android;
 using Avalonia.ReactiveUI;
+using AvaloniaDemo.Android.Services;
+using AvaloniaDemo.Services;
+using System;
 
 namespace AvaloniaDemo.Android
 {
@@ -29,13 +32,31 @@ namespace AvaloniaDemo.Android
         {
             base.OnCreate(savedInstanceState);
 
-            // 设置状态栏透明
             if (Window != null)
             {
-                Window.SetStatusBarColor(Color.Transparent);
-
-                // 让内容延伸到状态栏下面
+                // 设置内容扩展到状态栏
                 WindowCompat.SetDecorFitsSystemWindows(Window, false);
+
+                // 设置状态栏背景为透明，并根据 Android 版本设置状态栏图标颜色
+                if (OperatingSystem.IsAndroidVersionAtLeast(35))
+                {
+                    // Android 35+ 新写法
+                    Window.DecorView.SetBackgroundColor(Color.Transparent);
+
+                    var controller = WindowCompat.GetInsetsController(Window, Window.DecorView);
+                    controller?.AppearanceLightStatusBars = true; // 状态栏图标深色
+                }
+                else
+                {
+#pragma warning disable CA1422
+                    Window.SetStatusBarColor(Color.Transparent);
+#pragma warning restore CA1422
+
+                    var controller = WindowCompat.GetInsetsController(Window, Window.DecorView);
+                    controller?.AppearanceLightStatusBars = true;
+                }
+
+                ServiceLocator.StatusBarService = new AndroidStatusBarService(this);
             }
         }
     }

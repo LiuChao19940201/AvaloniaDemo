@@ -3,8 +3,10 @@ using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
+using AvaloniaDemo.Services;
 using AvaloniaDemo.ViewModels.UserControls;
 using ReactiveUI;
+using Semi.Avalonia.Tokens.Palette;
 using System;
 using System.Reactive.Disposables;
 
@@ -56,6 +58,26 @@ namespace AvaloniaDemo.Views.UserControls
             base.OnAttachedToVisualTree(e);
             //var topLevel = TopLevel.GetTopLevel(this);
             _manager = new WindowNotificationManager(TopLevel.GetTopLevel(this)) { MaxItems = 3 };
+
+            // Android 上设置顶部间距
+            if (OperatingSystem.IsAndroid())
+            {
+                var height = Services.ServiceLocator.StatusBarService?.GetStatusBarHeight() ?? 40;
+                // 找到最外层 Grid 设置 Margin
+                if (this.Content is Grid grid)
+                {
+                    grid.Margin = new Thickness(10, height, 10, 10);
+                }
+            }
+
+            // 在桌面端上设置顶部间距
+            if (!OperatingSystem.IsAndroid() && !OperatingSystem.IsIOS())
+            {
+                if (this.Content is Grid grid)
+                {
+                    grid.Margin = new Thickness(10, 20, 10, 10);
+                }
+            }
         }
 
         private void InfoButton_OnClick(object? sender, RoutedEventArgs e)

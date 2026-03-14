@@ -5,8 +5,7 @@
 			 xmlns:rxui="http://reactiveui.net"
              xmlns:vm="using:AvaloniaDemo.ViewModels.UserControls"
              mc:Ignorable="d"
-			 d:DesignWidth="350" d:DesignHeight="800"
-			 Width="350" Height="800"
+			 d:DesignWidth="350" d:DesignHeight="700"
              x:Class="AvaloniaDemo.Views.UserControls.HomeUserControl"
 			 xmlns:u="https://irihi.tech/ursa"
              x:DataType="vm:HomeViewModel">
@@ -15,7 +14,7 @@
 		<vm:HomeViewModel />
 	</Design.DataContext>
 
-	<Grid Margin="10" >
+	<Grid Margin="10">
 		<u:ButtonGroup Classes="Solid Warning" HorizontalAlignment="Left">
 			<Button Content="Hello"  />
 			<Button Content="World" />

@@ -6,8 +6,7 @@
               xmlns:views="using:AvaloniaDemo.Views.UserControls"
 		      xmlns:u="https://irihi.tech/ursa"
               mc:Ignorable="d" 
-			  d:DesignWidth="350" d:DesignHeight="800"
-			  Width="350" Height="800"
+			  d:DesignWidth="350" d:DesignHeight="700"
 		      x:CompileBindings="True" 
 			  WindowStartupLocation="CenterScreen"
               x:Class="AvaloniaDemo.Views.Windows.MainWindow"
@@ -17,5 +16,5 @@
 		<vm:HomeViewModel />
 	</Design.DataContext>
 
-	<views:HomeUserControl />
+	<views:HomeUserControl Margin="10"/>
 </u:UrsaWindow>
