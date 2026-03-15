@@ -26,5 +26,20 @@ namespace AvaloniaDemo.Desktop
                 })
                 .LogToTrace()
                 .UseReactiveUI();
+
+        /*
+         
+             //打包发布到Linux系统
+             dotnet publish -c Release  -f:net10.0  -r linux-x64 --self-contained true  -o ./bin/Release/LinuxOutput
+         
+             //Linux系统中下载.net的运行时
+            sudo apt-get update 
+            sudo apt-get install dotnet-runtime-10.0
+         
+            //运行在Linux系统中
+            chmod +x ./AvaloniaDemo.Desktop
+            ./AvaloniaDemo.Desktop
+         
+         */
     }
 }
