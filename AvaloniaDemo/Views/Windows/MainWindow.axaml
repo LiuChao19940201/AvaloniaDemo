@@ -9,12 +9,18 @@
 			  d:DesignWidth="350" d:DesignHeight="700"
 		      x:CompileBindings="True" 
 			  WindowStartupLocation="CenterScreen"
+			  IsFullScreenButtonVisible="{OnPlatform {x:True}, macOS={x:False}}"
+			  IsManagedResizerVisible="{OnPlatform {x:False}, Linux={x:True}}"
               x:Class="AvaloniaDemo.Views.Windows.MainWindow"
-              Icon="/Assets/avalonia-logo.ico"
+              Icon="../../Assets/avalonia-logo.ico"
               Title="AvaloniaDemo">
 	<Design.DataContext>
 		<vm:HomeViewModel />
 	</Design.DataContext>
+
+    <u:UrsaWindow.RightContent>
+		<u:ThemeToggleButton IsThreeState="True" Mode="Controller" />
+	</u:UrsaWindow.RightContent>
 
 	<views:HomeUserControl Margin="10"/>
 </u:UrsaWindow>
