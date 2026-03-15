@@ -88,7 +88,7 @@
                             </Canvas>
                         </Viewbox>
                         <TextBlock Text="微信"
-                                   FontSize="18" FontWeight="Bold"
+                                   FontSize="16" FontWeight="Bold"
                                    HorizontalAlignment="Center"
                                    Foreground="{Binding IsChatActive, Converter={StaticResource BoolToTabColorConverter}}" />
                     </StackPanel>
@@ -110,7 +110,7 @@
                             </Canvas>
                         </Viewbox>
                         <TextBlock Text="通讯录"
-                                   FontSize="18" FontWeight="Bold"
+                                   FontSize="16" FontWeight="Bold"
                                    HorizontalAlignment="Center"
                                    Foreground="{Binding IsContactsActive, Converter={StaticResource BoolToTabColorConverter}}" />
                     </StackPanel>
@@ -137,7 +137,7 @@
                                 </Canvas>
                             </Viewbox>
                             <TextBlock Text="发现"
-                                       FontSize="18" FontWeight="Bold"
+                                       FontSize="16" FontWeight="Bold"
                                        HorizontalAlignment="Center"
                                        Foreground="{Binding IsDiscoverActive, Converter={StaticResource BoolToTabColorConverter}}" />
                         </StackPanel>
@@ -164,7 +164,7 @@
                             </Canvas>
                         </Viewbox>
                         <TextBlock Text="我"
-                                    FontSize="18" FontWeight="Bold"
+                                    FontSize="16" FontWeight="Bold"
                                    HorizontalAlignment="Center"
                                    Foreground="{Binding IsProfileActive, Converter={StaticResource BoolToTabColorConverter}}" />
                     </StackPanel>
