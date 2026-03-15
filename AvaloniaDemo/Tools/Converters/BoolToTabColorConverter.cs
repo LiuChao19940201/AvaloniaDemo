@@ -13,7 +13,7 @@ public class BoolToTabColorConverter : IValueConverter
 {
     public static readonly BoolToTabColorConverter Instance = new();
 
-    private static readonly IBrush ActiveBrush   = new SolidColorBrush(Color.Parse("#07C160"));
+    private static readonly IBrush ActiveBrush = new SolidColorBrush(Color.Parse("#07C160"));
     private static readonly IBrush InactiveBrush = new SolidColorBrush(Color.Parse("#888888"));
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)

@@ -3,10 +3,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using AvaloniaDemo.Services;
 using AvaloniaDemo.ViewModels.UserControls;
 using ReactiveUI;
-using Semi.Avalonia.Tokens.Palette;
 using System;
 using System.Reactive.Disposables;
 
@@ -41,7 +39,6 @@ namespace AvaloniaDemo.Views.UserControls
                 //绑定按钮Command命令，注意：此种方式绑定后，在Android上运行软件会闪退，在Desktop上运行正常
                 //this.BindCommand(ViewModel, vm => vm.AddTaskCommand, view => view.addTaskBtn)
                 //    .DisposeWith(disposables);
-
             });
 
             //注册消息监听
@@ -50,7 +47,6 @@ namespace AvaloniaDemo.Views.UserControls
                 Console.WriteLine($"接收消息：{msg}");
                 _manager?.Show(new Notification("提示：", $"接收消息：{msg}", NotificationType.Error));
             });
-
         }
 
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
@@ -88,6 +84,5 @@ namespace AvaloniaDemo.Views.UserControls
                 _manager?.Show(new Notification("提示：", "This is message", NotificationType.Success));
             }
         }
-
     }
 }

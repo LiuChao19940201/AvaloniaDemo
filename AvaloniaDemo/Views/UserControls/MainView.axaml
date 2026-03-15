@@ -31,10 +31,6 @@
         </DataTemplate>
     </UserControl.DataTemplates>
 
-    <UserControl.Resources>
-        <conv:BoolToTabColorConverter x:Key="BoolToTabColorConverter" />
-    </UserControl.Resources>
-
     <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Background="#F0F0F0">
 
         <!-- ══ Row 0: 状态栏安全区（避开摄像头/刘海，高度 44） ══ -->
@@ -92,7 +88,7 @@
                             </Canvas>
                         </Viewbox>
                         <TextBlock Text="微信"
-                                   FontSize="10"
+                                   FontSize="18" FontWeight="Bold"
                                    HorizontalAlignment="Center"
                                    Foreground="{Binding IsChatActive, Converter={StaticResource BoolToTabColorConverter}}" />
                     </StackPanel>
@@ -114,7 +110,7 @@
                             </Canvas>
                         </Viewbox>
                         <TextBlock Text="通讯录"
-                                   FontSize="10"
+                                   FontSize="18" FontWeight="Bold"
                                    HorizontalAlignment="Center"
                                    Foreground="{Binding IsContactsActive, Converter={StaticResource BoolToTabColorConverter}}" />
                     </StackPanel>
@@ -141,7 +137,7 @@
                                 </Canvas>
                             </Viewbox>
                             <TextBlock Text="发现"
-                                       FontSize="10"
+                                       FontSize="18" FontWeight="Bold"
                                        HorizontalAlignment="Center"
                                        Foreground="{Binding IsDiscoverActive, Converter={StaticResource BoolToTabColorConverter}}" />
                         </StackPanel>
@@ -168,7 +164,7 @@
                             </Canvas>
                         </Viewbox>
                         <TextBlock Text="我"
-                                   FontSize="10"
+                                    FontSize="18" FontWeight="Bold"
                                    HorizontalAlignment="Center"
                                    Foreground="{Binding IsProfileActive, Converter={StaticResource BoolToTabColorConverter}}" />
                     </StackPanel>
@@ -178,7 +174,6 @@
         </Border>
 
         <!-- ══ Row 4: Home Indicator 安全区（底部导航条区域） ══ -->
-        <Border Grid.Row="4" Height="20" Background="White" />
-
+        <Border Grid.Row="4" Height="10" Background="White" />
     </Grid>
 </UserControl>

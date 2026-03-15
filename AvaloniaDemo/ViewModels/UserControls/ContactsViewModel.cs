@@ -21,9 +21,28 @@ public partial class ContactsViewModel : ObservableObject
         new() { Name = "钱七" },
     };
 
-    [RelayCommand] private void OpenContact(ContactItemViewModel item) { }
-    [RelayCommand] private void AddFriend()        { }
-    [RelayCommand] private void NewFriendRequest() { }
-    [RelayCommand] private void OpenGroupChat()    { }
-    [RelayCommand] private void OpenTagList()      { }
+    [RelayCommand]
+    private void OpenContact(ContactItemViewModel item)
+    {
+    }
+
+    [RelayCommand]
+    private void AddFriend()
+    {
+    }
+
+    [RelayCommand]
+    private void NewFriendRequest()
+    {
+    }
+
+    [RelayCommand]
+    private void OpenGroupChat()
+    {
+    }
+
+    [RelayCommand]
+    private void OpenTagList()
+    {
+    }
 }

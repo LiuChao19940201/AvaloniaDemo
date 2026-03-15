@@ -8,10 +8,10 @@ public partial class ChatItemViewModel : ObservableObject
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasUnread))]
-    private string _name    = "";
+    private string _name = "";
 
     [ObservableProperty] private string _preview = "";
-    [ObservableProperty] private string _time    = "";
+    [ObservableProperty] private string _time = "";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasUnread))]
@@ -35,5 +35,6 @@ public partial class ChatViewModel : ObservableObject
     };
 
     [RelayCommand]
-    private void OpenChat(ChatItemViewModel item) { }
+    private void OpenChat(ChatItemViewModel item)
+    { }
 }

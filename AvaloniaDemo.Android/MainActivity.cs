@@ -74,7 +74,7 @@ namespace AvaloniaDemo.Android
     }
 
     /*
-        
+
         #先切到 Android 项目目录
         cd AvaloniaDemo.Android
 
@@ -83,6 +83,6 @@ namespace AvaloniaDemo.Android
 
          # 构建并打包 Android 项目（以 net10.0-android 为例）
          dotnet build AvaloniaDemo.Android.csproj -c Release -f:net10.0-android -r android-arm64 -p:AndroidPackageFormat=apk --self-contained false
-    
+
      */
 }

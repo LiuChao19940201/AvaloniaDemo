@@ -1,4 +1,3 @@
-using Avalonia.Controls;
 using AvaloniaDemo.ViewModels.Windows;
 using System;
 

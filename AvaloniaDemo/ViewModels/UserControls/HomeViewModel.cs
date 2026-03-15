@@ -33,6 +33,7 @@ namespace AvaloniaDemo.ViewModels.UserControls
         }
 
         private string? _newTaskTitle;
+
         public string? NewTaskTitle
         {
             get => _newTaskTitle;
@@ -98,7 +99,6 @@ namespace AvaloniaDemo.ViewModels.UserControls
             // 初始时间设置
             Time = DateTime.Now;
             TimeStr = Time.ToString();
-
         }
 
         private void AddTask()

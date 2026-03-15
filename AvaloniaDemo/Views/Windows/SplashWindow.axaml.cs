@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using AvaloniaDemo.ViewModels.UserControls;
 using System.Threading.Tasks;
 
 namespace AvaloniaDemo.Views.Windows;
