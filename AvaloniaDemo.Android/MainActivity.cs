@@ -5,10 +5,12 @@ using Android.OS;
 using AndroidX.Core.View;
 using Avalonia;
 using Avalonia.Android;
+using Avalonia.Media;
 using Avalonia.ReactiveUI;
 using AvaloniaDemo.Android.Services;
 using AvaloniaDemo.Services;
 using System;
+using Color = Android.Graphics.Color;
 
 namespace AvaloniaDemo.Android
 {
@@ -22,9 +24,10 @@ namespace AvaloniaDemo.Android
     {
         protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
         {
+            // Android 系统字体链自带中文 (Noto Sans CJK) + Emoji 支持
+            // 不设置 DefaultFamilyName，不覆盖系统默认字体
             return base.CustomizeAppBuilder(builder)
                 .WithInterFont()
-                //.WithFont_Roboto()
                 .UseReactiveUI();
         }
 

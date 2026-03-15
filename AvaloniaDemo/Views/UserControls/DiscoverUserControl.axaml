@@ -1,0 +1,297 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AvaloniaDemo.ViewModels.UserControls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AvaloniaDemo.Views.UserControls.DiscoverUserControl"
+             x:DataType="vm:DiscoverViewModel">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Background="#F0F0F0">
+
+            <!-- ══ Group 1: 朋友圈 ══ -->
+            <Border Background="White" Margin="0,0,0,8">
+                <Button Background="Transparent"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        Height="56" Padding="0"
+                        Command="{Binding OpenMomentsCommand}">
+                    <Grid ColumnDefinitions="56,*,Auto,Auto" Margin="0,0,16,0">
+                        <!-- 四色圆点图标（原始设计，保留） -->
+                        <Canvas Grid.Column="0" Width="28" Height="28"
+                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Ellipse Canvas.Left="0"  Canvas.Top="0"  Width="12" Height="12" Fill="#E74C3C"/>
+                            <Ellipse Canvas.Left="16" Canvas.Top="0"  Width="12" Height="12" Fill="#2ECC71"/>
+                            <Ellipse Canvas.Left="0"  Canvas.Top="16" Width="12" Height="12" Fill="#3498DB"/>
+                            <Ellipse Canvas.Left="16" Canvas.Top="16" Width="12" Height="12" Fill="#F1C40F"/>
+                        </Canvas>
+                        <TextBlock Grid.Column="1" Text="朋友圈"
+                                   FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                        <Panel Grid.Column="2" Margin="0,0,8,0">
+                            <Border Width="40" Height="40" CornerRadius="4" ClipToBounds="True"
+                                    Background="#C8D8E8" VerticalAlignment="Center">
+                                <!-- 风景图占位（纯色渐变替代，不用 Emoji） -->
+                                <Canvas Width="40" Height="40">
+                                    <Rectangle Canvas.Left="0" Canvas.Top="20" Width="40" Height="20" Fill="#7CB9A8"/>
+                                    <Ellipse Canvas.Left="8" Canvas.Top="6" Width="14" Height="14" Fill="#F6C244"/>
+                                    <Path Data="M0,28 L10,18 L18,24 L26,14 L40,28 Z" Fill="#5FA08A"/>
+                                </Canvas>
+                            </Border>
+                            <Ellipse Width="10" Height="10" Fill="#FF4444"
+                                     HorizontalAlignment="Right" VerticalAlignment="Top"
+                                     Margin="0,0,-2,-2"/>
+                        </Panel>
+                        <Viewbox Grid.Column="3" Width="16" Height="16" VerticalAlignment="Center">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                            </Canvas>
+                        </Viewbox>
+                    </Grid>
+                </Button>
+            </Border>
+
+            <!-- ══ Group 2: 视频号 / 直播 ══ -->
+            <Border Background="White" Margin="0,0,0,8">
+                <StackPanel>
+                    <Button Background="Transparent" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" Height="56" Padding="0"
+                            Command="{Binding OpenChannelsCommand}">
+                        <Grid ColumnDefinitions="56,*,Auto,Auto" Margin="0,0,16,0">
+                            <!-- 视频号图标（SVG Path 替代 𝕎 字体） -->
+                            <Border Grid.Column="0" Width="28" Height="28"
+                                    Background="#FF8C00" CornerRadius="6"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Viewbox Width="18" Height="18">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M17 10.5V7C17 6.45 16.55 6 16 6H4C3.45 6 3 6.45 3 7V17C3 17.55 3.45 18 4 18H16C16.55 18 17 17.55 17 17V13.5L21 17.5V6.5L17 10.5Z"
+                                              Fill="White"/>
+                                    </Canvas>
+                                </Viewbox>
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="视频号"
+                                       FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                            <Panel Grid.Column="2" Margin="0,0,8,0" VerticalAlignment="Center">
+                                <TextBlock Text="宝妈喂娃突然晕倒 撞醒后第一反应看哭无数人"
+                                           FontSize="11" Foreground="#AAAAAA"
+                                           MaxWidth="160" TextWrapping="Wrap" MaxLines="2"/>
+                                <Ellipse Width="8" Height="8" Fill="#FF4444"
+                                         HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                            </Panel>
+                            <Viewbox Grid.Column="3" Width="16" Height="16" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                    <Rectangle Height="0.6" Fill="#EBEBEB" Margin="56,0,0,0"/>
+                    <Button Background="Transparent" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" Height="56" Padding="0"
+                            Command="{Binding OpenLiveCommand}">
+                        <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <!-- 直播图标（原始 Canvas，保留） -->
+                            <Border Grid.Column="0" Width="28" Height="28"
+                                    Background="#E74C3C" CornerRadius="14"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Ellipse Width="12" Height="12"
+                                         Stroke="White" StrokeThickness="2"
+                                         HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="直播"
+                                       FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                            <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- ══ Group 3: 扫一扫 / 听一听 ══ -->
+            <Border Background="White" Margin="0,0,0,8">
+                <StackPanel>
+                    <Button Background="Transparent" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" Height="56" Padding="0"
+                            Command="{Binding OpenScanCommand}">
+                        <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <!-- 扫码框图标（原始 Canvas，保留） -->
+                            <Canvas Grid.Column="0" Width="28" Height="28"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Rectangle Canvas.Left="2"  Canvas.Top="2"  Width="10" Height="2"  Fill="#3B8BDB"/>
+                                <Rectangle Canvas.Left="2"  Canvas.Top="2"  Width="2"  Height="10" Fill="#3B8BDB"/>
+                                <Rectangle Canvas.Left="16" Canvas.Top="2"  Width="10" Height="2"  Fill="#3B8BDB"/>
+                                <Rectangle Canvas.Left="24" Canvas.Top="2"  Width="2"  Height="10" Fill="#3B8BDB"/>
+                                <Rectangle Canvas.Left="2"  Canvas.Top="16" Width="2"  Height="10" Fill="#3B8BDB"/>
+                                <Rectangle Canvas.Left="2"  Canvas.Top="24" Width="10" Height="2"  Fill="#3B8BDB"/>
+                                <Rectangle Canvas.Left="24" Canvas.Top="16" Width="2"  Height="10" Fill="#3B8BDB"/>
+                                <Rectangle Canvas.Left="16" Canvas.Top="24" Width="10" Height="2"  Fill="#3B8BDB"/>
+                                <Rectangle Canvas.Left="2"  Canvas.Top="13" Width="24" Height="2"  Fill="#3B8BDB" Opacity="0.6"/>
+                            </Canvas>
+                            <TextBlock Grid.Column="1" Text="扫一扫"
+                                       FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                            <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                    <Rectangle Height="0.6" Fill="#EBEBEB" Margin="56,0,0,0"/>
+                    <Button Background="Transparent" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" Height="56" Padding="0"
+                            Command="{Binding OpenListenCommand}">
+                        <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <!-- 音符图标（原始 Canvas，保留） -->
+                            <Canvas Grid.Column="0" Width="28" Height="28"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Ellipse Canvas.Left="10" Canvas.Top="6"  Width="8"  Height="10" Fill="#E74C3C"/>
+                                <Rectangle Canvas.Left="12" Canvas.Top="16" Width="4" Height="5"  Fill="#E74C3C"/>
+                                <Rectangle Canvas.Left="8"  Canvas.Top="21" Width="12" Height="2" Fill="#E74C3C"/>
+                                <Rectangle Canvas.Left="18" Canvas.Top="8"  Width="2" Height="8"  Fill="#E74C3C"/>
+                                <Ellipse Canvas.Left="18" Canvas.Top="15" Width="5" Height="5"    Fill="#E74C3C"/>
+                            </Canvas>
+                            <TextBlock Grid.Column="1" Text="听一听"
+                                       FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                            <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- ══ Group 4: 看一看 / 搜一搜 ══ -->
+            <Border Background="White" Margin="0,0,0,8">
+                <StackPanel>
+                    <Button Background="Transparent" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" Height="56" Padding="0"
+                            Command="{Binding OpenReadCommand}">
+                        <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <!-- 五角星图标（原始 Canvas，保留） -->
+                            <Canvas Grid.Column="0" Width="28" Height="28"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Polygon Points="14,2 17,10 26,10 19,15 22,24 14,19 6,24 9,15 2,10 11,10"
+                                         Fill="#F1C40F"/>
+                            </Canvas>
+                            <TextBlock Grid.Column="1" Text="看一看"
+                                       FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                            <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                    <Rectangle Height="0.6" Fill="#EBEBEB" Margin="56,0,0,0"/>
+                    <Button Background="Transparent" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" Height="56" Padding="0"
+                            Command="{Binding OpenSearchCommand}">
+                        <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <!-- 搜索星号图标（原始 Canvas，保留） -->
+                            <Canvas Grid.Column="0" Width="28" Height="28"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Line StartPoint="14,2"  EndPoint="14,26" Stroke="#E74C3C" StrokeThickness="2.5" StrokeLineCap="Round"/>
+                                <Line StartPoint="2,14"  EndPoint="26,14" Stroke="#E74C3C" StrokeThickness="2.5" StrokeLineCap="Round"/>
+                                <Line StartPoint="5,5"   EndPoint="23,23" Stroke="#E74C3C" StrokeThickness="2.5" StrokeLineCap="Round"/>
+                                <Line StartPoint="23,5"  EndPoint="5,23"  Stroke="#E74C3C" StrokeThickness="2.5" StrokeLineCap="Round"/>
+                            </Canvas>
+                            <TextBlock Grid.Column="1" Text="搜一搜"
+                                       FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                            <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- ══ Group 5: 附近的人 ══ -->
+            <Border Background="White" Margin="0,0,0,8">
+                <Button Background="Transparent" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch" Height="56" Padding="0"
+                        Command="{Binding OpenNearbyCommand}">
+                    <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                        <!-- 附近人图标（原始 Canvas，保留） -->
+                        <Canvas Grid.Column="0" Width="28" Height="28"
+                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Ellipse Canvas.Left="3"  Canvas.Top="1" Width="9"  Height="9"  Fill="#3498DB"/>
+                            <Ellipse Canvas.Left="16" Canvas.Top="1" Width="9"  Height="9"  Fill="#3498DB"/>
+                            <Rectangle Canvas.Left="1"  Canvas.Top="12" Width="13" Height="14" RadiusX="4" RadiusY="4" Fill="#3498DB"/>
+                            <Rectangle Canvas.Left="14" Canvas.Top="12" Width="13" Height="14" RadiusX="4" RadiusY="4" Fill="#3498DB"/>
+                        </Canvas>
+                        <TextBlock Grid.Column="1" Text="附近的人"
+                                   FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                        <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                            </Canvas>
+                        </Viewbox>
+                    </Grid>
+                </Button>
+            </Border>
+
+            <!-- ══ Group 6: 游戏 / 小程序 ══ -->
+            <Border Background="White" Margin="0,0,0,8">
+                <StackPanel>
+                    <Button Background="Transparent" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" Height="56" Padding="0"
+                            Command="{Binding OpenGamesCommand}">
+                        <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <!-- 游戏图标（原始 Canvas，保留） -->
+                            <Canvas Grid.Column="0" Width="28" Height="28"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Polygon Points="14,2 26,14 14,26 2,14"
+                                         Fill="Transparent" Stroke="#F39C12" StrokeThickness="2.5"/>
+                                <Polygon Points="14,6 22,14 14,22 6,14"
+                                         Fill="Transparent" Stroke="#E74C3C" StrokeThickness="2"/>
+                                <Ellipse Canvas.Left="10" Canvas.Top="10" Width="8" Height="8" Fill="#2ECC71"/>
+                            </Canvas>
+                            <TextBlock Grid.Column="1" Text="游戏"
+                                       FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                            <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                    <Rectangle Height="0.6" Fill="#EBEBEB" Margin="56,0,0,0"/>
+                    <Button Background="Transparent" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch" Height="56" Padding="0"
+                            Command="{Binding OpenMiniAppCommand}">
+                        <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <!-- 小程序图标（SVG Path 替代 ⊕ 字体） -->
+                            <Border Grid.Column="0" Width="28" Height="28"
+                                    Background="#8E44AD" CornerRadius="6"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Viewbox Width="18" Height="18">
+                                    <Canvas Width="24" Height="24">
+                                        <!-- 九宫格图标 -->
+                                        <Path Data="M4 8H8V4H4V8ZM10 20H14V16H10V20ZM4 20H8V16H4V20ZM4 14H8V10H4V14ZM10 14H14V10H10V14ZM16 4V8H20V4H16ZM10 8H14V4H10V8ZM16 14H20V10H16V14ZM16 20H20V16H16V20Z"
+                                              Fill="White"/>
+                                    </Canvas>
+                                </Viewbox>
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="小程序"
+                                       FontSize="16" Foreground="#1A1A1A" VerticalAlignment="Center"/>
+                            <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z" Fill="#CCCCCC"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

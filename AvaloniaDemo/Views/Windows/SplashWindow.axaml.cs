@@ -18,10 +18,7 @@ public partial class SplashWindow : Ursa.Controls.SplashWindow
 
         if (this.DialogResult is true)
         {
-            return new MainWindow()
-            {
-                DataContext = new HomeViewModel()
-            };
+            return new MainWindow();
         }
         return null;
     }

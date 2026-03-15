@@ -1,34 +1,22 @@
 <Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:AvaloniaDemo"
-             x:Class="AvaloniaDemo.App"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:local="using:AvaloniaDemo"
+			 x:Class="AvaloniaDemo.App"
 			 xmlns:semi="https://irihi.tech/semi"
+			 xmlns:cvt="using:AvaloniaDemo.Tools.Converters"
 			 xmlns:u-semi="https://irihi.tech/ursa/themes/semi"
-             RequestedThemeVariant="Default">
-
+			 RequestedThemeVariant="Default">
+	
 	<Application.Resources>
 		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary>
-					<!-- 定义全局字体 -->
-					<FontFamily x:Key="CustomFontFamily">avares://AvaloniaDemo/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi</FontFamily>
-				</ResourceDictionary>
-			</ResourceDictionary.MergedDictionaries>
+			<cvt:BoolToTabColorConverter x:Key="BoolToTabColorConverter" />
 		</ResourceDictionary>
 	</Application.Resources>
 
-    <Application.Styles>
+	<Application.Styles>
 		<semi:SemiTheme Locale="zh-cn" />
 		<u-semi:SemiTheme Locale="zh-CN"/>
-		<semi:SemiPopupAnimations /><!-- 开启弹窗框动画 -->
-
-		<!-- 引入Fonts字体，两种字体方式选择其一，注意第一种Roboto在Browser中会无法识别字体，乱码 -->
-		<Style Selector="ContentPresenter">
-			<!--<Setter Property="FontFamily" Value="avares://Quick.AvaloniaFonts.Roboto/Assets/Fonts#Roboto"/>-->
-			<Setter Property="FontFamily" Value="{StaticResource CustomFontFamily}"/>
-			<Setter Property="FontSize" Value="14"/>
-		</Style>
+		<semi:SemiPopupAnimations />
 	</Application.Styles>
 
-	
 </Application>

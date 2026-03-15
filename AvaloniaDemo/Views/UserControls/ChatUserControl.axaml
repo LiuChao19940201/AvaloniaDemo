@@ -1,0 +1,67 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AvaloniaDemo.ViewModels.UserControls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AvaloniaDemo.Views.UserControls.ChatUserControl"
+             x:DataType="vm:ChatViewModel">
+
+    <ListBox ItemsSource="{Binding ChatList}"
+             Background="White"
+             SelectionMode="Single">
+        <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="vm:ChatItemViewModel">
+                <Button Background="Transparent"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        Padding="0" Height="68"
+                        Command="{Binding $parent[ListBox].((vm:ChatViewModel)DataContext).OpenChatCommand}"
+                        CommandParameter="{Binding}">
+                    <Grid ColumnDefinitions="72,*,Auto" Margin="0,0,16,0">
+                        <Border Grid.Column="0" Width="46" Height="46"
+                                CornerRadius="6" Background="#5B9BD5"
+                                HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding AvatarLetter}"
+                                       FontSize="20" FontWeight="Bold" Foreground="White"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                            <TextBlock Text="{Binding Name}"
+                                       FontSize="15" Foreground="#1A1A1A" FontWeight="Medium"/>
+                            <TextBlock Text="{Binding Preview}"
+                                       FontSize="13" Foreground="#AAAAAA"
+                                       TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" VerticalAlignment="Center"
+                                    HorizontalAlignment="Right" Spacing="6">
+                            <TextBlock Text="{Binding Time}"
+                                       FontSize="12" Foreground="#AAAAAA"
+                                       HorizontalAlignment="Right"/>
+                            <Border Background="#FF4444" CornerRadius="10"
+                                    MinWidth="20" Height="20"
+                                    HorizontalAlignment="Right" Padding="4,0"
+                                    IsVisible="{Binding HasUnread}">
+                                <TextBlock Text="{Binding Unread}"
+                                           FontSize="12" Foreground="White"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Button>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+        <ListBox.ItemContainerTheme>
+            <ControlTheme TargetType="ListBoxItem">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Style Selector="^:pointerover /template/ ContentPresenter">
+                    <Setter Property="Background" Value="#F5F5F5"/>
+                </Style>
+                <Style Selector="^:selected /template/ ContentPresenter">
+                    <Setter Property="Background" Value="#EBEBEB"/>
+                </Style>
+            </ControlTheme>
+        </ListBox.ItemContainerTheme>
+    </ListBox>
+</UserControl>

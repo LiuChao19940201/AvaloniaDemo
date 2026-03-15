@@ -20,5 +20,6 @@
     <PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.15.0" />
     <PackageReference Include="Quick.AvaloniaFonts.Roboto" Version="1.0.0" />
     <PackageReference Include="Semi.Avalonia" Version="11.3.7.3" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
   </ItemGroup>
 </Project>
