@@ -17,6 +17,20 @@
 		<semi:SemiTheme Locale="zh-cn" />
 		<u-semi:SemiTheme Locale="zh-CN"/>
 		<semi:SemiPopupAnimations />
-	</Application.Styles>
 
+		<!--控件放大-->
+		<Style Selector="Button:pointerover,Border#border1:pointerover,Border#border2:pointerover">
+			<Setter Property="RenderTransform">
+				<Setter.Value>
+					<ScaleTransform ScaleX="1.1" ScaleY="1.1" />
+				</Setter.Value>
+			</Setter>
+		</Style>
+		
+		<!--错误校验提示-->
+		<Style Selector="TextBox /template/ DataValidationErrors,CalendarDatePicker /template/ DataValidationErrors">
+			<Setter Property="Theme" Value="{DynamicResource TooltipDataValidationErrors}" />
+		</Style>
+
+	</Application.Styles>
 </Application>

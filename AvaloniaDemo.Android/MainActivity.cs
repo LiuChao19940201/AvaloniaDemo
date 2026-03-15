@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.Content.PM;
-using Android.Graphics;
 using Android.OS;
 using AndroidX.Core.View;
 using Avalonia;
@@ -24,10 +23,20 @@ namespace AvaloniaDemo.Android
     {
         protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
         {
-            // Android 系统字体链自带中文 (Noto Sans CJK) + Emoji 支持
-            // 不设置 DefaultFamilyName，不覆盖系统默认字体
+            // Avalonia 在 Android 上通过 SkiaSharp 渲染，不会自动使用系统字体回退链，
+            // 必须手动配置 FontFallbacks 才能正确显示中文。
             return base.CustomizeAppBuilder(builder)
                 .WithInterFont()
+                .With(new FontManagerOptions
+                {
+                    FontFallbacks =
+                    [
+                        new FontFallback
+                        {
+                            FontFamily = new FontFamily("avares://AvaloniaDemo/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi 3.0")
+                        }
+                    ]
+                })
                 .UseReactiveUI();
         }
 
