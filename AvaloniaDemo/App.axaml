@@ -18,11 +18,11 @@
 		<u-semi:SemiTheme Locale="zh-CN"/>
 		<semi:SemiPopupAnimations />
 
-		<!--控件放大-->
+		<!--控件缩放-->
 		<Style Selector="Button:pointerover,Border#border1:pointerover,Border#border2:pointerover">
 			<Setter Property="RenderTransform">
 				<Setter.Value>
-					<ScaleTransform ScaleX="1.1" ScaleY="1.1" />
+					<ScaleTransform ScaleX="0.9" ScaleY="0.9" />
 				</Setter.Value>
 			</Setter>
 		</Style>
