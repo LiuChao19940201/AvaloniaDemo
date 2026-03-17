@@ -17,7 +17,8 @@
         <StackPanel Background="{DynamicResource SemiColorBg1}">
 
             <!-- ══ Group 1: 朋友圈 ══ -->
-            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8">
+            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8"
+                    BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
                 <Button Background="Transparent"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
@@ -59,7 +60,8 @@
             </Border>
 
             <!-- ══ Group 2: 视频号 / 直播 ══ -->
-            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8">
+            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8"
+                    BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
                 <StackPanel>
                     <Button Background="Transparent" HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
@@ -123,7 +125,8 @@
             </Border>
 
             <!-- ══ Group 3: 扫一扫 / 听一听 ══ -->
-            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8">
+            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8"
+                    BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
                 <StackPanel>
                     <Button Background="Transparent" HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
@@ -182,7 +185,8 @@
             </Border>
 
             <!-- ══ Group 4: 看一看 / 搜一搜 ══ -->
-            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8">
+            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8"
+                    BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
                 <StackPanel>
                     <Button Background="Transparent" HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
@@ -233,7 +237,8 @@
             </Border>
 
             <!-- ══ Group 5: 附近的人 ══ -->
-            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8">
+            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8"
+                    BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
                 <Button Background="Transparent" HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                         Command="{Binding OpenNearbyCommand}">
@@ -260,7 +265,8 @@
             </Border>
 
             <!-- ══ Group 6: 游戏 / 小程序 ══ -->
-            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8">
+            <Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8"
+                    BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
                 <StackPanel>
                     <Button Background="Transparent" HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"

@@ -17,7 +17,8 @@
 		<StackPanel Background="{DynamicResource SemiColorBg1}">
 
 			<!-- ══ Profile Header ══ -->
-			<Border Background="{DynamicResource SemiColorBg0}" Padding="16,16,16,16" Margin="0,0,0,8">
+			<Border Background="{DynamicResource SemiColorBg0}" Padding="16,16,16,16" Margin="0,0,0,8"
+					BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
 				<Grid ColumnDefinitions="Auto,*,Auto">
 
 					<!-- 头像 -->
@@ -77,7 +78,8 @@
 			</Border>
 
 			<!-- ══ 服务 ══ -->
-			<Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8">
+			<Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8"
+					BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
 				<Button Background="Transparent" HorizontalAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" Height="52" Padding="0"
 						Command="{Binding OpenServiceCommand}">
@@ -102,7 +104,8 @@
 			</Border>
 
 			<!-- ══ 收藏 / 朋友圈 / 视频号 / 订单 / 表情 ══ -->
-			<Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8">
+			<Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8"
+					BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
 				<StackPanel>
 
 					<!-- 收藏 -->
@@ -227,7 +230,8 @@
 			</Border>
 
 			<!-- ══ 设置 ══ -->
-			<Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8">
+			<Border Background="{DynamicResource SemiColorBg0}" Margin="0,0,0,8"
+					BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
 				<Button Background="Transparent" HorizontalAlignment="Stretch"
 						HorizontalContentAlignment="Stretch" Height="52" Padding="0"
 						Command="{Binding OpenSettingsCommand}">

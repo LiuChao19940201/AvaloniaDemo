@@ -75,8 +75,8 @@ namespace AvaloniaDemo.Android
 
     /*
 
-        #先切到 Android 项目目录
-        cd AvaloniaDemo.Android
+         # 先切到 Android 项目目录
+         cd AvaloniaDemo.Android
 
          # 清理项目
          dotnet clean AvaloniaDemo.Android.csproj -c Release
