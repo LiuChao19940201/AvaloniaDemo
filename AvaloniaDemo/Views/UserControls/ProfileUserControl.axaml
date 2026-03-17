@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             d:DesignWidth="350" d:DesignHeight="700"
              x:Class="AvaloniaDemo.Views.UserControls.ProfileUserControl"
              x:DataType="vm:ProfileViewModel">
 
@@ -20,7 +21,7 @@
                 <Grid ColumnDefinitions="Auto,*,Auto">
 
                     <!-- 头像 -->
-                    <Border Grid.Column="0" Width="70" Height="70"
+                    <Border Grid.Column="0" Width="90" Height="90"
                             CornerRadius="6" ClipToBounds="True" Margin="0,0,14,0"
                             Background="#5B9BD5">
                         <TextBlock Text="H"

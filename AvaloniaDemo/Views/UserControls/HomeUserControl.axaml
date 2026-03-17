@@ -14,7 +14,7 @@
         <vm:HomeViewModel />
     </Design.DataContext>
 
-    <Grid Margin="10">
+    <Grid Margin="10" Background="{DynamicResource SemiColorBg1}">
         <u:ButtonGroup Classes="Solid Warning" HorizontalAlignment="Left">
             <Button Content="你好"  />
             <Button Content="World" />
@@ -23,14 +23,23 @@
         <Button Content="按钮123" Command="{Binding TestCommand}" Theme="{DynamicResource SolidButton}" Width="150" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" />
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ToggleSwitch Content="Smooth" Name="smooth"/>
+            <ToggleSwitch Content="Smooth" Name="smooth"
+                          Foreground="{DynamicResource SemiColorText0}"/>
             <u:Clock Width="200" Height="200" IsSmooth="{Binding #smooth.IsChecked}" Time="{Binding Time}" Margin="0 20 0 20"/>
 
-            <TextBlock FontSize="14" HorizontalAlignment="Center" Text="{Binding TimeStr}"/>
-            <TextBlock FontSize="14" HorizontalAlignment="Center" x:Name="TimeTextBlock" Margin="0 20 0 0"/>
+            <TextBlock FontSize="14" HorizontalAlignment="Center" Text="{Binding TimeStr}"
+                       Foreground="{DynamicResource SemiColorText0}"/>
+            <TextBlock FontSize="14" HorizontalAlignment="Center" x:Name="TimeTextBlock" Margin="0 20 0 0"
+                       Foreground="{DynamicResource SemiColorText1}"/>
 
-            <TextBox Width="200" Height="30" Margin="0 10" Text="{Binding NewTaskTitle, UpdateSourceTrigger=PropertyChanged}" />
-            <ComboBox Classes="ClearButton"  Width="200" ItemsSource="{Binding StrColl}"/>
+            <TextBox Width="200" Height="30" Margin="0 10" Text="{Binding NewTaskTitle, UpdateSourceTrigger=PropertyChanged}"
+                     Foreground="{DynamicResource SemiColorText0}"
+                     Background="{DynamicResource SemiColorBg0}"
+                     BorderBrush="{DynamicResource SemiColorBorder}"/>
+            <ComboBox Classes="ClearButton" Width="200" ItemsSource="{Binding StrColl}"
+                      Foreground="{DynamicResource SemiColorText0}"
+                      Background="{DynamicResource SemiColorBg0}"
+                      BorderBrush="{DynamicResource SemiColorBorder}"/>
 
             <Button Content="按钮cs绑定" Classes="Success Warning" Theme="{DynamicResource SolidButton}" Width="200"
                     Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="addTaskBtn" Margin="0 20 0 0"/>

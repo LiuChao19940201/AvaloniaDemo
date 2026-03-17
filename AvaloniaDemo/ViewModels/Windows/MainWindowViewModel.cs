@@ -24,7 +24,7 @@ public partial class MainWindowViewModel : ObservableObject
 
     public MainWindowViewModel()
     {
-        _currentPage = _discoverVm; // 默认打开「发现」
+        _currentPage = _chatVm; // 默认打开「发现」
     }
 
     // ── Tab 高亮状态（供 AXAML Converter 绑定） ──
