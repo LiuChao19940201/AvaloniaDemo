@@ -1,7 +1,9 @@
 using Avalonia;
 using Avalonia.Styling;
+using AvaloniaDemo.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaDemo.ViewModels.UserControls.Profile;
 
@@ -12,7 +14,10 @@ public partial class ProfileViewModel : ObservableObject
     [ObservableProperty] private int _friendCount = 2;
 
     [RelayCommand]
-    private void OpenService() { }
+    private void OpenService()
+    {
+        WeakReferenceMessenger.Default.Send(new NavigateToServiceMessage());
+    }
 
     [RelayCommand]
     private void OpenFavorites() { }
@@ -38,8 +43,7 @@ public partial class ProfileViewModel : ObservableObject
         var app = Application.Current;
         if (app is null) return;
 
-        // 当前是 Dark → 切到 Light，否则切到 Dark
-        app.RequestedThemeVariant = app.ActualThemeVariant == ThemeVariant.Dark 
+        app.RequestedThemeVariant = app.ActualThemeVariant == ThemeVariant.Dark
             ? ThemeVariant.Light : ThemeVariant.Dark;
     }
 

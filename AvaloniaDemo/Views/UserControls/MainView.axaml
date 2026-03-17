@@ -53,6 +53,9 @@
         <DataTemplate DataType="{x:Type profileVm:ProfileViewModel}">
             <profile:ProfileUserControl />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type profileVm:ServiceViewModel}">
+            <profile:ServiceUserControl />
+        </DataTemplate>
     </UserControl.DataTemplates>
 
     <Grid RowDefinitions="Auto,Auto,*,Auto,Auto"
@@ -93,7 +96,8 @@
                 Background="{DynamicResource SemiColorBg0}"
                 BorderBrush="{DynamicResource SemiColorBorder}"
                 BorderThickness="0,0.8,0,0"
-                Padding="0,6,0,0">
+                Padding="0,6,0,0"
+                IsVisible="{Binding ShowTabBar}">
             <Grid ColumnDefinitions="*,*,*,*">
 
                 <!-- 微信 Tab -->
@@ -193,6 +197,7 @@
 
         <!-- ══ Row 4: Home Indicator 安全区 ══ -->
         <Border Grid.Row="4" Height="10"
-                Background="{DynamicResource SemiColorBg0}" />
+                Background="{DynamicResource SemiColorBg0}"
+                IsVisible="{Binding ShowTabBar}" />
     </Grid>
 </UserControl>
