@@ -4,11 +4,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             d:DesignWidth="350" d:DesignHeight="700"
              x:Class="AvaloniaDemo.Views.UserControls.ChatUserControl"
              x:DataType="vm:ChatViewModel">
 
+    <Design.DataContext>
+        <vm:ChatViewModel />
+    </Design.DataContext>
+
     <ListBox ItemsSource="{Binding ChatList}"
-             Background="White"
+             Background="{DynamicResource SemiColorBg0}"
              SelectionMode="Single">
         <ListBox.ItemTemplate>
             <DataTemplate x:DataType="vm:ChatItemViewModel">
@@ -20,34 +25,23 @@
                         CommandParameter="{Binding}">
                     <Grid ColumnDefinitions="72,*,Auto" Margin="0,0,16,0">
 
-                        <!-- ══ 头像区：发现页风格 ══
-                             彩色圆角矩形底板 + Canvas 手绘 SVG 图标
-                             图标：聊天气泡（横线版），与发现页扫码框/音符等绘制方式完全一致
-                        -->
                         <Panel Grid.Column="0"
                                Width="46" Height="46"
                                HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                            <!-- 绿色圆角底板 -->
                             <Border Width="46" Height="46" CornerRadius="8" Background="#07C160"/>
 
-                            <!-- 聊天气泡 Canvas SVG（纯几何图形，无字体依赖） -->
                             <Canvas Width="28" Height="28"
                                     HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <!-- 气泡主体圆角矩形 -->
                                 <Rectangle Canvas.Left="1"  Canvas.Top="1"
                                            Width="22" Height="17"
                                            RadiusX="3" RadiusY="3"
                                            Fill="White"/>
-                                <!-- 气泡尾巴（三角形） -->
                                 <Polygon Points="4,18 1,25 11,18" Fill="White"/>
-                                <!-- 消息横线 1 -->
                                 <Rectangle Canvas.Left="5"  Canvas.Top="6"  Width="14" Height="2" Fill="#07C160"/>
-                                <!-- 消息横线 2 -->
                                 <Rectangle Canvas.Left="5"  Canvas.Top="10" Width="10" Height="2" Fill="#07C160"/>
                             </Canvas>
 
-                            <!-- 未读红点（右上角） -->
                             <Border Background="#FF4444" CornerRadius="10"
                                     MinWidth="18" Height="18"
                                     HorizontalAlignment="Right" VerticalAlignment="Top"
@@ -63,16 +57,20 @@
                         <!-- 名称 + 预览 -->
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
                             <TextBlock Text="{Binding Name}"
-                                       FontSize="15" Foreground="#1A1A1A" FontWeight="Medium"/>
+                                       FontSize="15"
+                                       Foreground="{DynamicResource SemiColorText0}"
+                                       FontWeight="Medium"/>
                             <TextBlock Text="{Binding Preview}"
-                                       FontSize="13" Foreground="#AAAAAA"
+                                       FontSize="13"
+                                       Foreground="{DynamicResource SemiColorText2}"
                                        TextTrimming="CharacterEllipsis"/>
                         </StackPanel>
 
                         <!-- 时间 -->
                         <TextBlock Grid.Column="2"
                                    Text="{Binding Time}"
-                                   FontSize="12" Foreground="#AAAAAA"
+                                   FontSize="12"
+                                   Foreground="{DynamicResource SemiColorText2}"
                                    VerticalAlignment="Top" Margin="0,14,0,0"
                                    HorizontalAlignment="Right"/>
                     </Grid>
@@ -84,10 +82,10 @@
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Style Selector="^:pointerover /template/ ContentPresenter">
-                    <Setter Property="Background" Value="#F5F5F5"/>
+                    <Setter Property="Background" Value="{DynamicResource SemiColorFillQuaternary}"/>
                 </Style>
                 <Style Selector="^:selected /template/ ContentPresenter">
-                    <Setter Property="Background" Value="#EBEBEB"/>
+                    <Setter Property="Background" Value="{DynamicResource SemiColorFillTertiary}"/>
                 </Style>
             </ControlTheme>
         </ListBox.ItemContainerTheme>

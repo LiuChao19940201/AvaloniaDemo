@@ -10,52 +10,32 @@ public partial class ProfileViewModel : ObservableObject
     [ObservableProperty] private int _friendCount = 2;
 
     [RelayCommand]
-    private void OpenService()
-    {
-    }
+    private void OpenService() { }
 
     [RelayCommand]
-    private void OpenFavorites()
-    {
-    }
+    private void OpenFavorites() { }
 
     [RelayCommand]
-    private void OpenMoments()
-    {
-    }
+    private void OpenMoments() { }
 
     [RelayCommand]
-    private void OpenChannels()
-    {
-    }
+    private void OpenChannels() { }
 
     [RelayCommand]
-    private void OpenOrders()
-    {
-    }
+    private void OpenOrders() { }
 
     [RelayCommand]
-    private void OpenEmoji()
-    {
-    }
+    private void OpenEmoji() { }
 
     [RelayCommand]
-    private void OpenSettings()
-    {
-    }
+    private void OpenSettings() { }
 
     [RelayCommand]
-    private void OpenQrCode()
-    {
-    }
+    private void OpenQrCode() { }
 
     [RelayCommand]
-    private void AddStatus()
-    {
-    }
+    private void AddStatus() { }
 
     [RelayCommand]
-    private void OpenFriends()
-    {
-    }
+    private void OpenFriends() { }
 }
