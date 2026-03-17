@@ -58,9 +58,8 @@
                         <!-- 名称 + 预览 -->
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
                             <TextBlock Text="{Binding Name}"
-                                       FontSize="15"
-                                       Foreground="{DynamicResource SemiColorText0}"
-                                       FontWeight="Medium"/>
+                                       FontSize="16"
+                                       Foreground="{DynamicResource SemiColorText0}"/>
                             <TextBlock Text="{Binding Preview}"
                                        FontSize="13"
                                        Foreground="{DynamicResource SemiColorText2}"

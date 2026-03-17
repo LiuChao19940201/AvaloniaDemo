@@ -69,6 +69,7 @@ namespace AvaloniaDemo.Android
                 }
 
                 ServiceLocator.StatusBarService = new AndroidStatusBarService(this);
+                ServiceLocator.DeviceService = new AndroidDeviceService(this);
             }
         }
     }

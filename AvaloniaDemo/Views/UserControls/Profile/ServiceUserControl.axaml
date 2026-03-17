@@ -13,7 +13,7 @@
         <profileVm:ServiceViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto,*" Background="{DynamicResource SemiColorBg1}">
+    <Grid RowDefinitions="Auto,*,Auto" Background="{DynamicResource SemiColorBg1}">
 
         <!-- ══ 顶部导航栏（含返回箭头） ══ -->
         <Border Grid.Row="0"
@@ -363,5 +363,19 @@
 
             </StackPanel>
         </ScrollViewer>
+
+        <!-- ══ 底部状态提示栏 ══ -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource SemiColorBg0}"
+                BorderBrush="{DynamicResource SemiColorBorder}"
+                BorderThickness="0,0.8,0,0"
+                Padding="16,10"
+                IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+            <TextBlock Text="{Binding StatusMessage}"
+                       FontSize="14"
+                       Foreground="{DynamicResource SemiColorText1}"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"/>
+        </Border>
     </Grid>
 </UserControl>

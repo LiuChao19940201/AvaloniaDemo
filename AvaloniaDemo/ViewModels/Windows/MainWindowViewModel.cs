@@ -67,6 +67,11 @@ public partial class MainWindowViewModel : ObservableObject,
     [RelayCommand] private void SwitchToProfile() => CurrentPage = _profileVm;
 
     // ── 接收子页面导航消息 ──
-    public void Receive(NavigateToServiceMessage message) => CurrentPage = _serviceVm;
+    public void Receive(NavigateToServiceMessage message)
+    {
+        _serviceVm.OnNavigatedTo();
+        CurrentPage = _serviceVm;
+    }
+
     public void Receive(NavigateBackToProfileMessage message) => CurrentPage = _profileVm;
 }
