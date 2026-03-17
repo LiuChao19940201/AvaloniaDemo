@@ -3,6 +3,14 @@
              xmlns:vm="using:AvaloniaDemo.ViewModels.Windows"
              xmlns:pageVm="using:AvaloniaDemo.ViewModels.UserControls"
              xmlns:views="using:AvaloniaDemo.Views.UserControls"
+             xmlns:chat="using:AvaloniaDemo.Views.UserControls.Chat"
+             xmlns:contacts="using:AvaloniaDemo.Views.UserControls.Contacts"
+             xmlns:discover="using:AvaloniaDemo.Views.UserControls.Discover"
+             xmlns:profile="using:AvaloniaDemo.Views.UserControls.Profile"
+             xmlns:chatVm="using:AvaloniaDemo.ViewModels.UserControls.Chat"
+             xmlns:contactsVm="using:AvaloniaDemo.ViewModels.UserControls.Contacts"
+             xmlns:discoverVm="using:AvaloniaDemo.ViewModels.UserControls.Discover"
+             xmlns:profileVm="using:AvaloniaDemo.ViewModels.UserControls.Profile"
              xmlns:conv="using:AvaloniaDemo.Tools.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -33,17 +41,17 @@
     </UserControl.Styles>
 
     <UserControl.DataTemplates>
-        <DataTemplate DataType="{x:Type pageVm:ChatViewModel}">
-            <views:ChatUserControl />
+        <DataTemplate DataType="{x:Type chatVm:ChatViewModel}">
+            <chat:ChatUserControl />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type pageVm:ContactsViewModel}">
-            <views:ContactsUserControl />
+        <DataTemplate DataType="{x:Type contactsVm:ContactsViewModel}">
+            <contacts:ContactsUserControl />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type pageVm:DiscoverViewModel}">
-            <views:DiscoverUserControl />
+        <DataTemplate DataType="{x:Type discoverVm:DiscoverViewModel}">
+            <discover:DiscoverUserControl />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type pageVm:ProfileViewModel}">
-            <views:ProfileUserControl />
+        <DataTemplate DataType="{x:Type profileVm:ProfileViewModel}">
+            <profile:ProfileUserControl />
         </DataTemplate>
     </UserControl.DataTemplates>
 

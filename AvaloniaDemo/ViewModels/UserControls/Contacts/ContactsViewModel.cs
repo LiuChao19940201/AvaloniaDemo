@@ -2,7 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 
-namespace AvaloniaDemo.ViewModels.UserControls;
+namespace AvaloniaDemo.ViewModels.UserControls.Contacts;
 
 public partial class ContactItemViewModel : ObservableObject
 {

@@ -1,4 +1,7 @@
-using AvaloniaDemo.ViewModels.UserControls;
+using AvaloniaDemo.ViewModels.UserControls.Chat;
+using AvaloniaDemo.ViewModels.UserControls.Contacts;
+using AvaloniaDemo.ViewModels.UserControls.Discover;
+using AvaloniaDemo.ViewModels.UserControls.Profile;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 

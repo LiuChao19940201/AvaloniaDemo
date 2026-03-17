@@ -1,7 +1,6 @@
-// 路径: Views/UserControls/ContactsUserControl.axaml.cs
 using Avalonia.Controls;
 
-namespace AvaloniaDemo.Views.UserControls;
+namespace AvaloniaDemo.Views.UserControls.Contacts;
 
 public partial class ContactsUserControl : UserControl
 {

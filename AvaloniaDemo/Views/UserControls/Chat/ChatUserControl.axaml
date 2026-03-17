@@ -3,25 +3,33 @@
              xmlns:vm="using:AvaloniaDemo.ViewModels.UserControls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:chat="using:AvaloniaDemo.Views.UserControls.Chat"
+             xmlns:contacts="using:AvaloniaDemo.Views.UserControls.Contacts"
+             xmlns:discover="using:AvaloniaDemo.Views.UserControls.Discover"
+             xmlns:profile="using:AvaloniaDemo.Views.UserControls.Profile"
+             xmlns:chatVm="using:AvaloniaDemo.ViewModels.UserControls.Chat"
+             xmlns:contactsVm="using:AvaloniaDemo.ViewModels.UserControls.Contacts"
+             xmlns:discoverVm="using:AvaloniaDemo.ViewModels.UserControls.Discover"
+             xmlns:profileVm="using:AvaloniaDemo.ViewModels.UserControls.Profile"
              mc:Ignorable="d"
              d:DesignWidth="350" d:DesignHeight="700"
-             x:Class="AvaloniaDemo.Views.UserControls.ChatUserControl"
-             x:DataType="vm:ChatViewModel">
+             x:Class="AvaloniaDemo.Views.UserControls.Chat.ChatUserControl"
+             x:DataType="chatVm:ChatViewModel">
 
     <Design.DataContext>
-        <vm:ChatViewModel />
+        <chatVm:ChatViewModel />
     </Design.DataContext>
 
     <ListBox ItemsSource="{Binding ChatList}"
              Background="{DynamicResource SemiColorBg0}"
              SelectionMode="Single">
         <ListBox.ItemTemplate>
-            <DataTemplate x:DataType="vm:ChatItemViewModel">
+            <DataTemplate x:DataType="chatVm:ChatItemViewModel">
                 <Button Background="Transparent"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
                         Padding="0" Height="68"
-                        Command="{Binding $parent[ListBox].((vm:ChatViewModel)DataContext).OpenChatCommand}"
+                        Command="{Binding $parent[ListBox].((chatVm:ChatViewModel)DataContext).OpenChatCommand}"
                         CommandParameter="{Binding}">
                     <Grid ColumnDefinitions="72,*,Auto" Margin="0,0,16,0">
 

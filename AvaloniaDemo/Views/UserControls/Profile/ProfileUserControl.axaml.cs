@@ -1,7 +1,6 @@
-// 路径: Views/UserControls/ProfileUserControl.axaml.cs
 using Avalonia.Controls;
 
-namespace AvaloniaDemo.Views.UserControls;
+namespace AvaloniaDemo.Views.UserControls.Profile;
 
 public partial class ProfileUserControl : UserControl
 {
