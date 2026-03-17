@@ -1,3 +1,5 @@
+using Avalonia;
+using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -31,7 +33,17 @@ public partial class ProfileViewModel : ObservableObject
     private void OpenSettings() { }
 
     [RelayCommand]
-    private void OpenQrCode() { }
+    private void OpenQrCode()
+    {
+        var app = Application.Current;
+        if (app is null) return;
+
+        // 当前是 Dark → 切到 Light，否则切到 Dark
+        app.RequestedThemeVariant =
+            app.ActualThemeVariant == ThemeVariant.Dark
+                ? ThemeVariant.Light
+                : ThemeVariant.Dark;
+    }
 
     [RelayCommand]
     private void AddStatus() { }
