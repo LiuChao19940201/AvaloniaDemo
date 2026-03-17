@@ -10,6 +10,15 @@ public partial class MainWindow : Ursa.Controls.UrsaWindow
         InitializeComponent();
         DataContext = new MainWindowViewModel();
 
+        // 窗体拖动（Avalonia 写法）
+        PointerPressed += (s, e) =>
+        {
+            if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            {
+                BeginMoveDrag(e);
+            }
+        };
+
         // 只在桌面端设置窗口大小
         if (!OperatingSystem.IsAndroid() && !OperatingSystem.IsIOS())
         {

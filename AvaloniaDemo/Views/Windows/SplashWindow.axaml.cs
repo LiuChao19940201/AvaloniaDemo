@@ -8,6 +8,15 @@ public partial class SplashWindow : Ursa.Controls.SplashWindow
     public SplashWindow()
     {
         InitializeComponent();
+
+        // ´°ÌåÍÏ¶¯£¨Avalonia Ð´·¨£©
+        PointerPressed += (s, e) =>
+        {
+            if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            {
+                BeginMoveDrag(e);
+            }
+        };
     }
 
     protected override async Task<Window?> CreateNextWindow()
