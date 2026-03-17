@@ -21,7 +21,7 @@
                 <Grid ColumnDefinitions="Auto,*,Auto">
 
                     <!-- 头像 -->
-                    <Border Grid.Column="0" Width="90" Height="90"
+                    <Border Grid.Column="0" Width="70" Height="70" VerticalAlignment="Top"
                             CornerRadius="6" ClipToBounds="True" Margin="0,0,14,0"
                             Background="#5B9BD5">
                         <TextBlock Text="H"
@@ -62,8 +62,8 @@
                     <!-- 二维码图标 -->
                     <Button Grid.Column="2" Background="Transparent" VerticalAlignment="Center"
                             Command="{Binding OpenQrCodeCommand}">
-                        <Viewbox Width="24" Height="24">
-                            <Canvas Width="24" Height="24">
+                        <Viewbox>
+                            <Canvas Width="40" Height="40" >
                                 <Path Data="M3 11H5V13H3ZM5 7H7V9H5ZM3 3V9H9V3ZM7 7H5V5H7ZM3 15H5V17H3ZM5 19H7V21H5ZM3 21V15H9V21ZM7 19H5V17H7ZM15 7H17V9H15ZM13 5V11H19V5ZM17 9H15V7H17ZM13 13H15V15H13ZM15 15H17V17H15ZM13 17H15V19H13ZM17 13H19V15H17ZM15 19H17V21H15ZM17 17H19V19H17ZM19 13H21V15H19ZM19 19H21V21H19ZM21 13V19H15V21H21V19H23V13ZM13 21H11V13H13Z"
                                       Fill="{DynamicResource SemiColorText2}"/>
                             </Canvas>
