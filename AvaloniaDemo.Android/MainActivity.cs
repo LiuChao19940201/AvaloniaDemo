@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using AndroidX.Core.View;
@@ -23,8 +24,6 @@ namespace AvaloniaDemo.Android
     {
         protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
         {
-            // Avalonia 在 Android 上通过 SkiaSharp 渲染，不会自动使用系统字体回退链，
-            // 必须手动配置 FontFallbacks 才能正确显示中文。
             return base.CustomizeAppBuilder(builder)
                 .WithInterFont()
                 .With(new FontManagerOptions
@@ -46,31 +45,34 @@ namespace AvaloniaDemo.Android
 
             if (Window != null)
             {
-                // 设置内容扩展到状态栏
                 WindowCompat.SetDecorFitsSystemWindows(Window, false);
 
-                // 设置状态栏背景为透明，并根据 Android 版本设置状态栏图标颜色
                 if (OperatingSystem.IsAndroidVersionAtLeast(35))
                 {
-                    // Android 35+ 新写法
                     Window.DecorView.SetBackgroundColor(Color.Transparent);
-
                     var controller = WindowCompat.GetInsetsController(Window, Window.DecorView);
-                    controller?.AppearanceLightStatusBars = true; // 状态栏图标深色
+                    controller?.AppearanceLightStatusBars = true;
                 }
                 else
                 {
 #pragma warning disable CA1422
                     Window.SetStatusBarColor(Color.Transparent);
 #pragma warning restore CA1422
-
                     var controller = WindowCompat.GetInsetsController(Window, Window.DecorView);
                     controller?.AppearanceLightStatusBars = true;
                 }
 
                 ServiceLocator.StatusBarService = new AndroidStatusBarService(this);
                 ServiceLocator.DeviceService = new AndroidDeviceService(this);
+                ServiceLocator.ImagePickerService = new AndroidImagePickerService(this); // ← 新增
             }
+        }
+
+        // ← 新增：接收相册选图回调
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            AndroidImagePickerService.HandleActivityResult(requestCode, resultCode, data, ContentResolver!);
         }
     }
 

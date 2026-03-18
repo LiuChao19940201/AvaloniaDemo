@@ -1,6 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Media;
 using Avalonia.ReactiveUI;
+using AvaloniaDemo.Desktop.Services;
+using AvaloniaDemo.Services;
 using System;
 
 namespace AvaloniaDemo.Desktop
@@ -8,8 +10,11 @@ namespace AvaloniaDemo.Desktop
     internal sealed class Program
     {
         [STAThread]
-        public static void Main(string[] args) => BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(args);
+        public static void Main(string[] args)
+        {
+            ServiceLocator.ImagePickerService = new DesktopImagePickerService();
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+        }
 
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()

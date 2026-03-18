@@ -23,14 +23,26 @@
 					BorderBrush="{DynamicResource SemiColorBorder}" BorderThickness="0,0.5,0,0.5">
 				<Grid ColumnDefinitions="Auto,*,Auto">
 
-					<!-- 头像 -->
-					<Border Grid.Column="0" Width="70" Height="70" VerticalAlignment="Top"
-							CornerRadius="6" ClipToBounds="True" Margin="0,0,14,0"
-							Background="#5B9BD5">
-						<TextBlock Text="H"
-								   FontSize="36" FontWeight="Bold" Foreground="White"
-								   HorizontalAlignment="Center" VerticalAlignment="Center"/>
-					</Border>
+					<!-- 头像（点击可选择图片） -->
+					<Button Grid.Column="0" Width="70" Height="70" VerticalAlignment="Top"
+							Background="Transparent" Padding="0" Margin="0,0,14,0"
+							Command="{Binding PickAvatarCommand}">
+						<Border Width="70" Height="70"
+								CornerRadius="6" ClipToBounds="True"
+								Background="#5B9BD5">
+							<Panel>
+								<!-- 文字占位符：无头像时显示 -->
+								<TextBlock Text="H"
+									   FontSize="36" FontWeight="Bold" Foreground="White"
+									   HorizontalAlignment="Center" VerticalAlignment="Center"
+									   IsVisible="{Binding !HasAvatar}"/>
+								<!-- 实际头像：选图后显示 -->
+								<Image Source="{Binding AvatarBitmap}"
+									   Stretch="UniformToFill"
+									   IsVisible="{Binding HasAvatar}"/>
+							</Panel>
+						</Border>
+					</Button>
 
 					<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="6">
 						<TextBlock Text="{Binding Nickname}"
