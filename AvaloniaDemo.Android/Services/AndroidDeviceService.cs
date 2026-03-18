@@ -97,7 +97,20 @@ public class AndroidDeviceService : IDeviceService
 
     public string GetBluetoothStatus()
     {
-        var adapter = BluetoothAdapter.DefaultAdapter;
+        BluetoothAdapter? adapter;
+
+        if (OperatingSystem.IsAndroidVersionAtLeast(31))
+        {
+            var bluetoothManager = _activity.GetSystemService(Context.BluetoothService) as BluetoothManager;
+            adapter = bluetoothManager?.Adapter;
+        }
+        else
+        {
+#pragma warning disable CA1422
+            adapter = BluetoothAdapter.DefaultAdapter;
+#pragma warning restore CA1422
+        }
+
         if (adapter is null)
             return "设备不支持蓝牙";
         return adapter.IsEnabled ? "已开启" : "已关闭";
