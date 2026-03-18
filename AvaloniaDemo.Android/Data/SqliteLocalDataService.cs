@@ -58,7 +58,7 @@ public class SqliteLocalDataService : ILocalDataService
         return Convert.FromBase64String(row.Value);
     }
 
-    // ✅ 新增：通用设置
+    // 通用设置
     public async Task SaveSettingAsync(string key, string value)
     {
         await EnsureInitializedAsync();

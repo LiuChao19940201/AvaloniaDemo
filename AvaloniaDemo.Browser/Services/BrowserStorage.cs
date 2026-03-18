@@ -13,7 +13,7 @@ internal static partial class BrowserStorage
     [JSImport("setItem", "storage")]
     internal static partial void SetItem(string key, string value);
 
-    // ✅ 返回 base64 字符串，高效编组，不再返回 JSObject
+    // 返回 base64 字符串，高效编组，不再返回 JSObject
     [JSImport("pickImageFile", "storage")]
     [return: JSMarshalAs<JSType.Promise<JSType.String>>]
     internal static partial Task<string?> PickImageFileAsync();

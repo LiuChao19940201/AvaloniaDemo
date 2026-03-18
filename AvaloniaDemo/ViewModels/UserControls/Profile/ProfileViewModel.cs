@@ -62,7 +62,7 @@ public partial class ProfileViewModel : ObservableObject
         {
             using (stream)
             {
-                // ✅ 关键修复：只解码为缩略图，而非原始分辨率
+                // 只解码为缩略图，而非原始分辨率
                 // 4000×3000 原图 → 48MB 像素 → WASM 直接 OOM 卡死
                 // DecodeToWidth(200) → ~200×150 → 120KB 像素 → 安全
                 AvatarBitmap = Bitmap.DecodeToWidth(stream, AvatarDecodeWidth,
@@ -109,7 +109,7 @@ public partial class ProfileViewModel : ObservableObject
     [RelayCommand]
     private void OpenSettings() { }
 
-    // ✅ 切换主题 + 持久化
+    // 切换主题 + 持久化
     [RelayCommand]
     private async Task OpenQrCode()
     {

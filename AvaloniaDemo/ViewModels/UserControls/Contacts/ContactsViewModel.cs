@@ -4,12 +4,6 @@ using System.Collections.ObjectModel;
 
 namespace AvaloniaDemo.ViewModels.UserControls.Contacts;
 
-public partial class ContactItemViewModel : ObservableObject
-{
-    [ObservableProperty] private string _name = "";
-    public string AvatarLetter => Name.Length > 0 ? Name[..1] : "?";
-}
-
 public partial class ContactsViewModel : ObservableObject
 {
     public ObservableCollection<ContactItemViewModel> Contacts { get; } = new()
@@ -45,4 +39,10 @@ public partial class ContactsViewModel : ObservableObject
     private void OpenTagList()
     {
     }
+}
+
+public partial class ContactItemViewModel : ObservableObject
+{
+    [ObservableProperty] private string _name = "";
+    public string AvatarLetter => Name.Length > 0 ? Name[..1] : "?";
 }

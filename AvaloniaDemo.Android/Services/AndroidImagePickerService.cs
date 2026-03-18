@@ -45,7 +45,7 @@ public class AndroidImagePickerService : IImagePickerService
                     return;
                 }
 
-                // ✅ 关键修复：ContentResolver 流是 non-seekable 的 Java InputStream
+                // ContentResolver 流是 non-seekable 的 Java InputStream
                 // Bitmap.DecodeToWidth 需要 seekable 流来：
                 //   1) 先读取图片头获取原始尺寸
                 //   2) seek 回起点再按缩放比解码
