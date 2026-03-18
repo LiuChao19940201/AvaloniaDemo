@@ -109,13 +109,25 @@ public partial class ProfileViewModel : ObservableObject
     [RelayCommand]
     private void OpenSettings() { }
 
+    // ✅ 切换主题 + 持久化
     [RelayCommand]
-    private void OpenQrCode()
+    private async Task OpenQrCode()
     {
         var app = Application.Current;
         if (app is null) return;
-        app.RequestedThemeVariant = app.ActualThemeVariant == ThemeVariant.Dark
-            ? ThemeVariant.Light : ThemeVariant.Dark;
+
+        // 切换主题
+        var newTheme = app.ActualThemeVariant == ThemeVariant.Dark
+            ? ThemeVariant.Light
+            : ThemeVariant.Dark;
+        app.RequestedThemeVariant = newTheme;
+
+        // 持久化当前主题选择
+        var dataService = ServiceLocator.LocalDataService;
+        if (dataService is not null)
+        {
+            await dataService.SaveSettingAsync(App.ThemeSettingKey, newTheme.ToString());
+        }
     }
 
     [RelayCommand]

@@ -20,4 +20,16 @@ public class BrowserLocalDataService : ILocalDataService
         if (base64 is null) return Task.FromResult<byte[]?>(null);
         return Task.FromResult<byte[]?>(Convert.FromBase64String(base64));
     }
+
+    // ✅ 新增：通用设置（localStorage 本身就是 key-value）
+    public Task SaveSettingAsync(string key, string value)
+    {
+        BrowserStorage.SetItem(key, value);
+        return Task.CompletedTask;
+    }
+
+    public Task<string?> LoadSettingAsync(string key)
+    {
+        return Task.FromResult(BrowserStorage.GetItem(key));
+    }
 }

@@ -57,4 +57,19 @@ public class SqliteLocalDataService : ILocalDataService
         if (row?.Value is null) return null;
         return Convert.FromBase64String(row.Value);
     }
+
+    // ✅ 新增：通用设置
+    public async Task SaveSettingAsync(string key, string value)
+    {
+        await EnsureInitializedAsync();
+        await _db.InsertOrReplaceAsync(new AppSetting { Key = key, Value = value });
+    }
+
+    public async Task<string?> LoadSettingAsync(string key)
+    {
+        await EnsureInitializedAsync();
+        var row = await _db.Table<AppSetting>()
+                           .FirstOrDefaultAsync(s => s.Key == key);
+        return row?.Value;
+    }
 }
