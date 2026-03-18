@@ -186,13 +186,13 @@ public class AndroidDeviceService : IDeviceService
             }
         }
 
-        var notification = new NotificationCompat.Builder(_activity, channelId)
-            .SetContentTitle(title)
-            .SetContentText(message)
-            .SetSmallIcon(global::Android.Resource.Drawable.IcDialogInfo)
-            .SetAutoCancel(true)
+        var notification = new NotificationCompat.Builder(_activity, channelId)!
+            .SetContentTitle(title)!
+            .SetContentText(message)!
+            .SetSmallIcon(global::Android.Resource.Drawable.IcDialogInfo)!
+            .SetAutoCancel(true)!
             .Build();
 
-        NotificationManagerCompat.From(_activity).Notify(1001, notification);
+        NotificationManagerCompat.From(_activity)!.Notify(1001, notification);
     }
 }

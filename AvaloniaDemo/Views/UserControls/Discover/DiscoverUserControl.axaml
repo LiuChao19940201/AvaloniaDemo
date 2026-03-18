@@ -28,13 +28,13 @@
                         Height="56" Padding="0"
                         Command="{Binding OpenMomentsCommand}">
                     <Grid ColumnDefinitions="56,*,Auto,Auto" Margin="0,0,16,0">
-                        <Canvas Grid.Column="0" Width="28" Height="28"
-                                HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Ellipse Canvas.Left="0"  Canvas.Top="0"  Width="12" Height="12" Fill="#E74C3C"/>
-                            <Ellipse Canvas.Left="16" Canvas.Top="0"  Width="12" Height="12" Fill="#2ECC71"/>
-                            <Ellipse Canvas.Left="0"  Canvas.Top="16" Width="12" Height="12" Fill="#3498DB"/>
-                            <Ellipse Canvas.Left="16" Canvas.Top="16" Width="12" Height="12" Fill="#F1C40F"/>
-                        </Canvas>
+                        <Viewbox Grid.Column="0" Width="24" Height="24"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M22 16V4C22 2.9 21.1 2 20 2H8C6.9 2 6 2.9 6 4V16C6 17.1 6.9 18 8 18H20C21.1 18 22 17.1 22 16ZM11 12L13.03 14.71L16 11L20 16H8L11 12ZM2 6V20C2 21.1 2.9 22 4 22H18V20H4V6H2Z"
+                                      Fill="#2D8CF0"/>
+                            </Canvas>
+                        </Viewbox>
                         <TextBlock Grid.Column="1" Text="朋友圈"
                                    FontSize="16"
                                    Foreground="{DynamicResource SemiColorText0}"
@@ -70,16 +70,13 @@
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                             Command="{Binding OpenChannelsCommand}">
                         <Grid ColumnDefinitions="56,*,Auto,Auto" Margin="0,0,16,0">
-                            <Border Grid.Column="0" Width="28" Height="28"
-                                    Background="#FF8C00" CornerRadius="6"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Viewbox Width="18" Height="18">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M17 10.5V7C17 6.45 16.55 6 16 6H4C3.45 6 3 6.45 3 7V17C3 17.55 3.45 18 4 18H16C16.55 18 17 17.55 17 17V13.5L21 17.5V6.5L17 10.5Z"
-                                              Fill="White"/>
-                                    </Canvas>
-                                </Viewbox>
-                            </Border>
+                            <Viewbox Grid.Column="0" Width="24" Height="24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M17 10.5V7C17 6.45 16.55 6 16 6H4C3.45 6 3 6.45 3 7V17C3 17.55 3.45 18 4 18H16C16.55 18 17 17.55 17 17V13.5L21 17.5V6.5L17 10.5Z"
+                                          Fill="#FF8C00"/>
+                                </Canvas>
+                            </Viewbox>
                             <TextBlock Grid.Column="1" Text="视频号"
                                        FontSize="16"
                                        Foreground="{DynamicResource SemiColorText0}"
@@ -105,13 +102,13 @@
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                             Command="{Binding OpenLiveCommand}">
                         <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
-                            <Border Grid.Column="0" Width="28" Height="28"
-                                    Background="#E74C3C" CornerRadius="14"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Ellipse Width="12" Height="12"
-                                         Stroke="White" StrokeThickness="2"
-                                         HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
+                            <Viewbox Grid.Column="0" Width="24" Height="24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 16.5V7.5L16 12L10 16.5Z"
+                                          Fill="#E74C3C"/>
+                                </Canvas>
+                            </Viewbox>
                             <TextBlock Grid.Column="1" Text="直播"
                                        FontSize="16"
                                        Foreground="{DynamicResource SemiColorText0}"
@@ -135,18 +132,13 @@
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                             Command="{Binding OpenScanCommand}">
                         <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
-                            <Canvas Grid.Column="0" Width="28" Height="28"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Rectangle Canvas.Left="2"  Canvas.Top="2"  Width="10" Height="2"  Fill="#3B8BDB"/>
-                                <Rectangle Canvas.Left="2"  Canvas.Top="2"  Width="2"  Height="10" Fill="#3B8BDB"/>
-                                <Rectangle Canvas.Left="16" Canvas.Top="2"  Width="10" Height="2"  Fill="#3B8BDB"/>
-                                <Rectangle Canvas.Left="24" Canvas.Top="2"  Width="2"  Height="10" Fill="#3B8BDB"/>
-                                <Rectangle Canvas.Left="2"  Canvas.Top="16" Width="2"  Height="10" Fill="#3B8BDB"/>
-                                <Rectangle Canvas.Left="2"  Canvas.Top="24" Width="10" Height="2"  Fill="#3B8BDB"/>
-                                <Rectangle Canvas.Left="24" Canvas.Top="16" Width="2"  Height="10" Fill="#3B8BDB"/>
-                                <Rectangle Canvas.Left="16" Canvas.Top="24" Width="10" Height="2"  Fill="#3B8BDB"/>
-                                <Rectangle Canvas.Left="2"  Canvas.Top="13" Width="24" Height="2"  Fill="#3B8BDB" Opacity="0.6"/>
-                            </Canvas>
+                            <Viewbox Grid.Column="0" Width="24" Height="24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M3 5V9H5V5H9V3H5C3.9 3 3 3.9 3 5ZM5 15H3V19C3 20.1 3.9 21 5 21H9V19H5V15ZM19 19H15V21H19C20.1 21 21 20.1 21 19V15H19V19ZM19 3H15V5H19V9H21V5C21 3.9 20.1 3 19 3ZM3 11H21V13H3V11Z"
+                                          Fill="#3B8BDB"/>
+                                </Canvas>
+                            </Viewbox>
                             <TextBlock Grid.Column="1" Text="扫一扫"
                                        FontSize="16"
                                        Foreground="{DynamicResource SemiColorText0}"
@@ -164,14 +156,13 @@
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                             Command="{Binding OpenListenCommand}">
                         <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
-                            <Canvas Grid.Column="0" Width="28" Height="28"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Ellipse Canvas.Left="10" Canvas.Top="6"  Width="8"  Height="10" Fill="#E74C3C"/>
-                                <Rectangle Canvas.Left="12" Canvas.Top="16" Width="4" Height="5"  Fill="#E74C3C"/>
-                                <Rectangle Canvas.Left="8"  Canvas.Top="21" Width="12" Height="2" Fill="#E74C3C"/>
-                                <Rectangle Canvas.Left="18" Canvas.Top="8"  Width="2" Height="8"  Fill="#E74C3C"/>
-                                <Ellipse Canvas.Left="18" Canvas.Top="15" Width="5" Height="5"    Fill="#E74C3C"/>
-                            </Canvas>
+                            <Viewbox Grid.Column="0" Width="24" Height="24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M12 3C7.03 3 3 7.03 3 12V18C3 19.66 4.34 21 6 21H9V13H5V12C5 8.13 8.13 5 12 5C15.87 5 19 8.13 19 12V13H15V21H18C19.66 21 21 19.66 21 18V12C21 7.03 16.97 3 12 3Z"
+                                          Fill="#E74C3C"/>
+                                </Canvas>
+                            </Viewbox>
                             <TextBlock Grid.Column="1" Text="听一听"
                                        FontSize="16"
                                        Foreground="{DynamicResource SemiColorText0}"
@@ -195,11 +186,13 @@
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                             Command="{Binding OpenReadCommand}">
                         <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
-                            <Canvas Grid.Column="0" Width="28" Height="28"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Polygon Points="14,2 17,10 26,10 19,15 22,24 14,19 6,24 9,15 2,10 11,10"
-                                         Fill="#F1C40F"/>
-                            </Canvas>
+                            <Viewbox Grid.Column="0" Width="24" Height="24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z"
+                                          Fill="#F1C40F"/>
+                                </Canvas>
+                            </Viewbox>
                             <TextBlock Grid.Column="1" Text="看一看"
                                        FontSize="16"
                                        Foreground="{DynamicResource SemiColorText0}"
@@ -217,13 +210,13 @@
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                             Command="{Binding OpenSearchCommand}">
                         <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
-                            <Canvas Grid.Column="0" Width="28" Height="28"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Line StartPoint="14,2"  EndPoint="14,26" Stroke="#E74C3C" StrokeThickness="2.5" StrokeLineCap="Round"/>
-                                <Line StartPoint="2,14"  EndPoint="26,14" Stroke="#E74C3C" StrokeThickness="2.5" StrokeLineCap="Round"/>
-                                <Line StartPoint="5,5"   EndPoint="23,23" Stroke="#E74C3C" StrokeThickness="2.5" StrokeLineCap="Round"/>
-                                <Line StartPoint="23,5"  EndPoint="5,23"  Stroke="#E74C3C" StrokeThickness="2.5" StrokeLineCap="Round"/>
-                            </Canvas>
+                            <Viewbox Grid.Column="0" Width="24" Height="24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z"
+                                          Fill="#E74C3C"/>
+                                </Canvas>
+                            </Viewbox>
                             <TextBlock Grid.Column="1" Text="搜一搜"
                                        FontSize="16"
                                        Foreground="{DynamicResource SemiColorText0}"
@@ -246,13 +239,13 @@
                         HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                         Command="{Binding OpenNearbyCommand}">
                     <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
-                        <Canvas Grid.Column="0" Width="28" Height="28"
-                                HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Ellipse Canvas.Left="3"  Canvas.Top="1" Width="9"  Height="9"  Fill="#3498DB"/>
-                            <Ellipse Canvas.Left="16" Canvas.Top="1" Width="9"  Height="9"  Fill="#3498DB"/>
-                            <Rectangle Canvas.Left="1"  Canvas.Top="12" Width="13" Height="14" RadiusX="4" RadiusY="4" Fill="#3498DB"/>
-                            <Rectangle Canvas.Left="14" Canvas.Top="12" Width="13" Height="14" RadiusX="4" RadiusY="4" Fill="#3498DB"/>
-                        </Canvas>
+                        <Viewbox Grid.Column="0" Width="24" Height="24"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z"
+                                      Fill="#3498DB"/>
+                            </Canvas>
+                        </Viewbox>
                         <TextBlock Grid.Column="1" Text="附近的人"
                                    FontSize="16"
                                    Foreground="{DynamicResource SemiColorText0}"
@@ -275,14 +268,13 @@
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                             Command="{Binding OpenGamesCommand}">
                         <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
-                            <Canvas Grid.Column="0" Width="28" Height="28"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Polygon Points="14,2 26,14 14,26 2,14"
-                                         Fill="Transparent" Stroke="#F39C12" StrokeThickness="2.5"/>
-                                <Polygon Points="14,6 22,14 14,22 6,14"
-                                         Fill="Transparent" Stroke="#E74C3C" StrokeThickness="2"/>
-                                <Ellipse Canvas.Left="10" Canvas.Top="10" Width="8" Height="8" Fill="#2ECC71"/>
-                            </Canvas>
+                            <Viewbox Grid.Column="0" Width="24" Height="24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M21 6H3C1.9 6 1 6.9 1 8V16C1 17.1 1.9 18 3 18H21C22.1 18 23 17.1 23 16V8C23 6.9 22.1 6 21 6ZM11 13H9V15H7V13H5V11H7V9H9V11H11V13ZM15.5 15C14.67 15 14 14.33 14 13.5C14 12.67 14.67 12 15.5 12C16.33 12 17 12.67 17 13.5C17 14.33 16.33 15 15.5 15ZM18.5 12C17.67 12 17 11.33 17 10.5C17 9.67 17.67 9 18.5 9C19.33 9 20 9.67 20 10.5C20 11.33 19.33 12 18.5 12Z"
+                                          Fill="#2ECC71"/>
+                                </Canvas>
+                            </Viewbox>
                             <TextBlock Grid.Column="1" Text="游戏"
                                        FontSize="16"
                                        Foreground="{DynamicResource SemiColorText0}"
@@ -300,16 +292,13 @@
                             HorizontalContentAlignment="Stretch" Height="56" Padding="0"
                             Command="{Binding OpenMiniAppCommand}">
                         <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
-                            <Border Grid.Column="0" Width="28" Height="28"
-                                    Background="#8E44AD" CornerRadius="6"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Viewbox Width="18" Height="18">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M4 8H8V4H4V8ZM10 20H14V16H10V20ZM4 20H8V16H4V20ZM4 14H8V10H4V14ZM10 14H14V10H10V14ZM16 4V8H20V4H16ZM10 8H14V4H10V8ZM16 14H20V10H16V14ZM16 20H20V16H16V20Z"
-                                              Fill="White"/>
-                                    </Canvas>
-                                </Viewbox>
-                            </Border>
+                            <Viewbox Grid.Column="0" Width="24" Height="24"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="M4 8H8V4H4V8ZM10 20H14V16H10V20ZM4 20H8V16H4V20ZM4 14H8V10H4V14ZM10 14H14V10H10V14ZM16 4V8H20V4H16ZM10 8H14V4H10V8ZM16 14H20V10H16V14ZM16 20H20V16H16V20Z"
+                                          Fill="#8E44AD"/>
+                                </Canvas>
+                            </Viewbox>
                             <TextBlock Grid.Column="1" Text="小程序"
                                        FontSize="16"
                                        Foreground="{DynamicResource SemiColorText0}"

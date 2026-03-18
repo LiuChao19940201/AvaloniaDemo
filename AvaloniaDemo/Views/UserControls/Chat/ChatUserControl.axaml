@@ -18,63 +18,66 @@
              SelectionMode="Single">
         <ListBox.ItemTemplate>
             <DataTemplate x:DataType="chatVm:ChatItemViewModel">
-                <Button Background="Transparent"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Stretch"
-                        Padding="0" Height="68"
-                        Command="{Binding $parent[ListBox].((chatVm:ChatViewModel)DataContext).OpenChatCommand}"
-                        CommandParameter="{Binding}">
-                    <Grid ColumnDefinitions="72,*,Auto" Margin="0,0,16,0">
+                <StackPanel>
+                    <Button Background="Transparent"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            Padding="0" Height="68"
+                            Command="{Binding $parent[ListBox].((chatVm:ChatViewModel)DataContext).OpenChatCommand}"
+                            CommandParameter="{Binding}">
+                        <Grid ColumnDefinitions="72,*,Auto" Margin="0,0,16,0">
 
-                        <Panel Grid.Column="0"
-                               Width="46" Height="46"
-                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Panel Grid.Column="0"
+                                   Width="46" Height="46"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                            <Border Width="46" Height="46" CornerRadius="8" Background="#07C160"/>
+                                <Border Width="46" Height="46" CornerRadius="8" Background="#07C160"/>
 
-                            <Canvas Width="28" Height="28"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Rectangle Canvas.Left="1"  Canvas.Top="1"
-                                           Width="22" Height="17"
-                                           RadiusX="3" RadiusY="3"
-                                           Fill="White"/>
-                                <Polygon Points="4,18 1,25 11,18" Fill="White"/>
-                                <Rectangle Canvas.Left="5"  Canvas.Top="6"  Width="14" Height="2" Fill="#07C160"/>
-                                <Rectangle Canvas.Left="5"  Canvas.Top="10" Width="10" Height="2" Fill="#07C160"/>
-                            </Canvas>
+                                <Canvas Width="28" Height="28"
+                                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Rectangle Canvas.Left="1"  Canvas.Top="1"
+                                               Width="22" Height="17"
+                                               RadiusX="3" RadiusY="3"
+                                               Fill="White"/>
+                                    <Polygon Points="4,18 1,25 11,18" Fill="White"/>
+                                    <Rectangle Canvas.Left="5"  Canvas.Top="6"  Width="14" Height="2" Fill="#07C160"/>
+                                    <Rectangle Canvas.Left="5"  Canvas.Top="10" Width="10" Height="2" Fill="#07C160"/>
+                                </Canvas>
 
-                            <Border Background="#FF4444" CornerRadius="10"
-                                    MinWidth="18" Height="18"
-                                    HorizontalAlignment="Right" VerticalAlignment="Top"
-                                    Padding="3,0"
-                                    IsVisible="{Binding HasUnread}"
-                                    Margin="0,-5,-5,0">
-                                <TextBlock Text="{Binding Unread}"
-                                           FontSize="11" Foreground="White"
-                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </Panel>
+                                <Border Background="#FF4444" CornerRadius="10"
+                                        MinWidth="18" Height="18"
+                                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                                        Padding="3,0"
+                                        IsVisible="{Binding HasUnread}"
+                                        Margin="0,-5,-5,0">
+                                    <TextBlock Text="{Binding Unread}"
+                                               FontSize="11" Foreground="White"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Panel>
 
-                        <!-- 名称 + 预览 -->
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
-                            <TextBlock Text="{Binding Name}"
-                                       FontSize="16"
-                                       Foreground="{DynamicResource SemiColorText0}"/>
-                            <TextBlock Text="{Binding Preview}"
-                                       FontSize="13"
+                            <!-- 名称 + 预览 -->
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                                <TextBlock Text="{Binding Name}"
+                                           FontSize="16"
+                                           Foreground="{DynamicResource SemiColorText0}"/>
+                                <TextBlock Text="{Binding Preview}"
+                                           FontSize="13"
+                                           Foreground="{DynamicResource SemiColorText2}"
+                                           TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+
+                            <!-- 时间 -->
+                            <TextBlock Grid.Column="2"
+                                       Text="{Binding Time}"
+                                       FontSize="12"
                                        Foreground="{DynamicResource SemiColorText2}"
-                                       TextTrimming="CharacterEllipsis"/>
-                        </StackPanel>
-
-                        <!-- 时间 -->
-                        <TextBlock Grid.Column="2"
-                                   Text="{Binding Time}"
-                                   FontSize="12"
-                                   Foreground="{DynamicResource SemiColorText2}"
-                                   VerticalAlignment="Top" Margin="0,14,0,0"
-                                   HorizontalAlignment="Right"/>
-                    </Grid>
-                </Button>
+                                       VerticalAlignment="Top" Margin="0,14,0,0"
+                                       HorizontalAlignment="Right"/>
+                        </Grid>
+                    </Button>
+                    <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="72,0,0,0"/>
+                </StackPanel>
             </DataTemplate>
         </ListBox.ItemTemplate>
         <ListBox.ItemContainerTheme>
