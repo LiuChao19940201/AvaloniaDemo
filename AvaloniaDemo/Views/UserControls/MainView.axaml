@@ -56,6 +56,12 @@
 		<DataTemplate DataType="{x:Type profileVm:ServiceViewModel}">
 			<profile:ServiceUserControl />
 		</DataTemplate>
+		<DataTemplate DataType="{x:Type chatVm:FundTrackerViewModel}">
+			<chat:FundTrackerUserControl />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type chatVm:FundChartViewModel}">
+			<chat:FundChartUserControl />
+		</DataTemplate>
 	</UserControl.DataTemplates>
 
 	<Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Background="{DynamicResource SemiColorBg1}">

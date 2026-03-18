@@ -1,0 +1,150 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:AvaloniaDemo.ViewModels.UserControls.Chat"
+             mc:Ignorable="d"
+             d:DesignWidth="390" d:DesignHeight="700"
+             x:Class="AvaloniaDemo.Views.UserControls.Chat.FundChartUserControl"
+             x:DataType="vm:FundChartViewModel">
+
+    <Design.DataContext>
+        <vm:FundChartViewModel />
+    </Design.DataContext>
+
+    <DockPanel Background="{DynamicResource SemiColorBg1}">
+
+        <!-- ══ 顶部导航栏 ══ -->
+        <Border DockPanel.Dock="Top"
+                Background="{DynamicResource SemiColorBg0}"
+                BorderBrush="{DynamicResource SemiColorBorder}"
+                BorderThickness="0,0,0,0.8"
+                Padding="4,8">
+            <Grid ColumnDefinitions="44,*,44">
+
+                <Button Grid.Column="0" Background="Transparent" Padding="8"
+                        Command="{Binding GoBackCommand}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Viewbox Width="20" Height="20">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M20 11H7.83L13.42 5.41 12 4 4 12 12 20 13.41 18.59 7.83 13H20V11Z"
+                                  Fill="{DynamicResource SemiColorText0}"/>
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                    <TextBlock Text="{Binding FundName}"
+                               FontSize="16" FontWeight="SemiBold"
+                               Foreground="{DynamicResource SemiColorText0}"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding FundCode}"
+                               FontSize="12"
+                               Foreground="{DynamicResource SemiColorText2}"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <Panel Grid.Column="2"/>
+            </Grid>
+        </Border>
+
+        <!-- ══ 加载中 ══ -->
+        <Border DockPanel.Dock="Top"
+                IsVisible="{Binding IsLoading}"
+                Background="{DynamicResource SemiColorBg0}"
+                Padding="0,12">
+            <TextBlock Text="数据加载中…"
+                       FontSize="13"
+                       Foreground="{DynamicResource SemiColorText2}"
+                       HorizontalAlignment="Center"/>
+        </Border>
+
+        <!-- ══ 错误提示 ══ -->
+        <Border DockPanel.Dock="Top"
+                IsVisible="{Binding HasError}"
+                Background="#FFF3CD"
+                Padding="16,10">
+            <TextBlock Text="{Binding ErrorText}"
+                       FontSize="13" Foreground="#856404"
+                       HorizontalAlignment="Center"/>
+        </Border>
+
+        <!-- ══ 底部状态栏 ══ -->
+        <Border DockPanel.Dock="Bottom"
+                Background="{DynamicResource SemiColorBg0}"
+                BorderBrush="{DynamicResource SemiColorBorder}"
+                BorderThickness="0,0.6,0,0"
+                Padding="16,7">
+            <TextBlock Text="{Binding StatusText}"
+                       FontSize="12"
+                       Foreground="{DynamicResource SemiColorText2}"/>
+        </Border>
+
+        <!-- ══ 主内容 ══ -->
+        <StackPanel Margin="0,12,0,0">
+
+            <!-- ── 涨跌幅 + 区间切换 ── -->
+            <Grid ColumnDefinitions="*,Auto" Margin="16,0,16,12">
+
+                <!-- 区间涨跌幅 -->
+                <TextBlock Grid.Column="0"
+                           Text="{Binding ChangeText}"
+                           FontSize="15" FontWeight="SemiBold"
+                           Foreground="{Binding LineColor}"
+                           VerticalAlignment="Center"/>
+
+                <!-- 区间切换按钮组 -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="0">
+
+                    <Button Content="当月"
+                            Command="{Binding SelectMonthCommand}"
+                            FontSize="13" Padding="14,6"
+                            CornerRadius="6 0 0 6">
+                        <Button.Styles>
+                            <Style Selector="Button">
+                                <Setter Property="Background" Value="{DynamicResource SemiColorFillQuaternary}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource SemiColorText2}"/>
+                                <Setter Property="BorderThickness" Value="0.6"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource SemiColorBorder}"/>
+                            </Style>
+                        </Button.Styles>
+                    </Button>
+
+                    <Button Content="近三个月"
+                            Command="{Binding Select3MonthCommand}"
+                            FontSize="13" Padding="14,6"
+                            CornerRadius="0 6 6 0">
+                        <Button.Styles>
+                            <Style Selector="Button">
+                                <Setter Property="Background" Value="{DynamicResource SemiColorFillQuaternary}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource SemiColorText2}"/>
+                                <Setter Property="BorderThickness" Value="0.6,0.6,0.6,0.6"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource SemiColorBorder}"/>
+                            </Style>
+                        </Button.Styles>
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+
+            <!-- ── 折线图 Canvas 容器 ── -->
+            <Border Margin="0,0,0,0"
+                    Background="{DynamicResource SemiColorBg0}"
+                    CornerRadius="12"
+                    Padding="0"
+                    Height="300">
+                <!-- NavChartCanvas 是 code-behind 里自定义的 Canvas 子类，负责绘图 -->
+                <vm:NavChartView
+                    Points="{Binding NavPoints}"
+                    YMin="{Binding YMin}"
+                    YMax="{Binding YMax}"
+                    LineColor="{Binding LineColor}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="12,16,12,24"/>
+            </Border>
+
+        </StackPanel>
+
+    </DockPanel>
+</UserControl>
