@@ -7,9 +7,11 @@ using Avalonia;
 using Avalonia.Android;
 using Avalonia.Media;
 using Avalonia.ReactiveUI;
+using AvaloniaDemo.Android.Data;
 using AvaloniaDemo.Android.Services;
 using AvaloniaDemo.Services;
 using System;
+using System.IO;
 using Color = Android.Graphics.Color;
 
 namespace AvaloniaDemo.Android
@@ -41,8 +43,19 @@ namespace AvaloniaDemo.Android
 
         protected override void OnCreate(Bundle? savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
+            // ═══ 必须在 base.OnCreate() 之前注册! ═══
+            // base.OnCreate() → OnFrameworkInitializationCompleted()
+            // → new MainWindowViewModel() → new ProfileViewModel()
+            // → LoadAvatarOnStartupAsync() 此时需要 LocalDataService
+            SQLitePCL.Batteries_V2.Init();
+            var dbPath = Path.Combine(FilesDir!.AbsolutePath, "app.db");
+            ServiceLocator.LocalDataService = new SqliteLocalDataService(dbPath);
+            ServiceLocator.DeviceService = new AndroidDeviceService(this);
+            ServiceLocator.ImagePickerService = new AndroidImagePickerService(this);
 
+            base.OnCreate(savedInstanceState); // ← 现在 ViewModel 能找到服务了
+
+            // Window 相关设置只能在 base.OnCreate() 之后
             if (Window != null)
             {
                 WindowCompat.SetDecorFitsSystemWindows(Window, false);
@@ -63,29 +76,13 @@ namespace AvaloniaDemo.Android
                 }
 
                 ServiceLocator.StatusBarService = new AndroidStatusBarService(this);
-                ServiceLocator.DeviceService = new AndroidDeviceService(this);
-                ServiceLocator.ImagePickerService = new AndroidImagePickerService(this); // ← 新增
             }
         }
 
-        // ← 新增：接收相册选图回调
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
             AndroidImagePickerService.HandleActivityResult(requestCode, resultCode, data, ContentResolver!);
         }
     }
-
-    /*
-
-         # 先切到 Android 项目目录
-         cd AvaloniaDemo.Android
-
-         # 清理项目
-         dotnet clean AvaloniaDemo.Android.csproj -c Release
-
-         # 构建并打包 Android 项目（以 net10.0-android 为例）
-         dotnet build AvaloniaDemo.Android.csproj -c Release -f:net10.0-android -r android-arm64 -p:AndroidPackageFormat=apk --self-contained false
-
-     */
 }

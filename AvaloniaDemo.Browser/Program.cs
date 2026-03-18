@@ -5,6 +5,7 @@ using Avalonia.ReactiveUI;
 using AvaloniaDemo;
 using AvaloniaDemo.Browser.Services;
 using AvaloniaDemo.Services;
+using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
@@ -12,10 +13,15 @@ using System.Threading.Tasks;
 
 internal sealed partial class Program
 {
-    private static Task Main(string[] args)
+    private static async Task Main(string[] args)
     {
-        ServiceLocator.ImagePickerService = new BrowserImagePickerService(); // ← 新增
-        return BuildAvaloniaApp()
+        // 先导入 storage.js 模块，再注册服务
+        await JSHost.ImportAsync("storage", "/storage.js");
+
+        ServiceLocator.LocalDataService = new BrowserLocalDataService();
+        ServiceLocator.ImagePickerService = new BrowserImagePickerService();
+
+        await BuildAvaloniaApp()
             .WithInterFont()
             .With(new FontManagerOptions
             {

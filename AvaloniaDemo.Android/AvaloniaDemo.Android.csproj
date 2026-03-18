@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Android" Version="11.3.12" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
     <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
 	  <PackageReference Include="SkiaSharp" Version="3.*" />
 	  <PackageReference Include="SkiaSharp.NativeAssets.Android" Version="3.*" />

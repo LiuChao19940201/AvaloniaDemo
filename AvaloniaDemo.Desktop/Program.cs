@@ -1,9 +1,11 @@
 ﻿using Avalonia;
 using Avalonia.Media;
 using Avalonia.ReactiveUI;
+using AvaloniaDemo.Desktop.Data;
 using AvaloniaDemo.Desktop.Services;
 using AvaloniaDemo.Services;
 using System;
+using System.IO;
 
 namespace AvaloniaDemo.Desktop
 {
@@ -12,7 +14,18 @@ namespace AvaloniaDemo.Desktop
         [STAThread]
         public static void Main(string[] args)
         {
+            // ═══ 必须在 App 启动前注册所有服务 ═══
+            SQLitePCL.Batteries_V2.Init();
+
+            var appDataPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "AvaloniaDemo");
+            Directory.CreateDirectory(appDataPath);
+
+            ServiceLocator.LocalDataService = new SqliteLocalDataService(
+                Path.Combine(appDataPath, "app.db"));
             ServiceLocator.ImagePickerService = new DesktopImagePickerService();
+
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }
 
@@ -31,20 +44,5 @@ namespace AvaloniaDemo.Desktop
                 })
                 .LogToTrace()
                 .UseReactiveUI();
-
-        /*
-
-             //打包发布到Linux系统
-             dotnet publish -c Release  -f:net10.0  -r linux-x64 --self-contained true  -o ./bin/Release/LinuxOutput
-
-             //Linux系统中下载.net的运行时
-            sudo apt-get update
-            sudo apt-get install dotnet-runtime-10.0
-
-            //运行在Linux系统中
-            chmod +x ./AvaloniaDemo.Desktop
-            ./AvaloniaDemo.Desktop
-
-         */
     }
 }
