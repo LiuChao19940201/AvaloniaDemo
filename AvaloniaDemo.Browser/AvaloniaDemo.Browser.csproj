@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Browser" Version="11.3.12" />
+    <!-- Browser 平台专用包 -->
+    <PackageReference Include="Avalonia.Browser" />
   </ItemGroup>
 
   <ItemGroup>

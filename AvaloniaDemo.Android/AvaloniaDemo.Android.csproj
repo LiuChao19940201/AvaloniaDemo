@@ -3,7 +3,6 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0-android</TargetFramework>
     <SupportedOSPlatformVersion>23</SupportedOSPlatformVersion>
-    <Nullable>enable</Nullable>
     <ApplicationId>com.CompanyName.AvaloniaDemo</ApplicationId>
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>1.2</ApplicationDisplayVersion>
@@ -18,12 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Android" Version="11.3.12" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
-    <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
-	  <PackageReference Include="SkiaSharp" Version="3.*" />
-	  <PackageReference Include="SkiaSharp.NativeAssets.Android" Version="3.*" />
+    <!-- Android 平台专用包 -->
+    <PackageReference Include="Avalonia.Android" />
+    <PackageReference Include="sqlite-net-pcl" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" />
+    <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" />
+    <PackageReference Include="SkiaSharp" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Android" />
   </ItemGroup>
 
   <ItemGroup>

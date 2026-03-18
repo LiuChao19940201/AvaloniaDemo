@@ -1,29 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net10.0</TargetFramework>
-		<Nullable>enable</Nullable>
-		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-	</PropertyGroup>
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+  </PropertyGroup>
 
-	<!-- 只在发布时才启用 AOT -->
-	<PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(PublishProtocol)' != ''">
-		<PublishAot>true</PublishAot>
-	</PropertyGroup>
+  <!-- 只在发布时才启用 AOT -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(PublishProtocol)' != ''">
+    <PublishAot>true</PublishAot>
+  </PropertyGroup>
 
-	<PropertyGroup>
-		<ApplicationManifest>app.manifest</ApplicationManifest>
-	</PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Avalonia.Desktop" Version="11.3.12" />
-		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.12" />
-		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
-	</ItemGroup>
+  <ItemGroup>
+    <!-- Desktop 平台专用包 -->
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="sqlite-net-pcl" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\AvaloniaDemo\AvaloniaDemo.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AvaloniaDemo\AvaloniaDemo.csproj" />
+  </ItemGroup>
 </Project>

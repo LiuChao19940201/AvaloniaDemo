@@ -1,0 +1,43 @@
+<Project>
+
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <AvaloniaVersion>11.3.12</AvaloniaVersion>
+    <SemiAvaloniaVersion>11.3.7.3</SemiAvaloniaVersion>
+    <UrsaVersion>1.15.0</UrsaVersion>
+    <SkiaSharpVersion>3.119.1</SkiaSharpVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- ═══ Avalonia ═══ -->
+    <PackageVersion Include="Avalonia"                       Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Desktop"               Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Android"               Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Browser"               Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.iOS"                   Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.Fonts.Inter"           Version="$(AvaloniaVersion)" />
+    <PackageVersion Include="Avalonia.ReactiveUI"            Version="11.3.8" />
+    <PackageVersion Include="Avalonia.Diagnostics"           Version="$(AvaloniaVersion)" />
+
+    <!-- ═══ UI 框架 ═══ -->
+    <PackageVersion Include="Semi.Avalonia"                  Version="$(SemiAvaloniaVersion)" />
+    <PackageVersion Include="Irihi.Ursa"                     Version="$(UrsaVersion)" />
+    <PackageVersion Include="Irihi.Ursa.Themes.Semi"         Version="$(UrsaVersion)" />
+
+    <!-- ═══ 字体 ═══ -->
+    <PackageVersion Include="Quick.AvaloniaFonts.Roboto"     Version="1.0.0" />
+
+    <!-- ═══ MVVM ═══ -->
+    <PackageVersion Include="CommunityToolkit.Mvvm"          Version="8.4.0" />
+
+    <!-- ═══ SQLite（Desktop + Android） ═══ -->
+    <PackageVersion Include="sqlite-net-pcl"                 Version="1.9.172" />
+    <PackageVersion Include="SQLitePCLRaw.bundle_green"      Version="2.1.11" />
+
+    <!-- ═══ Android 专用 ═══ -->
+    <PackageVersion Include="Xamarin.AndroidX.Core.SplashScreen" Version="1.2.0.2" />
+    <PackageVersion Include="SkiaSharp"                      Version="$(SkiaSharpVersion)" />
+    <PackageVersion Include="SkiaSharp.NativeAssets.Android"  Version="$(SkiaSharpVersion)" />
+  </ItemGroup>
+
+</Project>
