@@ -60,8 +60,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding OpenCameraCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
-                                <Viewbox Grid.Column="0" Width="24" Height="24"
+                            <Grid ColumnDefinitions="56,*">           <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
                                         <Path Data="M12 15.2C13.77 15.2 15.2 13.77 15.2 12C15.2 10.23 13.77 8.8 12 8.8C10.23 8.8 8.8 10.23 8.8 12C8.8 13.77 10.23 15.2 12 15.2ZM9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z"
@@ -70,12 +69,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="打开相机" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                         <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="56,0,0,0"/>
@@ -84,7 +77,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding VibrateCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -94,12 +87,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="震动测试" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                         <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="56,0,0,0"/>
@@ -108,7 +95,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding OpenAlbumCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -118,12 +105,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="打开相册" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                         <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="56,0,0,0"/>
@@ -132,7 +113,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding PlaySoundCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -142,12 +123,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="音效测试" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                     </StackPanel>
@@ -164,7 +139,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding TestBluetoothCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -174,12 +149,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="蓝牙测试" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                         <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="56,0,0,0"/>
@@ -188,7 +157,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding TestGpsCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -198,12 +167,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="GPS 定位" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                         <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="56,0,0,0"/>
@@ -212,7 +175,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding TestNfcCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -222,12 +185,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="NFC 测试" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                         <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="56,0,0,0"/>
@@ -236,7 +193,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding TestWifiCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -246,12 +203,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="WiFi 测试" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                     </StackPanel>
@@ -268,7 +219,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding TestFlashlightCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -278,12 +229,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="闪光灯" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                         <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="56,0,0,0"/>
@@ -292,7 +237,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding TestBrightnessCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -302,12 +247,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="屏幕亮度" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                         <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="56,0,0,0"/>
@@ -316,7 +255,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding TestSensorCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -326,12 +265,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="传感器" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                         <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="56,0,0,0"/>
@@ -340,7 +273,7 @@
                         <Button Background="Transparent" HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch" Height="52" Padding="0"
                                 Command="{Binding TestNotificationCommand}">
-                            <Grid ColumnDefinitions="56,*,Auto" Margin="0,0,16,0">
+                            <Grid ColumnDefinitions="56,*">
                                 <Viewbox Grid.Column="0" Width="24" Height="24"
                                          HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Canvas Width="24" Height="24">
@@ -350,12 +283,6 @@
                                 </Viewbox>
                                 <TextBlock Grid.Column="1" Text="通知推送" FontSize="16"
                                            Foreground="{DynamicResource SemiColorText0}" VerticalAlignment="Center"/>
-                                <Viewbox Grid.Column="2" Width="16" Height="16" VerticalAlignment="Center">
-                                    <Canvas Width="24" Height="24">
-                                        <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                              Fill="{DynamicResource SemiColorText2}"/>
-                                    </Canvas>
-                                </Viewbox>
                             </Grid>
                         </Button>
                     </StackPanel>

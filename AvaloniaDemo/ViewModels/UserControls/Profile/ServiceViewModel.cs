@@ -12,6 +12,9 @@ public partial class ServiceViewModel : ObservableObject
     [ObservableProperty] private string _statusMessage = string.Empty;
     [ObservableProperty] private bool _isFlashlightOn;
 
+    private static readonly float[] BrightnessLevels = [0.2f, 0.6f, 0.8f];
+    private int _brightnessIndex;
+
     private static bool IsMobilePlatform() =>
         OperatingSystem.IsAndroid() || OperatingSystem.IsIOS();
 
@@ -52,6 +55,7 @@ public partial class ServiceViewModel : ObservableObject
     {
         StatusMessage = string.Empty;
         IsFlashlightOn = false;
+        _brightnessIndex = 0;
     }
 
     [RelayCommand]
@@ -150,8 +154,10 @@ public partial class ServiceViewModel : ObservableObject
     {
         ExecuteOnMobile("屏幕亮度", () =>
         {
-            ServiceLocator.DeviceService!.SetBrightness(1.0f);
-            StatusMessage = "🔆 屏幕亮度已调至最大";
+            var level = BrightnessLevels[_brightnessIndex];
+            ServiceLocator.DeviceService!.SetBrightness(level);
+            StatusMessage = $"🔆 屏幕亮度已调至 {level * 100:0}%";
+            _brightnessIndex = (_brightnessIndex + 1) % BrightnessLevels.Length;
         });
     }
 
