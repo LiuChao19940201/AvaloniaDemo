@@ -43,5 +43,6 @@ public partial class ChatItemViewModel : ObservableObject
     public bool IsFundTracker { get; init; } = false;
 
     public string AvatarLetter => Name.Length > 0 ? Name[..1] : "?";
+
     public bool   HasUnread    => Unread > 0;
 }
