@@ -23,8 +23,6 @@ public partial class ChatViewModel : ObservableObject
     {
         if (item.IsFundTracker)
             WeakReferenceMessenger.Default.Send(new NavigateToFundTrackerMessage());
-
-        // 其他普通聊天项的逻辑留空，后续扩展
     }
 }
 
