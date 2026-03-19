@@ -5,7 +5,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<SupportedOSPlatformVersion>23</SupportedOSPlatformVersion>
-		<ApplicationId>com.CompanyName.AvaloniaDemo</ApplicationId>
+		<ApplicationId>com.CompanyName.AvaloniaKit</ApplicationId>
 		<ApplicationVersion>1</ApplicationVersion>
 		<ApplicationDisplayVersion>1.2</ApplicationDisplayVersion>
 		<AndroidPackageFormat>apk</AndroidPackageFormat>
@@ -29,6 +29,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\AvaloniaDemo\AvaloniaDemo.csproj" />
+		<ProjectReference Include="..\AvaloniaKit\AvaloniaKit.csproj" />
 	</ItemGroup>
 </Project>
