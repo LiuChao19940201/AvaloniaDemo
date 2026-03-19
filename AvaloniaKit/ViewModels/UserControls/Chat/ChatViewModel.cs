@@ -11,6 +11,7 @@ public partial class ChatViewModel : ObservableObject
     public ObservableCollection<ChatItemViewModel> ChatList { get; } = new()
     {
         new() { Name = "基金自选跟踪", Preview = "点击查看自选基金实时净值", Time = "昨天",  Unread = 0, IsFundTracker = true  },
+        new() { Name = "网易云音乐",   Preview = "私人漫游 · 推荐、排行、搜索", Time = "昨天", Unread = 0, IsNetease = true },
         new() { Name = "文件传输助手", Preview = "欢迎使用微信",             Time = "昨天",  Unread = 0  },
         new() { Name = "张三",         Preview = "好的，明天见",             Time = "10:32", Unread = 2  },
         new() { Name = "产品讨论群",   Preview = "李四：下周评审",           Time = "09:15", Unread = 5  },
@@ -23,6 +24,8 @@ public partial class ChatViewModel : ObservableObject
     {
         if (item.IsFundTracker)
             WeakReferenceMessenger.Default.Send(new NavigateToFundTrackerMessage());
+        else if (item.IsNetease)
+            WeakReferenceMessenger.Default.Send(new NavigateToNeteaseMessage());
     }
 }
 
@@ -39,10 +42,17 @@ public partial class ChatItemViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(HasUnread))]
     private int _unread = 0;
 
-    /// <summary>true 表示这一行是「基金自选跟踪」功能入口，而非普通聊天</summary>
     public bool IsFundTracker { get; init; } = false;
+    public bool IsNetease     { get; init; } = false;
+
+    // 是否是功能入口（基金 或 网易云），控制右侧箭头和 Time 显示
+    public bool IsSpecialEntry => IsFundTracker || IsNetease;
 
     public string AvatarLetter => Name.Length > 0 ? Name[..1] : "?";
-
     public bool   HasUnread    => Unread > 0;
+
+    // 头像背景色
+    public string AvatarBg => IsFundTracker ? "#E05C5C"
+                            : IsNetease     ? "#E05C5C"
+                            : "#07C160";
 }

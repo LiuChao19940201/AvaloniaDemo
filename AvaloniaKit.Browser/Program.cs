@@ -15,11 +15,14 @@ internal sealed partial class Program
 {
     private static async Task Main(string[] args)
     {
-        // 先导入 storage.js 模块，再注册服务
+        // 先导入 JS 模块
         await JSHost.ImportAsync("storage", "/storage.js");
+        await JSHost.ImportAsync("audio", "/audio.js");   // ★ 新增
 
+        // 注册服务
         ServiceLocator.LocalDataService = new BrowserLocalDataService();
         ServiceLocator.ImagePickerService = new BrowserImagePickerService();
+        ServiceLocator.AudioService = new BrowserAudioService();   // ★ 新增
 
         await BuildAvaloniaApp()
             .WithInterFont()

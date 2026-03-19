@@ -28,12 +28,12 @@
                             CommandParameter="{Binding}">
                         <Grid ColumnDefinitions="72,*,Auto" Margin="0,0,16,0">
 
-                            <!-- ── 左列头像区：IsFundTracker 显示折线图标，其余显示微信图标 ── -->
+                            <!-- ── 左列头像区 ── -->
                             <Panel Grid.Column="0"
                                    Width="46" Height="46"
                                    HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                                <!-- 基金入口：红色圆角背景 + 折线图标 -->
+                                <!-- 基金入口：红色 + 折线图 -->
                                 <Panel IsVisible="{Binding IsFundTracker}">
                                     <Border Width="46" Height="46" CornerRadius="8" Background="#E05C5C"/>
                                     <Viewbox Width="26" Height="26"
@@ -49,8 +49,35 @@
                                     </Viewbox>
                                 </Panel>
 
-                                <!-- 普通聊天：绿色圆角背景 + 微信气泡图标 + 未读红点 -->
-                                <Panel IsVisible="{Binding !IsFundTracker}">
+                                <!-- 网易云入口：红色 + 音符图标 -->
+                                <Panel IsVisible="{Binding IsNetease}">
+                                    <Border Width="46" Height="46" CornerRadius="8" Background="#E05C5C"/>
+                                    <Viewbox Width="26" Height="26"
+                                             HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Canvas Width="24" Height="24">
+                                            <!-- 黑胶唱片图标 -->
+                                            <Ellipse Canvas.Left="2"  Canvas.Top="2"
+                                                     Width="20" Height="20"
+                                                     Stroke="White" StrokeThickness="1.5"
+                                                     Fill="Transparent"/>
+                                            <Ellipse Canvas.Left="8"  Canvas.Top="8"
+                                                     Width="8" Height="8"
+                                                     Stroke="White" StrokeThickness="1.2"
+                                                     Fill="Transparent"/>
+                                            <Ellipse Canvas.Left="10" Canvas.Top="10"
+                                                     Width="4" Height="4"
+                                                     Fill="White"/>
+                                            <!-- 音符尾巴 -->
+                                            <Line StartPoint="18,2" EndPoint="22,1"
+                                                  Stroke="White" StrokeThickness="1.5"/>
+                                            <Line StartPoint="22,1" EndPoint="22,5"
+                                                  Stroke="White" StrokeThickness="1.5"/>
+                                        </Canvas>
+                                    </Viewbox>
+                                </Panel>
+
+                                <!-- 普通聊天：绿色 + 微信气泡 -->
+                                <Panel IsVisible="{Binding !IsSpecialEntry}">
                                     <Border Width="46" Height="46" CornerRadius="8" Background="#07C160"/>
                                     <Canvas Width="28" Height="28"
                                             HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -76,7 +103,7 @@
 
                             </Panel>
 
-                            <!-- ── 名称 + 预览文字 ── -->
+                            <!-- ── 名称 + 预览 ── -->
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
                                 <TextBlock Text="{Binding Name}"
                                            FontSize="16"
@@ -87,25 +114,26 @@
                                            TextTrimming="CharacterEllipsis"/>
                             </StackPanel>
 
-                            <!-- ── 右侧：基金入口显示箭头，普通聊天显示时间 ── -->
+                            <!-- ── 右侧 ── -->
+                            <!-- 功能入口显示箭头 -->
                             <Viewbox Grid.Column="2"
                                      Width="16" Height="16"
                                      VerticalAlignment="Center"
-                                     IsVisible="{Binding IsFundTracker}">
+                                     IsVisible="{Binding IsSpecialEntry}">
                                 <Canvas Width="24" Height="24">
                                     <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
                                           Fill="{DynamicResource SemiColorText2}"/>
                                 </Canvas>
                             </Viewbox>
 
+                            <!-- 普通聊天显示时间 -->
                             <TextBlock Grid.Column="2"
                                        Text="{Binding Time}"
                                        FontSize="12"
                                        Foreground="{DynamicResource SemiColorText2}"
                                        VerticalAlignment="Top" Margin="0,14,0,0"
                                        HorizontalAlignment="Right"
-                                       IsVisible="{Binding !IsFundTracker}"/>
-
+                                       IsVisible="{Binding !IsSpecialEntry}"/>
                         </Grid>
                     </Button>
                     <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="72,0,0,0"/>

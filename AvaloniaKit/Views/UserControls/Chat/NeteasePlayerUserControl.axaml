@@ -1,0 +1,313 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:AvaloniaKit.ViewModels.UserControls.Chat"
+             mc:Ignorable="d"
+             d:DesignWidth="390" d:DesignHeight="760"
+             x:Class="AvaloniaKit.Views.UserControls.Chat.NeteasePlayerUserControl"
+             x:DataType="vm:NeteasePlayerViewModel">
+
+    <Design.DataContext>
+        <vm:NeteasePlayerViewModel />
+    </Design.DataContext>
+
+    <UserControl.Styles>
+        <Style Selector="Button.ctrl-btn">
+            <Setter Property="Background"      Value="Transparent"/>
+            <Setter Property="Padding"         Value="10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Button.ctrl-btn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style Selector="Button.range-btn">
+            <Setter Property="Background"      Value="Transparent"/>
+            <Setter Property="Foreground"      Value="{DynamicResource SemiColorText2}"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="Padding"         Value="10,6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Button.range-btn.active">
+            <Setter Property="Foreground"  Value="#E05C5C"/>
+            <Setter Property="FontWeight"  Value="SemiBold"/>
+        </Style>
+        <Style Selector="Button.range-btn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Styles>
+
+    <!-- ★ 修复2：使用动态主题背景色，与其他页面保持一致 -->
+    <Grid Background="{DynamicResource SemiColorBg1}">
+
+        <!-- 背景模糊封面（只在封面视图显示）-->
+        <Border IsVisible="{Binding !IsLyricView}"
+                Opacity="0.3">
+            <Image Source="{Binding CoverUrl}"
+                   Stretch="UniformToFill"/>
+        </Border>
+
+        <DockPanel>
+
+            <!-- ══ 顶部导航 ══ -->
+            <Grid DockPanel.Dock="Top"
+                  ColumnDefinitions="44,*,44"
+                  Margin="4,48,4,0">
+                <!-- 返回 -->
+                <Button Grid.Column="0" Classes="ctrl-btn"
+                        Command="{Binding GoBackCommand}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Viewbox Width="22" Height="22">
+                        <Canvas Width="24" Height="24">
+                            <!-- ★ 修复：图标颜色改为动态主题前景色 -->
+                            <Path Data="M20 11H7.83L13.42 5.41 12 4 4 12 12 20 13.41 18.59 7.83 13H20V11Z"
+                                  Fill="{DynamicResource SemiColorText0}"/>
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+
+                <!-- 歌曲信息 -->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" Spacing="2">
+                    <TextBlock Text="{Binding SongName}"
+                               FontSize="17" FontWeight="SemiBold"
+                               Foreground="{DynamicResource SemiColorText0}"
+                               HorizontalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"
+                               MaxWidth="220"/>
+                    <TextBlock Text="{Binding Artist}"
+                               FontSize="13"
+                               Foreground="{DynamicResource SemiColorText2}"
+                               HorizontalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"
+                               MaxWidth="220"/>
+                </StackPanel>
+
+                <!-- 切换歌词/封面 -->
+                <Button Grid.Column="2" Classes="ctrl-btn"
+                        Command="{Binding ToggleViewCommand}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding ViewModeName}"
+                               FontSize="13" Foreground="{DynamicResource SemiColorText2}"/>
+                </Button>
+            </Grid>
+
+            <!-- ══ 底部控制区 ══ -->
+            <StackPanel DockPanel.Dock="Bottom" Margin="0,0,0,40" Spacing="0">
+
+                <!-- 状态文字（加载中/错误提示）-->
+                <TextBlock Text="{Binding StatusText}"
+                           IsVisible="{Binding StatusText.Length}"
+                           FontSize="12" Foreground="{DynamicResource SemiColorText2}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,8"/>
+
+                <!-- 进度条 + 时间 -->
+                <Grid ColumnDefinitions="50,*,50" Margin="16,0">
+                    <TextBlock Grid.Column="0"
+                               Text="{Binding CurrentTimeStr}"
+                               FontSize="12" Foreground="{DynamicResource SemiColorText2}"
+                               VerticalAlignment="Center"/>
+                    <Slider Grid.Column="1"
+                            Value="{Binding ProgressValue}"
+                            Minimum="0" Maximum="100"
+                            Margin="8,0"
+                            Foreground="#E05C5C"/>
+                    <TextBlock Grid.Column="2"
+                               Text="{Binding TotalTimeStr}"
+                               FontSize="12" Foreground="{DynamicResource SemiColorText2}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right"/>
+                </Grid>
+
+                <!-- 控制按钮 -->
+                <Grid ColumnDefinitions="*,*,*,*,*" Margin="0,8,0,0">
+
+                    <!-- 播放模式 -->
+                    <Button Grid.Column="0" Classes="ctrl-btn"
+                            Command="{Binding ToggleRepeatModeCommand}"
+                            HorizontalAlignment="Center">
+                        <Viewbox Width="24" Height="24">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="{Binding RepeatModeIcon}"
+                                      Fill="{DynamicResource SemiColorText2}"/>
+                            </Canvas>
+                        </Viewbox>
+                    </Button>
+
+                    <!-- ★ 修复3：上一首绑定 PrevSongCommand -->
+                    <Button Grid.Column="1" Classes="ctrl-btn"
+                            Command="{Binding PrevSongCommand}"
+                            HorizontalAlignment="Center">
+                        <Viewbox Width="32" Height="32">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M6 6H8V18H6ZM9.5 12L18 18V6Z"
+                                      Fill="{DynamicResource SemiColorText0}"/>
+                            </Canvas>
+                        </Viewbox>
+                    </Button>
+
+                    <!-- 播放/暂停 主按钮 -->
+                    <Button Grid.Column="2" Classes="ctrl-btn"
+                            Command="{Binding TogglePlayCommand}"
+                            HorizontalAlignment="Center">
+                        <Border Width="60" Height="60"
+                                CornerRadius="30"
+                                Background="#E05C5C">
+                            <Viewbox Width="34" Height="34"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Data="{Binding PlayBtnIcon}" Fill="White"/>
+                                </Canvas>
+                            </Viewbox>
+                        </Border>
+                    </Button>
+
+                    <!-- ★ 修复3：下一首绑定 NextSongCommand -->
+                    <Button Grid.Column="3" Classes="ctrl-btn"
+                            Command="{Binding NextSongCommand}"
+                            HorizontalAlignment="Center">
+                        <Viewbox Width="32" Height="32">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M6 18L14.5 12 6 6V18ZM16 6V18H18V6H16Z"
+                                      Fill="{DynamicResource SemiColorText0}"/>
+                            </Canvas>
+                        </Viewbox>
+                    </Button>
+
+                    <!-- 喜欢 -->
+                    <Button Grid.Column="4" Classes="ctrl-btn"
+                            Command="{Binding ToggleLikeCommand}"
+                            HorizontalAlignment="Center">
+                        <Viewbox Width="26" Height="26">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08 13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z"
+                                      Fill="{Binding LikeColor}"/>
+                            </Canvas>
+                        </Viewbox>
+                    </Button>
+                </Grid>
+
+                <!-- 音质标签 -->
+                <TextBlock Text="{Binding QualityText}"
+                           FontSize="12" Foreground="{DynamicResource SemiColorText2}"
+                           HorizontalAlignment="Center"
+                           Margin="0,12,0,0"/>
+            </StackPanel>
+
+            <!-- ══ 中间区域：封面 OR 歌词 ══ -->
+            <Panel>
+
+                <!-- 封面视图（圆形黑胶碟效果）-->
+                <StackPanel IsVisible="{Binding !IsLyricView}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+
+                    <!-- 唱针 -->
+                    <Canvas Width="200" Height="80" HorizontalAlignment="Center"
+                            Margin="60,0,0,0">
+                        <Line StartPoint="100,0" EndPoint="150,70"
+                              Stroke="{DynamicResource SemiColorText0}" StrokeThickness="2"
+                              Opacity="0.7"/>
+                        <Ellipse Canvas.Left="144" Canvas.Top="66"
+                                 Width="12" Height="12"
+                                 Fill="{DynamicResource SemiColorText0}" Opacity="0.9"/>
+                    </Canvas>
+
+                    <!-- 黑胶唱片圆圈 -->
+                    <Border Width="220" Height="220"
+                            CornerRadius="110"
+                            Background="{DynamicResource SemiColorBackground3}"
+                            Margin="0,-30,0,0">
+                        <Panel>
+                            <Border Width="220" Height="220"
+                                    CornerRadius="110"
+                                    BorderBrush="{DynamicResource SemiColorBackground4}"
+                                    BorderThickness="1"/>
+                            <Border Width="180" Height="180"
+                                    CornerRadius="90"
+                                    BorderBrush="{DynamicResource SemiColorBackground3}"
+                                    BorderThickness="1"/>
+                            <!-- 封面圆 -->
+                            <Border Width="120" Height="120"
+                                    CornerRadius="60"
+                                    ClipToBounds="True"
+                                    Background="{DynamicResource SemiColorBackground2}">
+                                <Panel>
+                                    <Image Source="{Binding CoverUrl}"
+                                           Stretch="UniformToFill"
+                                           IsVisible="{Binding CoverUrl, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                                    <Viewbox Width="50" Height="50"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center">
+                                        <Canvas Width="24" Height="24">
+                                            <Path Data="M12 3V13.55C11.41 13.21 10.73 13 10 13C7.79 13 6 14.79 6 17S7.79 21 10 21 14 19.21 14 17V7H18V3H12Z"
+                                                  Fill="{DynamicResource SemiColorText2}"/>
+                                        </Canvas>
+                                    </Viewbox>
+                                </Panel>
+                            </Border>
+                            <!-- 中心小圆 -->
+                            <Border Width="20" Height="20"
+                                    CornerRadius="10"
+                                    Background="{DynamicResource SemiColorBackground4}"/>
+                        </Panel>
+                    </Border>
+
+                    <!-- 歌曲信息 -->
+                    <StackPanel HorizontalAlignment="Center" Spacing="6" Margin="0,28,0,0">
+                        <TextBlock Text="{Binding Album}"
+                                   FontSize="13" Foreground="{DynamicResource SemiColorText2}"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding QualityText}"
+                                   FontSize="11" Foreground="{DynamicResource SemiColorText2}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- 歌词视图 -->
+                <DockPanel IsVisible="{Binding IsLyricView}">
+
+                    <TextBlock DockPanel.Dock="Top"
+                               IsVisible="{Binding IsLyricLoading}"
+                               Text="歌词加载中…"
+                               FontSize="14" Foreground="{DynamicResource SemiColorText2}"
+                               HorizontalAlignment="Center"
+                               Margin="0,30"/>
+
+                    <TextBlock DockPanel.Dock="Top"
+                               Text="{Binding LyricStatus}"
+                               IsVisible="{Binding LyricStatus.Length}"
+                               FontSize="15" Foreground="{DynamicResource SemiColorText2}"
+                               HorizontalAlignment="Center"
+                               Margin="0,60"/>
+
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  IsVisible="{Binding HasLyric}">
+                        <StackPanel Margin="32,80,32,80"
+                                    Spacing="14"
+                                    HorizontalAlignment="Center">
+                            <ItemsControl ItemsSource="{Binding LyricLines}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:LyricLine">
+                                        <TextBlock Text="{Binding Text}"
+                                                   FontSize="{Binding FontSize}"
+                                                   FontWeight="{Binding FontWeight}"
+                                                   Foreground="{Binding Foreground}"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   TextWrapping="Wrap"
+                                                   Margin="0,5"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+
+            </Panel>
+
+        </DockPanel>
+    </Grid>
+</UserControl>

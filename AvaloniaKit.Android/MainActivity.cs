@@ -1,4 +1,4 @@
-﻿using Android.App;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
@@ -32,16 +32,16 @@ namespace AvaloniaKit.Android
                 {
                     FontFallbacks =
                     [
-                         new FontFallback
-                         {
-                             FontFamily = new FontFamily(
-                                 "avares://AvaloniaKit/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi 3.0")
-                         },
-                         new FontFallback
-                         {
-                             FontFamily = new FontFamily(
-                                 "avares://AvaloniaKit/Assets/Fonts/NotoColorEmoji-emojicompat.ttf#Noto Color Emoji")
-                         },
+                        new FontFallback
+                        {
+                            FontFamily = new FontFamily(
+                                "avares://AvaloniaKit/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi 3.0")
+                        },
+                        new FontFallback
+                        {
+                            FontFamily = new FontFamily(
+                                "avares://AvaloniaKit/Assets/Fonts/NotoColorEmoji-emojicompat.ttf#Noto Color Emoji")
+                        },
                     ]
                 })
                 .UseReactiveUI();
@@ -50,18 +50,15 @@ namespace AvaloniaKit.Android
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             // ═══ 必须在 base.OnCreate() 之前注册! ═══
-            // base.OnCreate() → OnFrameworkInitializationCompleted()
-            // → new MainWindowViewModel() → new ProfileViewModel()
-            // → LoadAvatarOnStartupAsync() 此时需要 LocalDataService
             SQLitePCL.Batteries_V2.Init();
             var dbPath = Path.Combine(FilesDir!.AbsolutePath, "app.db");
-            ServiceLocator.LocalDataService = new SqliteLocalDataService(dbPath);
-            ServiceLocator.DeviceService = new AndroidDeviceService(this);
+            ServiceLocator.LocalDataService   = new SqliteLocalDataService(dbPath);
+            ServiceLocator.DeviceService      = new AndroidDeviceService(this);
             ServiceLocator.ImagePickerService = new AndroidImagePickerService(this);
+            ServiceLocator.AudioService       = new AndroidAudioService();  // ★ 新增
 
-            base.OnCreate(savedInstanceState); // ← 现在 ViewModel 能找到服务了
+            base.OnCreate(savedInstanceState);
 
-            // Window 相关设置只能在 base.OnCreate() 之后
             if (Window != null)
             {
                 WindowCompat.SetDecorFitsSystemWindows(Window, false);

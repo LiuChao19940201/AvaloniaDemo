@@ -62,6 +62,13 @@
 		<DataTemplate DataType="{x:Type chatVm:FundChartViewModel}">
 			<chat:FundChartUserControl />
 		</DataTemplate>
+		<DataTemplate DataType="{x:Type chatVm:NeteaseViewModel}">
+			<chat:NeteaseUserControl/>
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type chatVm:NeteasePlayerViewModel}">
+			<chat:NeteasePlayerUserControl/>
+		</DataTemplate>
+
 	</UserControl.DataTemplates>
 
 	<Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Background="{DynamicResource SemiColorBg1}">

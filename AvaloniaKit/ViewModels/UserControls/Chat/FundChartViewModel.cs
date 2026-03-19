@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using AvaloniaKit.ViewModels.Messages;
+using AvaloniaKit.Tools.Extensions;
 
 namespace AvaloniaKit.ViewModels.UserControls.Chat;
 
@@ -297,11 +298,4 @@ public class RecentNavRow
     public string DayChangeColor { get; set; } = "#AAAAAA";
 }
 
-// ── JsonElement 扩展（不变）──────────────────────────────────────────────────
-internal static class ChartJsonExtensions
-{
-    internal static string? TryGetStr(this JsonElement el, string prop)
-        => el.TryGetProperty(prop, out var v) && v.ValueKind != JsonValueKind.Null
-            ? v.GetString()
-            : null;
-}
+

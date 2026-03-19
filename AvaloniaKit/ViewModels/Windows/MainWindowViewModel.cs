@@ -15,18 +15,24 @@ public partial class MainWindowViewModel : ObservableObject,
     IRecipient<NavigateToFundTrackerMessage>,
     IRecipient<NavigateBackFromFundTrackerMessage>,
     IRecipient<NavigateToFundChartMessage>,
-    IRecipient<NavigateBackFromFundChartMessage>
+    IRecipient<NavigateBackFromFundChartMessage>,
+    // ★ 新增：网易云
+    IRecipient<NavigateToNeteaseMessage>,
+    IRecipient<NavigateBackFromNeteaseMessage>,
+    IRecipient<NavigateToNeteasePlayerMessage>,
+    IRecipient<NavigateBackFromNeteasePlayerMessage>
 {
-    // ── 页面 ViewModel 实例（单例，切换不重建，状态保留） ──
-    private readonly ChatViewModel         _chatVm         = new();
-    private readonly ContactsViewModel     _contactsVm     = new();
-    private readonly DiscoverViewModel     _discoverVm     = new();
-    private readonly ProfileViewModel      _profileVm      = new();
-    private readonly ServiceViewModel      _serviceVm      = new();
-    private readonly FundTrackerViewModel  _fundTrackerVm  = new();
-    private readonly FundChartViewModel    _fundChartVm    = new();
+    // ── 页面 ViewModel 实例 ──
+    private readonly ChatViewModel            _chatVm           = new();
+    private readonly ContactsViewModel        _contactsVm       = new();
+    private readonly DiscoverViewModel        _discoverVm       = new();
+    private readonly ProfileViewModel         _profileVm        = new();
+    private readonly ServiceViewModel         _serviceVm        = new();
+    private readonly FundTrackerViewModel     _fundTrackerVm    = new();
+    private readonly FundChartViewModel       _fundChartVm      = new();
+    private readonly NeteaseViewModel         _neteaseVm        = new();   // ★
+    private readonly NeteasePlayerViewModel   _neteasePlayerVm  = new();   // ★
 
-    // ── ContentControl 绑定目标：赋值即切换页面 ──
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsChatActive))]
     [NotifyPropertyChangedFor(nameof(IsContactsActive))]
@@ -39,47 +45,47 @@ public partial class MainWindowViewModel : ObservableObject,
 
     public MainWindowViewModel()
     {
-        _currentPage = _chatVm; // 默认打开「微信」
+        _currentPage = _chatVm;
         WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
-    // ── Tab 高亮状态（供 AXAML Converter 绑定） ──
     public bool IsChatActive     => CurrentPage is ChatViewModel;
     public bool IsContactsActive => CurrentPage is ContactsViewModel;
     public bool IsDiscoverActive => CurrentPage is DiscoverViewModel;
     public bool IsProfileActive  => CurrentPage is ProfileViewModel;
 
-    // ── 顶部公共标题文字 ──
     public string CurrentPageTitle => CurrentPage switch
     {
-        ChatViewModel        => "微信",
-        ContactsViewModel    => "通讯录",
-        DiscoverViewModel    => "发现",
-        ProfileViewModel     => "我",
-        ServiceViewModel     => "服务",
-        FundTrackerViewModel => "基金自选跟踪",
-        FundChartViewModel   => "净值走势",
-        _                    => ""
+        ChatViewModel           => "微信",
+        ContactsViewModel       => "通讯录",
+        DiscoverViewModel       => "发现",
+        ProfileViewModel        => "我",
+        ServiceViewModel        => "服务",
+        FundTrackerViewModel    => "基金自选跟踪",
+        FundChartViewModel      => "净值走势",
+        NeteaseViewModel        => "网易云音乐",
+        NeteasePlayerViewModel  => "",   // 播放器自带顶栏
+        _                       => ""
     };
 
-    // ── 自带 Header 的页面不显示公共标题栏 ──
     public bool ShowTitleBar => CurrentPage is not ProfileViewModel
                                            and not ServiceViewModel
                                            and not FundTrackerViewModel
-                                           and not FundChartViewModel;
+                                           and not FundChartViewModel
+                                           and not NeteaseViewModel        // ★
+                                           and not NeteasePlayerViewModel; // ★
 
-    // ── 子页全屏，隐藏底部 TabBar ──
     public bool ShowTabBar => CurrentPage is not ServiceViewModel
                                         and not FundTrackerViewModel
-                                        and not FundChartViewModel;
+                                        and not FundChartViewModel
+                                        and not NeteaseViewModel           // ★
+                                        and not NeteasePlayerViewModel;    // ★
 
-    // ── Tab 切换命令（由底部 TabBar Button 绑定） ──
     [RelayCommand] private void SwitchToChat()     => CurrentPage = _chatVm;
     [RelayCommand] private void SwitchToContacts() => CurrentPage = _contactsVm;
     [RelayCommand] private void SwitchToDiscover() => CurrentPage = _discoverVm;
     [RelayCommand] private void SwitchToProfile()  => CurrentPage = _profileVm;
 
-    // ── 接收子页面导航消息 ──
     public void Receive(NavigateToServiceMessage message)
     {
         _serviceVm.OnNavigatedTo();
@@ -106,4 +112,25 @@ public partial class MainWindowViewModel : ObservableObject,
 
     public void Receive(NavigateBackFromFundChartMessage message)
         => CurrentPage = _fundTrackerVm;
+
+    // ── ★ 网易云导航 ─────────────────────────────────────────────────────────
+    public void Receive(NavigateToNeteaseMessage message)
+    {
+        _neteaseVm.OnNavigatedTo();
+        CurrentPage = _neteaseVm;
+    }
+
+    public void Receive(NavigateBackFromNeteaseMessage message)
+        => CurrentPage = _chatVm;
+
+    public void Receive(NavigateToNeteasePlayerMessage message)
+    {
+        _neteasePlayerVm.OnNavigatedTo(
+            message.SongId, message.SongName,
+            message.Artist, message.Album, message.CoverUrl);
+        CurrentPage = _neteasePlayerVm;
+    }
+
+    public void Receive(NavigateBackFromNeteasePlayerMessage message)
+        => CurrentPage = _neteaseVm;
 }

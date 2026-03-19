@@ -25,6 +25,7 @@ namespace AvaloniaKit.Desktop
             ServiceLocator.LocalDataService = new SqliteLocalDataService(
                 Path.Combine(appDataPath, "app.db"));
             ServiceLocator.ImagePickerService = new DesktopImagePickerService();
+            ServiceLocator.AudioService = new DesktopAudioService();
 
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }
