@@ -29,8 +29,14 @@ internal sealed partial class Program
                 [
                     new FontFallback
                     {
-                        FontFamily = new FontFamily("avares://AvaloniaKit/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi 3.0")
-                    }
+                        FontFamily = new FontFamily(
+                            "avares://AvaloniaKit/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi 3.0")
+                    },
+                    new FontFallback
+                    {
+                        FontFamily = new FontFamily(
+                            "avares://AvaloniaKit/Assets/Fonts/NotoColorEmoji-emojicompat.ttf#Noto Color Emoji")
+                    },
                 ]
             })
             .UseReactiveUI()
