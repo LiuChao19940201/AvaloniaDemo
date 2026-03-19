@@ -13,10 +13,14 @@ using AvaloniaDemo.ViewModels.Messages;
 namespace AvaloniaDemo.ViewModels.UserControls.Chat;
 
 // ══════════════════════════════════════════════════════════════════════════════
-//  FundChartViewModel
-//  · 区间：当月 / 近三个月（对应 WinForm 的 rbMonth / rb3Month）
-//  · 数据：东方财富历史净值 API（lsjz），与 ChartForm.LoadData 完全一致
-//  · 折线：把净值点序列暴露给 View，由 Canvas 手绘，不依赖第三方图表库
+//  FundChartViewModel  （增强版）
+//  新增只读派生属性，不改变任何数据源逻辑：
+//  · LatestNavText    — 最新净值（大字显示）
+//  · ChangeBadgeBg    — 涨跌徽章背景色
+//  · ChangeDateRange  — 区间日期文字（分离自 ChangeText）
+//  · StatHigh/Low/Avg/Days — 区间统计数据
+//  · RecentRows       — 最近 5 条净值（含日涨跌）
+//  · HasRecentRows    — 控制最近净值表格可见性
 // ══════════════════════════════════════════════════════════════════════════════
 public partial class FundChartViewModel : ObservableObject
 {
@@ -37,10 +41,10 @@ public partial class FundChartViewModel : ObservableObject
     [ObservableProperty] private string _pageTitle = "";
 
     // ── UI 状态 ───────────────────────────────────────────────────────────────
-    [ObservableProperty] private bool   _isLoading   = false;
-    [ObservableProperty] private bool   _hasError    = false;
-    [ObservableProperty] private string _errorText   = "";
-    [ObservableProperty] private string _statusText  = "";
+    [ObservableProperty] private bool _isLoading = false;
+    [ObservableProperty] private bool _hasError = false;
+    [ObservableProperty] private string _errorText = "";
+    [ObservableProperty] private string _statusText = "";
 
     // ── 区间选择（0 = 当月，1 = 近三个月）────────────────────────────────────
     [ObservableProperty]
@@ -48,28 +52,47 @@ public partial class FundChartViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(Is3MonthSelected))]
     private int _selectedRange = 0;
 
-    public bool IsMonthSelected  => SelectedRange == 0;
+    public bool IsMonthSelected => SelectedRange == 0;
     public bool Is3MonthSelected => SelectedRange == 1;
 
     // ── 折线数据点（暴露给 View 的 Canvas 绘图）──────────────────────────────
     public ObservableCollection<NavPoint> NavPoints { get; } = new();
 
-    // ── 涨跌颜色（供 View 绑定）──────────────────────────────────────────────
-    [ObservableProperty] private string _lineColor   = "#4080FF";
-    [ObservableProperty] private string _changeText  = "--";
-    [ObservableProperty] private bool   _isUp        = true;
+    // ── 原有涨跌属性 ─────────────────────────────────────────────────────────
+    [ObservableProperty] private string _lineColor = "#4080FF";
+    [ObservableProperty] private string _changeText = "--";   // 保持不变，兼容旧代码
+    [ObservableProperty] private bool _isUp = true;
 
     // Y 轴范围（供 Canvas 绘图归一化用）
     [ObservableProperty] private double _yMin = 0;
     [ObservableProperty] private double _yMax = 1;
+
+    // ── 新增：大净值显示 ──────────────────────────────────────────────────────
+    [ObservableProperty] private string _latestNavText = "--";
+    [ObservableProperty] private string _changeBadgeBg = "#C0392B";
+    [ObservableProperty] private string _changeDateRange = "";
+
+    // ── 新增：统计卡片 ────────────────────────────────────────────────────────
+    [ObservableProperty] private string _statHigh = "--";
+    [ObservableProperty] private string _statLow = "--";
+    [ObservableProperty] private string _statAvg = "--";
+    [ObservableProperty] private string _statDays = "--";
+
+    // ── 新增：最近净值列表 ────────────────────────────────────────────────────
+    public ObservableCollection<RecentNavRow> RecentRows { get; } = new();
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasRecentRows))]
+    private int _recentRowCount = 0;
+    public bool HasRecentRows => RecentRowCount > 0;
 
     private CancellationTokenSource? _cts;
 
     // ── 由 MainWindowViewModel.Receive 调用，传入基金信息 ─────────────────────
     public void OnNavigatedTo(string code, string name)
     {
-        FundCode  = code;
-        FundName  = name;
+        FundCode = code;
+        FundName = name;
         PageTitle = $"{name}（{code}）";
         SelectedRange = 0;
         _ = LoadDataAsync(0);
@@ -98,7 +121,7 @@ public partial class FundChartViewModel : ObservableObject
     }
 
     // ══════════════════════════════════════════════════════════════════════════
-    //  历史净值加载（对应 ChartForm.LoadData）
+    //  历史净值加载（数据源完全不变，仅在加载完毕后派生新属性）
     // ══════════════════════════════════════════════════════════════════════════
     private async Task LoadDataAsync(int range)
     {
@@ -107,17 +130,23 @@ public partial class FundChartViewModel : ObservableObject
         _cts = new CancellationTokenSource();
         var ct = _cts.Token;
 
-        IsLoading  = true;
-        HasError   = false;
+        IsLoading = true;
+        HasError = false;
         NavPoints.Clear();
+        RecentRows.Clear();
+        RecentRowCount = 0;
+        LatestNavText = "--";
+        ChangeBadgeBg = "#AAAAAA";
+        ChangeDateRange = "";
+        StatHigh = StatLow = StatAvg = StatDays = "--";
         StatusText = "数据加载中…";
 
         try
         {
-            DateTime endDate   = DateTime.Today;
+            DateTime endDate = DateTime.Today;
             DateTime startDate = range == 0
-                ? new DateTime(endDate.Year, endDate.Month, 1)   // 当月1日
-                : endDate.AddMonths(-3);                          // 近三个月
+                ? new DateTime(endDate.Year, endDate.Month, 1)
+                : endDate.AddMonths(-3);
 
             string url = $"https://api.fund.eastmoney.com/f10/lsjz" +
                          $"?fundCode={FundCode}" +
@@ -130,8 +159,8 @@ public partial class FundChartViewModel : ObservableObject
 
             string raw = await _http.GetStringAsync(url, reqCts.Token);
 
-            using var doc  = JsonDocument.Parse(raw);
-            var root       = doc.RootElement;
+            using var doc = JsonDocument.Parse(raw);
+            var root = doc.RootElement;
 
             if (!root.TryGetProperty("Data", out var data) ||
                 !data.TryGetProperty("LSJZList", out var list) ||
@@ -142,12 +171,12 @@ public partial class FundChartViewModel : ObservableObject
                 return;
             }
 
-            // 解析并排序（API 返回倒序，需正序）
+            // ── 解析并排序（原逻辑不变）──────────────────────────────────
             var points = new List<NavPoint>();
             foreach (var item in list.EnumerateArray())
             {
                 string dateStr = item.TryGetStr("FSRQ") ?? "";
-                string navStr  = item.TryGetStr("DWJZ") ?? "";
+                string navStr = item.TryGetStr("DWJZ") ?? "";
                 if (DateTime.TryParse(dateStr, out DateTime dt) &&
                     double.TryParse(navStr, out double nav))
                 {
@@ -162,7 +191,7 @@ public partial class FundChartViewModel : ObservableObject
                 return;
             }
 
-            // 计算 Y 轴范围（与 ChartForm 完全一致）
+            // ── Y 轴范围（原逻辑不变）──────────────────────────────────
             double minNav = double.MaxValue, maxNav = double.MinValue;
             foreach (var p in points)
             {
@@ -174,15 +203,57 @@ public partial class FundChartViewModel : ObservableObject
             YMin = Math.Round(minNav - padding, 4);
             YMax = Math.Round(maxNav + padding, 4);
 
-            // 涨跌判断（区间首尾对比）
-            bool up    = points[^1].Nav >= points[0].Nav;
-            IsUp       = up;
-            LineColor  = up ? "#C0392B" : "#18B06A";   // 涨红跌绿（A股惯例）
+            // ── 涨跌判断（原逻辑不变）──────────────────────────────────
+            bool up = points[^1].Nav >= points[0].Nav;
+            IsUp = up;
+            LineColor = up ? "#C0392B" : "#18B06A";
             double chg = points.Count >= 2
                 ? (points[^1].Nav - points[0].Nav) / points[0].Nav * 100
                 : 0;
+            // 保留旧 ChangeText（兼容旧绑定）
             ChangeText = $"{(up ? "+" : "")}{chg:F2}%  {points[0].Date:MM/dd} → {points[^1].Date:MM/dd}";
 
+            // ── 新增派生属性（纯展示，不修改 points 数据）────────────────
+
+            // 大净值
+            LatestNavText = points[^1].Nav.ToString("F4");
+
+            // 徽章颜色 + 日期范围（拆分自旧 ChangeText）
+            ChangeBadgeBg = up ? "#C0392B" : "#18B06A";
+            ChangeText = $"{(up ? "+" : "")}{chg:F2}%";          // 只保留百分比
+            ChangeDateRange = $"{points[0].Date:MM/dd} → {points[^1].Date:MM/dd}";
+
+            // 统计卡片
+            double sum = 0;
+            foreach (var p in points) sum += p.Nav;
+            StatHigh = maxNav.ToString("F4");
+            StatLow = minNav.ToString("F4");
+            StatAvg = (sum / points.Count).ToString("F4");
+            StatDays = $"{points.Count} 天";
+
+            // 最近 5 条净值（含日涨跌）
+            int recentCount = Math.Min(5, points.Count);
+            for (int i = points.Count - 1; i >= points.Count - recentCount; i--)
+            {
+                double dayChg = (i > 0)
+                    ? (points[i].Nav - points[i - 1].Nav) / points[i - 1].Nav * 100
+                    : 0;
+                bool dayUp = dayChg >= 0;
+                RecentRows.Add(new RecentNavRow
+                {
+                    DateStr = points[i].Date.ToString("MM-dd"),
+                    NavStr = points[i].Nav.ToString("F4"),
+                    DayChangeStr = i > 0
+                        ? $"{(dayUp ? "+" : "")}{dayChg:F2}%"
+                        : "--",
+                    DayChangeColor = i > 0
+                        ? (dayUp ? "#C0392B" : "#18B06A")
+                        : "#AAAAAA"
+                });
+            }
+            RecentRowCount = RecentRows.Count;
+
+            // ── 填充 NavPoints（原逻辑不变）─────────────────────────────
             foreach (var p in points)
                 NavPoints.Add(p);
 
@@ -205,19 +276,28 @@ public partial class FundChartViewModel : ObservableObject
 
     private void SetError(string msg)
     {
-        HasError  = true;
+        HasError = true;
         ErrorText = msg;
     }
 }
 
-// ── 净值数据点 ───────────────────────────────────────────────────────────────
+// ── 净值数据点（不变）────────────────────────────────────────────────────────
 public class NavPoint
 {
     public DateTime Date { get; set; }
-    public double   Nav  { get; set; }
+    public double Nav { get; set; }
 }
 
-// ── JsonElement 扩展（复用）──────────────────────────────────────────────────
+// ── 最近净值行（新增）────────────────────────────────────────────────────────
+public class RecentNavRow
+{
+    public string DateStr { get; set; } = "";
+    public string NavStr { get; set; } = "";
+    public string DayChangeStr { get; set; } = "";
+    public string DayChangeColor { get; set; } = "#AAAAAA";
+}
+
+// ── JsonElement 扩展（不变）──────────────────────────────────────────────────
 internal static class ChartJsonExtensions
 {
     internal static string? TryGetStr(this JsonElement el, string prop)
