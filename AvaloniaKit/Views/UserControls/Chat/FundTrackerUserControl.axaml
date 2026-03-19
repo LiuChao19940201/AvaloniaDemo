@@ -4,13 +4,56 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AvaloniaDemo.ViewModels.UserControls.Chat"
              mc:Ignorable="d"
-             d:DesignWidth="390" d:DesignHeight="700"
+             d:DesignWidth="390" d:DesignHeight="760"
              x:Class="AvaloniaDemo.Views.UserControls.Chat.FundTrackerUserControl"
              x:DataType="vm:FundTrackerViewModel">
 
     <Design.DataContext>
         <vm:FundTrackerViewModel />
     </Design.DataContext>
+
+    <UserControl.Styles>
+
+        <!-- ══ 底部Tab按钮：默认态 ══ -->
+        <Style Selector="Button.tab-btn">
+            <Setter Property="Background"      Value="Transparent"/>
+            <Setter Property="Foreground"      Value="{DynamicResource SemiColorText2}"/>
+            <Setter Property="FontSize"        Value="14"/>
+            <Setter Property="Padding"         Value="0,10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Button.tab-btn.active">
+            <Setter Property="Foreground"  Value="{DynamicResource SemiColorPrimary}"/>
+            <Setter Property="FontWeight"  Value="SemiBold"/>
+        </Style>
+        <Style Selector="Button.tab-btn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <!-- ══ 分类标签：默认态 ══ -->
+        <Style Selector="Button.cat-btn">
+            <Setter Property="Background"      Value="{DynamicResource SemiColorFillQuaternary}"/>
+            <Setter Property="Foreground"      Value="{DynamicResource SemiColorText1}"/>
+            <Setter Property="FontSize"        Value="12"/>
+            <Setter Property="Padding"         Value="12,5"/>
+            <Setter Property="CornerRadius"    Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="MinHeight"       Value="0"/>
+        </Style>
+        <Style Selector="Button.cat-btn.active">
+            <Setter Property="Background" Value="{DynamicResource SemiColorPrimary}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="Button.cat-btn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource SemiColorFillTertiary}"/>
+        </Style>
+        <Style Selector="Button.cat-btn.active:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource SemiColorPrimary}"/>
+        </Style>
+
+    </UserControl.Styles>
 
     <DockPanel Background="{DynamicResource SemiColorBg1}">
 
@@ -22,7 +65,6 @@
                 Padding="4,8">
             <Grid ColumnDefinitions="44,*,44,44">
 
-                <!-- 返回 -->
                 <Button Grid.Column="0" Background="Transparent" Padding="8"
                         Command="{Binding GoBackCommand}"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -34,16 +76,16 @@
                     </Viewbox>
                 </Button>
 
-                <!-- 标题 -->
-                <TextBlock Grid.Column="1" Text="基金自选跟踪"
+                <TextBlock Grid.Column="1" Text="基金"
                            FontSize="17" FontWeight="SemiBold"
                            Foreground="{DynamicResource SemiColorText0}"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                <!-- 刷新 -->
+                <!-- 刷新（自选Tab时可用）-->
                 <Button Grid.Column="2" Background="Transparent" Padding="8"
                         Command="{Binding RefreshCommand}"
                         IsEnabled="{Binding !IsLoading}"
+                        IsVisible="{Binding IsWatchlistActive}"
                         HorizontalAlignment="Center" VerticalAlignment="Center"
                         ToolTip.Tip="刷新净值">
                     <Viewbox Width="20" Height="20">
@@ -54,14 +96,14 @@
                     </Viewbox>
                 </Button>
 
-                <!-- 搜索/添加 toggle -->
+                <!-- 搜索/添加 toggle（自选Tab时显示）-->
                 <Button Grid.Column="3" Background="Transparent" Padding="8"
                         Command="{Binding ToggleSearchCommand}"
+                        IsVisible="{Binding IsWatchlistActive}"
                         HorizontalAlignment="Center" VerticalAlignment="Center"
                         ToolTip.Tip="搜索并添加基金">
                     <Viewbox Width="20" Height="20">
                         <Canvas Width="24" Height="24">
-                            <!-- 展开时显示"×"，收起时显示"+" -->
                             <Path IsVisible="{Binding !ShowSearch}"
                                   Data="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z"
                                   Fill="{DynamicResource SemiColorText0}"/>
@@ -75,276 +117,435 @@
             </Grid>
         </Border>
 
-        <!-- ══ 搜索面板（可折叠）══ -->
-        <Border DockPanel.Dock="Top"
-                IsVisible="{Binding ShowSearch}"
-                Background="{DynamicResource SemiColorBg0}"
-                BorderBrush="{DynamicResource SemiColorBorder}"
-                BorderThickness="0,0,0,0.8"
-                Padding="12,10">
-            <StackPanel Spacing="8">
-
-                <!-- 搜索框 + 按钮 -->
-                <Grid ColumnDefinitions="*,Auto">
-                    <TextBox Grid.Column="0"
-                             Text="{Binding SearchText}"
-                             Watermark="输入基金名称或代码…"
-                             FontSize="14"
-                             Padding="10,8"
-                             CornerRadius="6 0 0 6">
-                        <TextBox.KeyBindings>
-                            <KeyBinding Gesture="Return" Command="{Binding SearchFundCommand}"/>
-                        </TextBox.KeyBindings>
-                    </TextBox>
-                    <Button Grid.Column="1"
-                            Content="搜索"
-                            Command="{Binding SearchFundCommand}"
-                            IsEnabled="{Binding !IsSearching}"
-                            Padding="14,8"
-                            FontSize="14"
-                            CornerRadius="0 6 6 0"
-                            Background="#07C160"
-                            Foreground="White"/>
-                </Grid>
-
-                <!-- 搜索状态文字 -->
-                <TextBlock Text="{Binding SearchStatus}"
-                           FontSize="12"
-                           Foreground="{DynamicResource SemiColorText2}"
-                           IsVisible="{Binding SearchStatus.Length}"/>
-
-                <!-- 搜索结果列表 -->
-                <Border IsVisible="{Binding SearchResults.Count}"
-                        BorderBrush="{DynamicResource SemiColorBorder}"
-                        BorderThickness="0.6"
-                        CornerRadius="6">
-                    <ItemsControl ItemsSource="{Binding SearchResults}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="vm:SearchResultItem">
-                                <Grid ColumnDefinitions="*,Auto"
-                                      Margin="12,0">
-                                    <!-- 名称 + 代码 -->
-                                    <StackPanel Grid.Column="0"
-                                                VerticalAlignment="Center"
-                                                Spacing="2" Margin="0,8">
-                                        <TextBlock Text="{Binding Name}"
-                                                   FontSize="14"
-                                                   Foreground="{DynamicResource SemiColorText0}"/>
-                                        <TextBlock Text="{Binding Code}"
-                                                   FontSize="11"
-                                                   Foreground="{DynamicResource SemiColorText2}"/>
-                                    </StackPanel>
-                                    <!-- 添加按钮 -->
-                                    <Button Grid.Column="1"
-                                            Content="添加"
-                                            FontSize="13"
-                                            Padding="12,5"
-                                            VerticalAlignment="Center"
-                                            CornerRadius="4"
-                                            Background="#07C160"
-                                            Foreground="White"
-                                            Command="{Binding $parent[ItemsControl].((vm:FundTrackerViewModel)DataContext).AddFundCommand}"
-                                            CommandParameter="{Binding}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Border>
-
-            </StackPanel>
-        </Border>
-
-        <!-- ══ 离线提示条 ══ -->
-        <Border DockPanel.Dock="Top"
-                IsVisible="{Binding IsOffline}"
-                Background="#FFF3CD"
-                Padding="16,7">
-            <StackPanel Orientation="Horizontal" Spacing="8">
-                <Viewbox Width="15" Height="15">
-                    <Canvas Width="24" Height="24">
-                        <Path Data="M1 21H23L12 2 1 21ZM13 18H11V16H13V18ZM13 14H11V10H13V14Z"
-                              Fill="#856404"/>
-                    </Canvas>
-                </Viewbox>
-                <TextBlock Text="网络不可用，当前为离线数据"
-                           FontSize="12" Foreground="#856404"
-                           VerticalAlignment="Center"/>
-            </StackPanel>
-        </Border>
-
-        <!-- ══ 加载中提示 ══ -->
-        <Border DockPanel.Dock="Top"
-                IsVisible="{Binding IsLoading}"
-                Background="{DynamicResource SemiColorBg0}"
-                Padding="16,9">
-            <TextBlock Text="数据加载中…"
-                       FontSize="13"
-                       Foreground="{DynamicResource SemiColorText2}"
-                       HorizontalAlignment="Center"/>
-        </Border>
-
-        <!-- ══ 底部状态栏 ══ -->
+        <!-- ══ 底部 Tab 栏 ══ -->
         <Border DockPanel.Dock="Bottom"
                 Background="{DynamicResource SemiColorBg0}"
                 BorderBrush="{DynamicResource SemiColorBorder}"
-                BorderThickness="0,0.6,0,0"
-                Padding="16,7">
-            <TextBlock Text="{Binding StatusText}"
-                       FontSize="12"
-                       Foreground="{DynamicResource SemiColorText2}"/>
+                BorderThickness="0,0.8,0,0">
+            <Grid ColumnDefinitions="*,*">
+
+                <!-- 发现 Tab -->
+                <StackPanel Grid.Column="0">
+                    <Button Classes="tab-btn"
+                            Classes.active="{Binding IsDiscoverActive}"
+                            Command="{Binding SwitchToDiscoverCommand}"
+                            HorizontalAlignment="Stretch">
+                        <StackPanel HorizontalAlignment="Center" Spacing="2">
+                            <TextBlock Text="发现" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <!-- 下划线指示器 -->
+                    <Rectangle Height="2" Margin="24,0"
+                               Fill="{DynamicResource SemiColorPrimary}"
+                               IsVisible="{Binding IsDiscoverActive}"/>
+                    <Rectangle Height="2" Margin="24,0"
+                               Fill="Transparent"
+                               IsVisible="{Binding !IsDiscoverActive}"/>
+                </StackPanel>
+
+                <!-- 自选 Tab -->
+                <StackPanel Grid.Column="1">
+                    <Button Classes="tab-btn"
+                            Classes.active="{Binding IsWatchlistActive}"
+                            Command="{Binding SwitchToWatchlistCommand}"
+                            HorizontalAlignment="Stretch">
+                        <StackPanel HorizontalAlignment="Center" Spacing="2">
+                            <TextBlock Text="自选" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Rectangle Height="2" Margin="24,0"
+                               Fill="{DynamicResource SemiColorPrimary}"
+                               IsVisible="{Binding IsWatchlistActive}"/>
+                    <Rectangle Height="2" Margin="24,0"
+                               Fill="Transparent"
+                               IsVisible="{Binding !IsWatchlistActive}"/>
+                </StackPanel>
+
+            </Grid>
         </Border>
 
         <!-- ══ 主内容区 ══ -->
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel>
+        <Panel>
 
-                <!-- ── 表头 ── -->
-                <Border Background="{DynamicResource SemiColorBg0}"
+            <!-- ════════════════════════════════════════════════════════════
+                 发现 Tab 内容
+                 ════════════════════════════════════════════════════════════ -->
+            <DockPanel IsVisible="{Binding IsDiscoverActive}">
+
+                <!-- 分类标签横向滚动 -->
+                <Border DockPanel.Dock="Top"
+                        Background="{DynamicResource SemiColorBg0}"
                         BorderBrush="{DynamicResource SemiColorBorder}"
                         BorderThickness="0,0,0,0.6"
-                        Padding="16,7">
-                    <Grid ColumnDefinitions="*,70,70,76,36">
-                        <TextBlock Grid.Column="0" Text="基金名称"
-                                   FontSize="11" FontWeight="Medium"
-                                   Foreground="{DynamicResource SemiColorText2}"/>
-                        <TextBlock Grid.Column="1" Text="昨日净值"
-                                   FontSize="11" FontWeight="Medium"
-                                   Foreground="{DynamicResource SemiColorText2}"
-                                   HorizontalAlignment="Right"/>
-                        <TextBlock Grid.Column="2" Text="估算净值"
-                                   FontSize="11" FontWeight="Medium"
-                                   Foreground="{DynamicResource SemiColorText2}"
-                                   HorizontalAlignment="Right"/>
-                        <TextBlock Grid.Column="3" Text="估算涨跌"
-                                   FontSize="11" FontWeight="Medium"
-                                   Foreground="{DynamicResource SemiColorText2}"
-                                   HorizontalAlignment="Right"/>
-                        <!-- 删除列占位 -->
-                        <TextBlock Grid.Column="4" Text=""
-                                   FontSize="11"/>
-                    </Grid>
+                        Padding="12,8">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding DiscoverCategories}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="8"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:DiscoverCategory">
+                                    <Button Classes="cat-btn"
+                                            Classes.active="{Binding IsSelected}"
+                                            Content="{Binding Label}"
+                                            Command="{Binding $parent[ItemsControl].((vm:FundTrackerViewModel)DataContext).SelectCategoryCommand}"
+                                            CommandParameter="{Binding Index}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </Border>
 
-                <!-- ── 基金行列表 ── -->
-                <ItemsControl ItemsSource="{Binding Funds}"
-                              Background="{DynamicResource SemiColorBg0}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="vm:FundItemViewModel">
-                            <StackPanel>
-                                <!-- 整行可点击跳转曲线页 -->
-                                <Button Background="Transparent"
-                                        HorizontalAlignment="Stretch"
-                                        HorizontalContentAlignment="Stretch"
-                                        Padding="0"
-                                        Command="{Binding $parent[ItemsControl].((vm:FundTrackerViewModel)DataContext).OpenChartCommand}"
-                                        CommandParameter="{Binding}">
-                                <Grid ColumnDefinitions="*,70,70,76,36"
-                                      Margin="16,0" MinHeight="58">
+                <!-- 加载中 -->
+                <Border DockPanel.Dock="Top"
+                        IsVisible="{Binding IsDiscoverLoading}"
+                        Padding="0,20">
+                    <TextBlock Text="加载中…"
+                               FontSize="13"
+                               Foreground="{DynamicResource SemiColorText2}"
+                               HorizontalAlignment="Center"/>
+                </Border>
 
-                                    <!-- 名称 + 代码 + 来源 + 离线标 -->
-                                    <StackPanel Grid.Column="0"
-                                                VerticalAlignment="Center" Spacing="3">
-                                        <TextBlock Text="{Binding Name}"
-                                                   FontSize="14"
-                                                   Foreground="{DynamicResource SemiColorText0}"
-                                                   TextTrimming="CharacterEllipsis"/>
-                                        <StackPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding Code}"
-                                                       FontSize="11"
-                                                       Foreground="{DynamicResource SemiColorText2}"/>
-                                            <TextBlock Text="{Binding UpdatedAt}"
-                                                       FontSize="11"
-                                                       Foreground="{DynamicResource SemiColorText2}"/>
-                                            <Border IsVisible="{Binding IsMock}"
-                                                    Background="#FFF3CD"
-                                                    CornerRadius="3" Padding="4,1">
-                                                <TextBlock Text="离线" FontSize="10"
-                                                           Foreground="#856404"/>
-                                            </Border>
-                                        </StackPanel>
-                                    </StackPanel>
+                <!-- 发现基金卡片列表 -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="12,10,12,10" Spacing="8">
 
-                                    <!-- 昨日净值 -->
-                                    <TextBlock Grid.Column="1"
-                                               Text="{Binding LastNav}"
-                                               FontSize="14"
-                                               Foreground="{DynamicResource SemiColorText0}"
-                                               HorizontalAlignment="Right"
-                                               VerticalAlignment="Center"/>
+                        <!-- 榜单标题 -->
+                        <Grid ColumnDefinitions="*,Auto" Margin="4,0,4,4">
+                            <TextBlock Grid.Column="0"
+                                       Text="近1月涨幅排行"
+                                       FontSize="13" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource SemiColorText0}"/>
+                            <TextBlock Grid.Column="1"
+                                       Text="数据来源：东方财富"
+                                       FontSize="11"
+                                       Foreground="{DynamicResource SemiColorText2}"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
 
-                                    <!-- 估算净值 -->
-                                    <TextBlock Grid.Column="2"
-                                               Text="{Binding EstNav}"
-                                               FontSize="14"
-                                               Foreground="{DynamicResource SemiColorText0}"
-                                               HorizontalAlignment="Right"
-                                               VerticalAlignment="Center"/>
+                        <ItemsControl ItemsSource="{Binding DiscoverFunds}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:DiscoverFundItem">
+                                    <Border Background="{DynamicResource SemiColorBg0}"
+                                            CornerRadius="12"
+                                            Margin="0,0,0,0"
+                                            Padding="0">
+                                        <Grid ColumnDefinitions="*,Auto">
 
-                                    <!-- 涨跌幅 chip（颜色绑定 ViewModel 计算属性）-->
-                                    <Border Grid.Column="3"
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Right"
-                                            CornerRadius="4" Padding="7,5"
-                                            MinWidth="68"
-                                            Background="{Binding ChipBackground}">
-                                        <TextBlock Text="{Binding ChangeText}"
-                                                   FontSize="13" FontWeight="Medium"
-                                                   Foreground="{Binding ChipForeground}"
-                                                   HorizontalAlignment="Center"/>
+                                            <!-- 左侧：点击跳转图表 -->
+                                            <Button Grid.Column="0"
+                                                    Background="Transparent"
+                                                    HorizontalAlignment="Stretch"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    Padding="14,12,8,12"
+                                                    Command="{Binding $parent[ItemsControl].((vm:FundTrackerViewModel)DataContext).OpenDiscoverChartCommand}"
+                                                    CommandParameter="{Binding}">
+                                                <Grid ColumnDefinitions="*,80">
+
+                                                    <!-- 基金名称 + 代码 -->
+                                                    <StackPanel Grid.Column="0"
+                                                                VerticalAlignment="Center"
+                                                                Spacing="4">
+                                                        <TextBlock Text="{Binding Name}"
+                                                                   FontSize="14" FontWeight="Medium"
+                                                                   Foreground="{DynamicResource SemiColorText0}"
+                                                                   TextTrimming="CharacterEllipsis"/>
+                                                        <TextBlock Text="{Binding Code}"
+                                                                   FontSize="11"
+                                                                   Foreground="{DynamicResource SemiColorText2}"/>
+                                                    </StackPanel>
+
+                                                    <!-- 净值 + 涨跌 -->
+                                                    <StackPanel Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Center"
+                                                                Spacing="4">
+                                                        <TextBlock Text="{Binding NavStr}"
+                                                                   FontSize="15" FontWeight="SemiBold"
+                                                                   Foreground="{DynamicResource SemiColorText0}"
+                                                                   HorizontalAlignment="Right"/>
+                                                        <Border Background="{Binding ChangeBg}"
+                                                                CornerRadius="4" Padding="6,2"
+                                                                HorizontalAlignment="Right">
+                                                            <TextBlock Text="{Binding ChangeText}"
+                                                                       FontSize="12" FontWeight="SemiBold"
+                                                                       Foreground="{Binding ChangeColor}"/>
+                                                        </Border>
+                                                    </StackPanel>
+
+                                                </Grid>
+                                            </Button>
+
+                                            <!-- 右侧：+ 按钮 -->
+                                            <Button Grid.Column="1"
+                                                    Width="44" Height="44"
+                                                    CornerRadius="22"
+                                                    Background="{Binding AddBtnBg}"
+                                                    Foreground="{Binding AddBtnFg}"
+                                                    FontSize="20" FontWeight="Bold"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Margin="0,0,14,0"
+                                                    Padding="0"
+                                                    HorizontalContentAlignment="Center"
+                                                    VerticalContentAlignment="Center"
+                                                    Command="{Binding $parent[ItemsControl].((vm:FundTrackerViewModel)DataContext).AddDiscoverFundCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    ToolTip.Tip="添加到自选">
+                                                <TextBlock Text="{Binding AddBtnText}"
+                                                           FontSize="18" FontWeight="Bold"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+                                            </Button>
+
+                                        </Grid>
                                     </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Spacing="6"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
 
-                                    <!-- 删除按钮 -->
-                                    <Button Grid.Column="4"
-                                            Background="Transparent"
-                                            Padding="4"
-                                            VerticalAlignment="Center"
-                                            HorizontalAlignment="Center"
-                                            ToolTip.Tip="从自选移除"
-                                            Command="{Binding $parent[ItemsControl].((vm:FundTrackerViewModel)DataContext).RemoveFundCommand}"
-                                            CommandParameter="{Binding}">
-                                        <Viewbox Width="16" Height="16">
-                                            <Canvas Width="24" Height="24">
-                                                <Path Data="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
-                                                      Fill="{DynamicResource SemiColorText2}"/>
-                                            </Canvas>
-                                        </Viewbox>
-                                    </Button>
+                    </StackPanel>
+                </ScrollViewer>
 
-                                </Grid>
-                                </Button>
+            </DockPanel>
 
-                                <!-- 来源小字 -->
-                                <TextBlock Text="{Binding Source}"
-                                           FontSize="10"
-                                           Foreground="{DynamicResource SemiColorText2}"
-                                           Margin="16,0,16,6"
-                                           HorizontalAlignment="Right"/>
+            <!-- ════════════════════════════════════════════════════════════
+                 自选 Tab 内容（原有逻辑完全保留）
+                 ════════════════════════════════════════════════════════════ -->
+            <DockPanel IsVisible="{Binding IsWatchlistActive}">
 
-                                <Rectangle Height="0.6"
-                                           Fill="{DynamicResource SemiColorBorder}"
-                                           Margin="16,0,0,0"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <!-- 搜索面板（可折叠） -->
+                <Border DockPanel.Dock="Top"
+                        IsVisible="{Binding ShowSearch}"
+                        Background="{DynamicResource SemiColorBg0}"
+                        BorderBrush="{DynamicResource SemiColorBorder}"
+                        BorderThickness="0,0,0,0.8"
+                        Padding="12,10">
+                    <StackPanel Spacing="8">
 
-                <!-- 空列表占位 -->
-                <Border IsVisible="{Binding !Funds.Count}"
-                        Padding="0,60">
-                    <StackPanel HorizontalAlignment="Center" Spacing="10">
-                        <TextBlock Text="暂无自选基金"
-                                   FontSize="15"
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox Grid.Column="0"
+                                     Text="{Binding SearchText}"
+                                     Watermark="输入基金名称或代码…"
+                                     FontSize="14" Padding="10,8"
+                                     CornerRadius="6 0 0 6">
+                                <TextBox.KeyBindings>
+                                    <KeyBinding Gesture="Return" Command="{Binding SearchFundCommand}"/>
+                                </TextBox.KeyBindings>
+                            </TextBox>
+                            <Button Grid.Column="1"
+                                    Content="搜索"
+                                    Command="{Binding SearchFundCommand}"
+                                    IsEnabled="{Binding !IsSearching}"
+                                    Padding="14,8" FontSize="14"
+                                    CornerRadius="0 6 6 0"
+                                    Background="#07C160" Foreground="White"/>
+                        </Grid>
+
+                        <TextBlock Text="{Binding SearchStatus}"
+                                   FontSize="12"
                                    Foreground="{DynamicResource SemiColorText2}"
-                                   HorizontalAlignment="Center"/>
-                        <TextBlock Text="点击右上角「+」搜索并添加"
-                                   FontSize="13"
-                                   Foreground="{DynamicResource SemiColorText2}"
-                                   HorizontalAlignment="Center"/>
+                                   IsVisible="{Binding SearchStatus.Length}"/>
+
+                        <Border IsVisible="{Binding SearchResults.Count}"
+                                BorderBrush="{DynamicResource SemiColorBorder}"
+                                BorderThickness="0.6" CornerRadius="6">
+                            <ItemsControl ItemsSource="{Binding SearchResults}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:SearchResultItem">
+                                        <Grid ColumnDefinitions="*,Auto" Margin="12,0">
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center"
+                                                        Spacing="2" Margin="0,8">
+                                                <TextBlock Text="{Binding Name}"
+                                                           FontSize="14"
+                                                           Foreground="{DynamicResource SemiColorText0}"/>
+                                                <TextBlock Text="{Binding Code}"
+                                                           FontSize="11"
+                                                           Foreground="{DynamicResource SemiColorText2}"/>
+                                            </StackPanel>
+                                            <Button Grid.Column="1"
+                                                    Content="添加"
+                                                    FontSize="13" Padding="12,6"
+                                                    CornerRadius="6"
+                                                    Background="{DynamicResource SemiColorPrimary}"
+                                                    Foreground="White"
+                                                    VerticalAlignment="Center"
+                                                    Command="{Binding $parent[ItemsControl].((vm:FundTrackerViewModel)DataContext).AddFundCommand}"
+                                                    CommandParameter="{Binding}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+
                     </StackPanel>
                 </Border>
 
-            </StackPanel>
-        </ScrollViewer>
+                <!-- 状态栏 -->
+                <Border DockPanel.Dock="Top"
+                        Background="{DynamicResource SemiColorBg0}"
+                        BorderBrush="{DynamicResource SemiColorBorder}"
+                        BorderThickness="0,0,0,0.4"
+                        Padding="16,6"
+                        IsVisible="{Binding StatusText.Length}">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Column="0"
+                                   Text="{Binding StatusText}"
+                                   FontSize="12"
+                                   Foreground="{DynamicResource SemiColorText2}"
+                                   VerticalAlignment="Center"/>
+                        <!-- 加载指示 -->
+                        <Ellipse Grid.Column="1" Width="8" Height="8"
+                                 Fill="{DynamicResource SemiColorPrimary}"
+                                 IsVisible="{Binding IsLoading}"/>
+                    </Grid>
+                </Border>
+
+                <!-- 列表区 -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+
+                        <!-- 列头 -->
+                        <Border IsVisible="{Binding Funds.Count}"
+                                Background="{DynamicResource SemiColorBg0}"
+                                BorderBrush="{DynamicResource SemiColorBorder}"
+                                BorderThickness="0,0,0,0.6"
+                                Padding="16,6">
+                            <Grid ColumnDefinitions="*,70,70,76,36">
+                                <TextBlock Grid.Column="0" Text="基金" FontSize="11" FontWeight="Medium"
+                                           Foreground="{DynamicResource SemiColorText2}"/>
+                                <TextBlock Grid.Column="1" Text="昨日净值" FontSize="11" FontWeight="Medium"
+                                           Foreground="{DynamicResource SemiColorText2}"
+                                           HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="2" Text="估算净值" FontSize="11" FontWeight="Medium"
+                                           Foreground="{DynamicResource SemiColorText2}"
+                                           HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="3" Text="估算涨跌" FontSize="11" FontWeight="Medium"
+                                           Foreground="{DynamicResource SemiColorText2}"
+                                           HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="4" Text="" FontSize="11"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- 基金行列表 -->
+                        <ItemsControl ItemsSource="{Binding Funds}"
+                                      Background="{DynamicResource SemiColorBg0}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:FundItemViewModel">
+                                    <StackPanel>
+                                        <Button Background="Transparent"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Stretch"
+                                                Padding="0"
+                                                Command="{Binding $parent[ItemsControl].((vm:FundTrackerViewModel)DataContext).OpenChartCommand}"
+                                                CommandParameter="{Binding}">
+                                            <Grid ColumnDefinitions="*,70,70,76,36"
+                                                  Margin="16,0" MinHeight="58">
+
+                                                <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="3">
+                                                    <TextBlock Text="{Binding Name}" FontSize="14"
+                                                               Foreground="{DynamicResource SemiColorText0}"
+                                                               TextTrimming="CharacterEllipsis"/>
+                                                    <StackPanel Orientation="Horizontal" Spacing="5">
+                                                        <TextBlock Text="{Binding Code}" FontSize="11"
+                                                                   Foreground="{DynamicResource SemiColorText2}"/>
+                                                        <TextBlock Text="{Binding UpdatedAt}" FontSize="11"
+                                                                   Foreground="{DynamicResource SemiColorText2}"/>
+                                                        <Border IsVisible="{Binding IsMock}"
+                                                                Background="#FFF3CD" CornerRadius="3" Padding="4,1">
+                                                            <TextBlock Text="离线" FontSize="10" Foreground="#856404"/>
+                                                        </Border>
+                                                    </StackPanel>
+                                                </StackPanel>
+
+                                                <TextBlock Grid.Column="1" Text="{Binding LastNav}"
+                                                           FontSize="14"
+                                                           Foreground="{DynamicResource SemiColorText0}"
+                                                           HorizontalAlignment="Right"
+                                                           VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="2" Text="{Binding EstNav}"
+                                                           FontSize="14"
+                                                           Foreground="{DynamicResource SemiColorText0}"
+                                                           HorizontalAlignment="Right"
+                                                           VerticalAlignment="Center"/>
+                                                <Border Grid.Column="3"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Right"
+                                                        CornerRadius="4" Padding="7,5" MinWidth="68"
+                                                        Background="{Binding ChipBackground}">
+                                                    <TextBlock Text="{Binding ChangeText}"
+                                                               FontSize="13" FontWeight="Medium"
+                                                               Foreground="{Binding ChipForeground}"
+                                                               HorizontalAlignment="Center"/>
+                                                </Border>
+                                                <Button Grid.Column="4"
+                                                        Background="Transparent" Padding="4"
+                                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                        ToolTip.Tip="从自选移除"
+                                                        Command="{Binding $parent[ItemsControl].((vm:FundTrackerViewModel)DataContext).RemoveFundCommand}"
+                                                        CommandParameter="{Binding}">
+                                                    <Viewbox Width="16" Height="16">
+                                                        <Canvas Width="24" Height="24">
+                                                            <Path Data="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z"
+                                                                  Fill="{DynamicResource SemiColorText2}"/>
+                                                        </Canvas>
+                                                    </Viewbox>
+                                                </Button>
+
+                                            </Grid>
+                                        </Button>
+
+                                        <TextBlock Text="{Binding Source}"
+                                                   FontSize="10"
+                                                   Foreground="{DynamicResource SemiColorText2}"
+                                                   Margin="16,0,16,6"
+                                                   HorizontalAlignment="Right"/>
+                                        <Rectangle Height="0.6"
+                                                   Fill="{DynamicResource SemiColorBorder}"
+                                                   Margin="16,0,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- 空列表占位 -->
+                        <Border IsVisible="{Binding !Funds.Count}" Padding="0,60">
+                            <StackPanel HorizontalAlignment="Center" Spacing="12">
+                                <!-- 空状态图标 -->
+                                <Viewbox Width="48" Height="48" HorizontalAlignment="Center">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"
+                                              Fill="{DynamicResource SemiColorBorder}"/>
+                                    </Canvas>
+                                </Viewbox>
+                                <TextBlock Text="暂无自选基金"
+                                           FontSize="15"
+                                           Foreground="{DynamicResource SemiColorText2}"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="在「发现」里找到感兴趣的基金，点 + 直接添加"
+                                           FontSize="13"
+                                           Foreground="{DynamicResource SemiColorText2}"
+                                           HorizontalAlignment="Center"
+                                           TextWrapping="Wrap"
+                                           TextAlignment="Center"
+                                           MaxWidth="260"/>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+            </DockPanel>
+
+        </Panel>
 
     </DockPanel>
 </UserControl>
