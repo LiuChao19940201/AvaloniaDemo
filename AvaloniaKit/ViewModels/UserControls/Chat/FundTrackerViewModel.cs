@@ -10,10 +10,10 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using AvaloniaDemo.ViewModels.Messages;
+using AvaloniaKit.ViewModels.Messages;
 using System.Collections.Generic;
 
-namespace AvaloniaDemo.ViewModels.UserControls.Chat;
+namespace AvaloniaKit.ViewModels.UserControls.Chat;
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  FundTrackerViewModel  （增强版）

@@ -12,11 +12,11 @@ using Android.OS;
 using Android.Provider;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
-using AvaloniaDemo.Services;
+using AvaloniaKit.Services;
 using System;
 using System.Linq;
 
-namespace AvaloniaDemo.Android.Services;
+namespace AvaloniaKit.Android.Services;
 
 public class AndroidDeviceService : IDeviceService
 {

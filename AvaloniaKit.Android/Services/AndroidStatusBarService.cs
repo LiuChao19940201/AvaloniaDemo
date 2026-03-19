@@ -1,7 +1,7 @@
 ﻿using Android.App;
-using AvaloniaDemo.Services;
+using AvaloniaKit.Services;
 
-namespace AvaloniaDemo.Android.Services
+namespace AvaloniaKit.Android.Services
 {
     public class AndroidStatusBarService : IStatusBarService
     {

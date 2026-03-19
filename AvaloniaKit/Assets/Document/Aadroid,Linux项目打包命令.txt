@@ -1,13 +1,13 @@
 /*
 
      # 先切到 Android 项目目录
-     cd AvaloniaDemo.Android
+     cd AvaloniaKit.Android
 
      # 清理项目
-     dotnet clean AvaloniaDemo.Android.csproj -c Release
+     dotnet clean AvaloniaKit.Android.csproj -c Release
 
      # 构建并打包 Android 项目（以 net10.0-android 为例）
-     dotnet build AvaloniaDemo.Android.csproj -c Release -f:net10.0-android -r android-arm64 -p:AndroidPackageFormat=apk --self-contained false
+     dotnet build AvaloniaKit.Android.csproj -c Release -f:net10.0-android -r android-arm64 -p:AndroidPackageFormat=apk --self-contained false
 
  */
 
@@ -22,7 +22,7 @@
     sudo apt-get install dotnet-runtime-10.0
 
     # 运行在Linux系统中
-    chmod +x ./AvaloniaDemo.Desktop
-    ./AvaloniaDemo.Desktop
+    chmod +x ./AvaloniaKit.Desktop
+    ./AvaloniaKit.Desktop
 
   */

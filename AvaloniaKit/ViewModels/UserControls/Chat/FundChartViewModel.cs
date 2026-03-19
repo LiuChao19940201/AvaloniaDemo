@@ -8,9 +8,9 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using AvaloniaDemo.ViewModels.Messages;
+using AvaloniaKit.ViewModels.Messages;
 
-namespace AvaloniaDemo.ViewModels.UserControls.Chat;
+namespace AvaloniaKit.ViewModels.UserControls.Chat;
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  FundChartViewModel  （增强版）

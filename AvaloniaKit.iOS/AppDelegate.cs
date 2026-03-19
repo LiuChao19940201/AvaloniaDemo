@@ -3,7 +3,7 @@ using Avalonia.iOS;
 using Avalonia.ReactiveUI;
 using Foundation;
 
-namespace AvaloniaDemo.iOS
+namespace AvaloniaKit.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the
     // User Interface of the application, as well as listening (and optionally responding) to

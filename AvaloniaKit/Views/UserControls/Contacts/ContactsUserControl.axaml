@@ -1,13 +1,13 @@
 <UserControl xmlns="https://github.com/avaloniaui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:vm="using:AvaloniaDemo.ViewModels.UserControls"
+			 xmlns:vm="using:AvaloniaKit.ViewModels.UserControls"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:contacts="using:AvaloniaDemo.Views.UserControls.Contacts"
-             xmlns:contactsVm="using:AvaloniaDemo.ViewModels.UserControls.Contacts"
+             xmlns:contacts="using:AvaloniaKit.Views.UserControls.Contacts"
+             xmlns:contactsVm="using:AvaloniaKit.ViewModels.UserControls.Contacts"
 			 mc:Ignorable="d"
 			 d:DesignWidth="350" d:DesignHeight="700"
-			 x:Class="AvaloniaDemo.Views.UserControls.Contacts.ContactsUserControl"
+			 x:Class="AvaloniaKit.Views.UserControls.Contacts.ContactsUserControl"
 			 x:DataType="contactsVm:ContactsViewModel">
 
 	<Design.DataContext>

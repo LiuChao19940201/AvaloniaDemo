@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace AvaloniaDemo.ViewModels.UserControls.Discover;
+namespace AvaloniaKit.ViewModels.UserControls.Discover;
 
 public partial class DiscoverViewModel : ObservableObject
 {

@@ -1,13 +1,13 @@
-using AvaloniaDemo.ViewModels.Messages;
-using AvaloniaDemo.ViewModels.UserControls.Chat;
-using AvaloniaDemo.ViewModels.UserControls.Contacts;
-using AvaloniaDemo.ViewModels.UserControls.Discover;
-using AvaloniaDemo.ViewModels.UserControls.Profile;
+using AvaloniaKit.ViewModels.Messages;
+using AvaloniaKit.ViewModels.UserControls.Chat;
+using AvaloniaKit.ViewModels.UserControls.Contacts;
+using AvaloniaKit.ViewModels.UserControls.Discover;
+using AvaloniaKit.ViewModels.UserControls.Profile;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace AvaloniaDemo.ViewModels.Windows;
+namespace AvaloniaKit.ViewModels.Windows;
 
 public partial class MainWindowViewModel : ObservableObject,
     IRecipient<NavigateToServiceMessage>,

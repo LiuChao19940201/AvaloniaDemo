@@ -2,9 +2,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using AvaloniaDemo.ViewModels.Messages;
+using AvaloniaKit.ViewModels.Messages;
 
-namespace AvaloniaDemo.ViewModels.UserControls.Chat;
+namespace AvaloniaKit.ViewModels.UserControls.Chat;
 
 public partial class ChatViewModel : ObservableObject
 {

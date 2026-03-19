@@ -1,6 +1,6 @@
 using UIKit;
 
-namespace AvaloniaDemo.iOS
+namespace AvaloniaKit.iOS
 {
     public class Application
     {

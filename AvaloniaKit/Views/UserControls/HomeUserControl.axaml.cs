@@ -3,12 +3,12 @@ using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Interactivity;
 using Avalonia.ReactiveUI;
-using AvaloniaDemo.ViewModels.UserControls;
+using AvaloniaKit.ViewModels.UserControls;
 using ReactiveUI;
 using System;
 using System.Reactive.Disposables;
 
-namespace AvaloniaDemo.Views.UserControls
+namespace AvaloniaKit.Views.UserControls
 {
     public partial class HomeUserControl : ReactiveUserControl<HomeViewModel>
     {

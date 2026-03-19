@@ -3,7 +3,7 @@ using Irihi.Avalonia.Shared.Contracts;
 using ReactiveUI;
 using System;
 
-namespace AvaloniaDemo.ViewModels.Windows
+namespace AvaloniaKit.ViewModels.Windows
 {
     public partial class SplashViewModel : ReactiveObject, IDialogContext
     {

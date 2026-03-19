@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using AvaloniaDemo.ViewModels.UserControls.Chat;
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  NavChartView  —  增强版自绘折线图
@@ -18,7 +17,7 @@ using AvaloniaDemo.ViewModels.UserControls.Chat;
 //  5. 渐变填充区域
 //  6. 首末价格水平参考线（虚线）
 // ══════════════════════════════════════════════════════════════════════════════
-namespace AvaloniaDemo.ViewModels.UserControls.Chat
+namespace AvaloniaKit.ViewModels.UserControls.Chat
 {
     public class NavChartView : Control
     {
@@ -425,7 +424,7 @@ namespace AvaloniaDemo.ViewModels.UserControls.Chat
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-namespace AvaloniaDemo.Views.UserControls.Chat
+namespace AvaloniaKit.Views.UserControls.Chat
 {
     public partial class FundChartUserControl : Avalonia.Controls.UserControl
     {

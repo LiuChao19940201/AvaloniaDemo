@@ -1,9 +1,9 @@
-using AvaloniaDemo.Services;
+using AvaloniaKit.Services;
 using System;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.Browser.Services;
+namespace AvaloniaKit.Browser.Services;
 
 [SupportedOSPlatform("browser")]
 public class BrowserLocalDataService : ILocalDataService

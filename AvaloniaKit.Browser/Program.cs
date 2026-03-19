@@ -2,9 +2,9 @@
 using Avalonia.Browser;
 using Avalonia.Media;
 using Avalonia.ReactiveUI;
-using AvaloniaDemo;
-using AvaloniaDemo.Browser.Services;
-using AvaloniaDemo.Services;
+using AvaloniaKit;
+using AvaloniaKit.Browser.Services;
+using AvaloniaKit.Services;
 using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
@@ -29,7 +29,7 @@ internal sealed partial class Program
                 [
                     new FontFallback
                     {
-                        FontFamily = new FontFamily("avares://AvaloniaDemo/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi 3.0")
+                        FontFamily = new FontFamily("avares://AvaloniaKit/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi 3.0")
                     }
                 ]
             })

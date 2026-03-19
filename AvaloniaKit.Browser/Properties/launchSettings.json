@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "AvaloniaDemo.Browser": {
+    "AvaloniaKit.Browser": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

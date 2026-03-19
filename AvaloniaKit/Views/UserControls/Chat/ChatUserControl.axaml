@@ -2,11 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:chat="using:AvaloniaDemo.Views.UserControls.Chat"
-             xmlns:chatVm="using:AvaloniaDemo.ViewModels.UserControls.Chat"
+             xmlns:chat="using:AvaloniaKit.Views.UserControls.Chat"
+             xmlns:chatVm="using:AvaloniaKit.ViewModels.UserControls.Chat"
              mc:Ignorable="d"
              d:DesignWidth="350" d:DesignHeight="700"
-             x:Class="AvaloniaDemo.Views.UserControls.Chat.ChatUserControl"
+             x:Class="AvaloniaKit.Views.UserControls.Chat.ChatUserControl"
              x:DataType="chatVm:ChatViewModel">
 
     <Design.DataContext>

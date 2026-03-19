@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaDemo.Views.UserControls.Profile;
+namespace AvaloniaKit.Views.UserControls.Profile;
 
 public partial class ServiceUserControl : UserControl
 {

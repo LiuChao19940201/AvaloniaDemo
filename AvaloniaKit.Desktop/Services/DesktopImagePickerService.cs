@@ -2,11 +2,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
-using AvaloniaDemo.Services;
+using AvaloniaKit.Services;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.Desktop.Services;
+namespace AvaloniaKit.Desktop.Services;
 
 public class DesktopImagePickerService : IImagePickerService
 {

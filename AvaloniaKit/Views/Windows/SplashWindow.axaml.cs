@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.Views.Windows;
+namespace AvaloniaKit.Views.Windows;
 
 public partial class SplashWindow : Ursa.Controls.SplashWindow
 {

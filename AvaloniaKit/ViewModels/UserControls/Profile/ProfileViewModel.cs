@@ -1,8 +1,8 @@
 using Avalonia;
 using Avalonia.Media.Imaging;
 using Avalonia.Styling;
-using AvaloniaDemo.Services;
-using AvaloniaDemo.ViewModels.Messages;
+using AvaloniaKit.Services;
+using AvaloniaKit.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,7 +10,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.ViewModels.UserControls.Profile;
+namespace AvaloniaKit.ViewModels.UserControls.Profile;
 
 public partial class ProfileViewModel : ObservableObject
 {
@@ -116,18 +116,9 @@ public partial class ProfileViewModel : ObservableObject
         var app = Application.Current;
         if (app is null) return;
 
-        // 切换主题
-        var newTheme = app.ActualThemeVariant == ThemeVariant.Dark
+        app.RequestedThemeVariant = app.ActualThemeVariant == ThemeVariant.Dark
             ? ThemeVariant.Light
             : ThemeVariant.Dark;
-        app.RequestedThemeVariant = newTheme;
-
-        // 持久化当前主题选择
-        var dataService = ServiceLocator.LocalDataService;
-        if (dataService is not null)
-        {
-            await dataService.SaveSettingAsync(App.ThemeSettingKey, newTheme.ToString());
-        }
     }
 
     [RelayCommand]

@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaDemo.Views.UserControls.Chat;
+namespace AvaloniaKit.Views.UserControls.Chat;
 
 public partial class ChatUserControl : UserControl
 {

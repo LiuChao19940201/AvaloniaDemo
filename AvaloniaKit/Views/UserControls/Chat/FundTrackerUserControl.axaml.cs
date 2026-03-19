@@ -2,9 +2,9 @@ using Avalonia.Controls;
 using Avalonia.Data.Converters;
 using System;
 using System.Globalization;
-using AvaloniaDemo.ViewModels.UserControls.Chat;
+using AvaloniaKit.ViewModels.UserControls.Chat;
 
-namespace AvaloniaDemo.ViewModels.UserControls.Chat
+namespace AvaloniaKit.ViewModels.UserControls.Chat
 {
     // ── 分类标签选中状态 Converter ────────────────────────────────────────────
     // 绑定方式：SelectedCategoryIndex → 与 DataContext 的 Category 在列表中的下标比较
@@ -19,7 +19,7 @@ namespace AvaloniaDemo.ViewModels.UserControls.Chat
     //   DiscoverCategory.IsSelected 驱动）
 }
 
-namespace AvaloniaDemo.Views.UserControls.Chat
+namespace AvaloniaKit.Views.UserControls.Chat
 {
     public partial class FundTrackerUserControl : UserControl
     {

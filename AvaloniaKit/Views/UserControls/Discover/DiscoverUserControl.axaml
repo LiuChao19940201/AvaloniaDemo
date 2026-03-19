@@ -1,14 +1,14 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="using:AvaloniaDemo.ViewModels.UserControls"
+             xmlns:vm="using:AvaloniaKit.ViewModels.UserControls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:discover="using:AvaloniaDemo.Views.UserControls.Discover"
-             xmlns:discoverVm="using:AvaloniaDemo.ViewModels.UserControls.Discover"
-             xmlns:profileVm="using:AvaloniaDemo.ViewModels.UserControls.Profile"
+             xmlns:discover="using:AvaloniaKit.Views.UserControls.Discover"
+             xmlns:discoverVm="using:AvaloniaKit.ViewModels.UserControls.Discover"
+             xmlns:profileVm="using:AvaloniaKit.ViewModels.UserControls.Profile"
              mc:Ignorable="d"
              d:DesignWidth="350" d:DesignHeight="700"
-             x:Class="AvaloniaDemo.Views.UserControls.Discover.DiscoverUserControl"
+             x:Class="AvaloniaKit.Views.UserControls.Discover.DiscoverUserControl"
              x:DataType="discoverVm:DiscoverViewModel">
 
       <Design.DataContext>

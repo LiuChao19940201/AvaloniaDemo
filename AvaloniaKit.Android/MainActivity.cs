@@ -7,17 +7,17 @@ using Avalonia;
 using Avalonia.Android;
 using Avalonia.Media;
 using Avalonia.ReactiveUI;
-using AvaloniaDemo.Android.Data;
-using AvaloniaDemo.Android.Services;
-using AvaloniaDemo.Services;
+using AvaloniaKit.Android.Data;
+using AvaloniaKit.Android.Services;
+using AvaloniaKit.Services;
 using System;
 using System.IO;
 using Color = Android.Graphics.Color;
 
-namespace AvaloniaDemo.Android
+namespace AvaloniaKit.Android
 {
     [Activity(
-        Label = "AvaloniaDemo.Android",
+        Label = "AvaloniaKit.Android",
         Theme = "@style/MyTheme.NoActionBar",
         Icon = "@drawable/icon",
         MainLauncher = true,
@@ -34,7 +34,7 @@ namespace AvaloniaDemo.Android
                     [
                         new FontFallback
                         {
-                            FontFamily = new FontFamily("avares://AvaloniaDemo/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi 3.0")
+                            FontFamily = new FontFamily("avares://AvaloniaKit/Assets/Fonts/AlibabaPuHuiTi-3-55-Regular.ttf#Alibaba PuHuiTi 3.0")
                         }
                     ]
                 })

@@ -3,7 +3,7 @@ using Avalonia.Media;
 using System;
 using System.Globalization;
 
-namespace AvaloniaDemo.Tools.Converters;
+namespace AvaloniaKit.Tools.Converters;
 
 /// <summary>
 /// true  → 微信绿 #07C160（Tab 选中态）

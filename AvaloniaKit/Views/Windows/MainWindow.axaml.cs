@@ -1,7 +1,7 @@
-using AvaloniaDemo.ViewModels.Windows;
+using AvaloniaKit.ViewModels.Windows;
 using System;
 
-namespace AvaloniaDemo.Views.Windows;
+namespace AvaloniaKit.Views.Windows;
 
 public partial class MainWindow : Ursa.Controls.UrsaWindow
 {

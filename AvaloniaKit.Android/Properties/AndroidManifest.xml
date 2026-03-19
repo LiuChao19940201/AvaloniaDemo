@@ -11,5 +11,5 @@
 		</intent>
 	</queries>
 
-	<application android:label="AvaloniaDemo" android:icon="@drawable/Icon" />
+	<application android:label="AvaloniaKit" android:icon="@drawable/Icon" />
 </manifest>

@@ -1,4 +1,4 @@
-namespace AvaloniaDemo.ViewModels.Messages;
+namespace AvaloniaKit.ViewModels.Messages;
 
 /// <summary>从基金列表页跳转到曲线页</summary>
 public record NavigateToFundChartMessage(string Code, string Name);

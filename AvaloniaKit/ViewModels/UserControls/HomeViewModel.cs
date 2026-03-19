@@ -5,7 +5,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
-namespace AvaloniaDemo.ViewModels.UserControls
+namespace AvaloniaKit.ViewModels.UserControls
 {
     public partial class HomeViewModel : ReactiveObject, IDisposable
     {

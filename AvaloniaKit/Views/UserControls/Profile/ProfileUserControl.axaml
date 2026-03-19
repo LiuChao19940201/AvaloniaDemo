@@ -1,13 +1,13 @@
 <UserControl xmlns="https://github.com/avaloniaui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:vm="using:AvaloniaDemo.ViewModels.UserControls"
+			 xmlns:vm="using:AvaloniaKit.ViewModels.UserControls"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:profile="using:AvaloniaDemo.Views.UserControls.Profile"
-             xmlns:profileVm="using:AvaloniaDemo.ViewModels.UserControls.Profile"
+             xmlns:profile="using:AvaloniaKit.Views.UserControls.Profile"
+             xmlns:profileVm="using:AvaloniaKit.ViewModels.UserControls.Profile"
 			 mc:Ignorable="d"
 			 d:DesignWidth="350" d:DesignHeight="700"
-			 x:Class="AvaloniaDemo.Views.UserControls.Profile.ProfileUserControl"
+			 x:Class="AvaloniaKit.Views.UserControls.Profile.ProfileUserControl"
 			 x:DataType="profileVm:ProfileViewModel">
 
 	<Design.DataContext>

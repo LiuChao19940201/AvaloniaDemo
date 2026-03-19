@@ -1,7 +1,7 @@
 <u:UrsaWindow xmlns="https://github.com/avaloniaui"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-              xmlns:vm="using:AvaloniaDemo.ViewModels.Windows"
-              xmlns:views="using:AvaloniaDemo.Views.UserControls"
+              xmlns:vm="using:AvaloniaKit.ViewModels.Windows"
+              xmlns:views="using:AvaloniaKit.Views.UserControls"
               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
               xmlns:u="https://irihi.tech/ursa"
@@ -12,9 +12,9 @@
               WindowStartupLocation="CenterScreen"
               IsFullScreenButtonVisible="{OnPlatform {x:True}, macOS={x:False}}"
               IsManagedResizerVisible="{OnPlatform {x:False}, Linux={x:True}}"
-              x:Class="AvaloniaDemo.Views.Windows.MainWindow"
+              x:Class="AvaloniaKit.Views.Windows.MainWindow"
               Icon="../../Assets/avalonia-logo.ico"
-              Title="AvaloniaDemo">
+              Title="AvaloniaKit">
 
     <Design.DataContext>
         <vm:MainWindowViewModel />

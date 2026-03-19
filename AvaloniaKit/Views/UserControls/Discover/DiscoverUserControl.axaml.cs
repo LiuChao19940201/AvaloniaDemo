@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaDemo.Views.UserControls.Discover;
+namespace AvaloniaKit.Views.UserControls.Discover;
 
 public partial class DiscoverUserControl : UserControl
 {

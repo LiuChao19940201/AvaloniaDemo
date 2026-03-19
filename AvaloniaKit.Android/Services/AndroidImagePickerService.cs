@@ -1,10 +1,10 @@
 using Android.App;
 using Android.Content;
-using AvaloniaDemo.Services;
+using AvaloniaKit.Services;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.Android.Services;
+namespace AvaloniaKit.Android.Services;
 
 public class AndroidImagePickerService : IImagePickerService
 {

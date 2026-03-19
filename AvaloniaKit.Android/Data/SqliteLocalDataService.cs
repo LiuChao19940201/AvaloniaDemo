@@ -1,10 +1,10 @@
-using AvaloniaDemo.Services;
+using AvaloniaKit.Services;
 using SQLite;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.Android.Data;
+namespace AvaloniaKit.Android.Data;
 
 [Table("app_settings")]
 internal class AppSetting

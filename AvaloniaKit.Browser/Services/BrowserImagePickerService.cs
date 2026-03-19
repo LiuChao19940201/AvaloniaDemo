@@ -1,10 +1,10 @@
-using AvaloniaDemo.Services;
+using AvaloniaKit.Services;
 using System;
 using System.IO;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.Browser.Services;
+namespace AvaloniaKit.Browser.Services;
 
 [SupportedOSPlatform("browser")]
 public class BrowserImagePickerService : IImagePickerService

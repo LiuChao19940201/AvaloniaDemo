@@ -1,4 +1,4 @@
-﻿namespace AvaloniaDemo.Services;
+﻿namespace AvaloniaKit.Services;
 
 public interface IDeviceService
 {

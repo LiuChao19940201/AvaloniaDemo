@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.Services;
+namespace AvaloniaKit.Services;
 
 public interface ILocalDataService
 {

@@ -2,7 +2,7 @@ using System.Runtime.InteropServices.JavaScript;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.Browser.Services;
+namespace AvaloniaKit.Browser.Services;
 
 [SupportedOSPlatform("browser")]
 internal static partial class BrowserStorage

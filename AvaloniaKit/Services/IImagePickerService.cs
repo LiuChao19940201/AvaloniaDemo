@@ -1,7 +1,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace AvaloniaDemo.Services;
+namespace AvaloniaKit.Services;
 
 public interface IImagePickerService
 {

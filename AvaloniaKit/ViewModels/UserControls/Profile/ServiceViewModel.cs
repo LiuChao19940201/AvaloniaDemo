@@ -1,11 +1,11 @@
 ﻿using System;
-using AvaloniaDemo.Services;
-using AvaloniaDemo.ViewModels.Messages;
+using AvaloniaKit.Services;
+using AvaloniaKit.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace AvaloniaDemo.ViewModels.UserControls.Profile;
+namespace AvaloniaKit.ViewModels.UserControls.Profile;
 
 public partial class ServiceViewModel : ObservableObject
 {
@@ -176,7 +176,7 @@ public partial class ServiceViewModel : ObservableObject
     {
         ExecuteOnMobile("通知推送", () =>
         {
-            ServiceLocator.DeviceService!.SendNotification("测试通知", "这是一条来自 AvaloniaDemo 的测试通知");
+            ServiceLocator.DeviceService!.SendNotification("测试通知", "这是一条来自 AvaloniaKit 的测试通知");
             StatusMessage = "🔔 通知已发送";
         });
     }

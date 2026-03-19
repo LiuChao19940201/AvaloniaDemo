@@ -1,4 +1,4 @@
-﻿namespace AvaloniaDemo.ViewModels.Messages;
+﻿namespace AvaloniaKit.ViewModels.Messages;
 
 /// <summary>从 Profile 跳转到服务页</summary>
 public record NavigateToServiceMessage;

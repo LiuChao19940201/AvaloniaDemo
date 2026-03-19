@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaDemo.Views.UserControls.Contacts;
+namespace AvaloniaKit.Views.UserControls.Contacts;
 
 public partial class ContactsUserControl : UserControl
 {

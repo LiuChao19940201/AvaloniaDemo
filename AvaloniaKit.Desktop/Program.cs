@@ -1,13 +1,13 @@
 ﻿using Avalonia;
 using Avalonia.Media;
 using Avalonia.ReactiveUI;
-using AvaloniaDemo.Desktop.Data;
-using AvaloniaDemo.Desktop.Services;
-using AvaloniaDemo.Services;
+using AvaloniaKit.Desktop.Data;
+using AvaloniaKit.Desktop.Services;
+using AvaloniaKit.Services;
 using System;
 using System.IO;
 
-namespace AvaloniaDemo.Desktop
+namespace AvaloniaKit.Desktop
 {
     internal sealed class Program
     {
@@ -19,7 +19,7 @@ namespace AvaloniaDemo.Desktop
 
             var appDataPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "AvaloniaDemo");
+                "AvaloniaKit");
             Directory.CreateDirectory(appDataPath);
 
             ServiceLocator.LocalDataService = new SqliteLocalDataService(
