@@ -63,34 +63,67 @@ public class DesktopAudioService : IAudioService, IDisposable
 
         try
         {
-            // MCI 只能播放本地文件；先下载到临时文件
             string tmpFile = System.IO.Path.Combine(
                 System.IO.Path.GetTempPath(),
                 $"netease_{Guid.NewGuid():N}.mp3");
 
             StatusText("下载中…");
-            using var http = new System.Net.Http.HttpClient();
+
+            var handler = new System.Net.Http.HttpClientHandler
+            {
+                AllowAutoRedirect = false // ★ 关键：关闭自动跳转
+            };
+
+            using var http = new System.Net.Http.HttpClient(handler);
+
             http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent",
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
             http.DefaultRequestHeaders.TryAddWithoutValidation(
                 "Referer", "https://music.163.com/");
 
-            var bytes = await http.GetByteArrayAsync(url);
+            // ────────────────
+            // 第一次请求（拿 302）
+            // ────────────────
+            var resp = await http.SendAsync(
+                new System.Net.Http.HttpRequestMessage(
+                    System.Net.Http.HttpMethod.Get, url),
+                System.Net.Http.HttpCompletionOption.ResponseHeadersRead);
+
+            string realUrl = url;
+
+            // ★ 关键：处理 302
+            if ((int)resp.StatusCode == 302 || resp.StatusCode == System.Net.HttpStatusCode.Found)
+            {
+                realUrl = resp.Headers.Location?.ToString() ?? url;
+            }
+
+            // ────────────────
+            // 第二次请求（真正音频）
+            // ────────────────
+            var audioResp = await http.GetAsync(realUrl);
+            audioResp.EnsureSuccessStatusCode();
+
+            var bytes = await audioResp.Content.ReadAsByteArrayAsync();
             await System.IO.File.WriteAllBytesAsync(tmpFile, bytes);
 
-            // 打开并播放
+            // ────────────────
+            // MCI 播放
+            // ────────────────
             string openCmd = $"open \"{tmpFile}\" type mpegvideo alias {ALIAS}";
             int ret = mciSendString(openCmd, null, 0, IntPtr.Zero);
+
             if (ret != 0)
             {
                 PlaybackError?.Invoke(this, $"MCI open 失败: {ret}");
                 return;
             }
+
             _opened = true;
 
             // 获取时长
             var sb = new System.Text.StringBuilder(128);
             mciSendString($"status {ALIAS} length", sb, 128, IntPtr.Zero);
+
             if (long.TryParse(sb.ToString().Trim(), out long dur))
                 DurationMs = dur;
 
@@ -98,7 +131,6 @@ public class DesktopAudioService : IAudioService, IDisposable
             mciSendString($"play {ALIAS}", null, 0, IntPtr.Zero);
             IsPlaying = true;
 
-            // 启动进度轮询
             StartPolling(tmpFile);
         }
         catch (Exception ex)
