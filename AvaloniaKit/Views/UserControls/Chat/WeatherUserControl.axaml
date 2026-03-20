@@ -1,0 +1,123 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:AvaloniaKit.ViewModels.UserControls.Chat"
+             x:Class="AvaloniaKit.Views.UserControls.Chat.WeatherUserControl"
+			 d:DesignWidth="390" d:DesignHeight="760"
+             x:DataType="vm:WeatherViewModel">
+
+    <Design.DataContext>
+        <vm:WeatherViewModel/>
+    </Design.DataContext>
+
+    <UserControl.Styles>
+		<Style Selector="Button.tab-btn">
+			<Setter Property="Background"      Value="Transparent"/>
+			<Setter Property="Foreground"      Value="{DynamicResource SemiColorText2}"/>
+			<Setter Property="FontSize"        Value="15"/>
+			<Setter Property="Padding"         Value="0,10"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		</Style>
+		<Style Selector="Button.tab-btn.active">
+			<Setter Property="Foreground" Value="#E05C5C"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+		</Style>
+		<Style Selector="Button.tab-btn:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<Style Selector="Button.rank-btn">
+			<Setter Property="Background"      Value="{DynamicResource SemiColorFillQuaternary}"/>
+			<Setter Property="Foreground"      Value="{DynamicResource SemiColorText1}"/>
+			<Setter Property="FontSize"        Value="12"/>
+			<Setter Property="Padding"         Value="14,5"/>
+			<Setter Property="CornerRadius"    Value="14"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="MinHeight"       Value="0"/>
+		</Style>
+		<Style Selector="Button.rank-btn.active">
+			<Setter Property="Background" Value="#E05C5C"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+		</Style>
+		<Style Selector="Button.rank-btn:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource SemiColorFillTertiary}"/>
+		</Style>
+		<Style Selector="Button.rank-btn.active:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="#E05C5C"/>
+		</Style>
+		<Style Selector="Button.icon-btn">
+			<Setter Property="Background"      Value="Transparent"/>
+			<Setter Property="Padding"         Value="8"/>
+			<Setter Property="BorderThickness" Value="0"/>
+		</Style>
+		<Style Selector="Button.icon-btn:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="Transparent"/>
+		</Style>
+		<!-- 封面缩略图统一样式 -->
+		<Style Selector="Border.cover-thumb">
+			<Setter Property="Width"        Value="44"/>
+			<Setter Property="Height"       Value="44"/>
+			<Setter Property="CornerRadius" Value="6"/>
+			<Setter Property="ClipToBounds" Value="True"/>
+			<Setter Property="Background"   Value="{DynamicResource SemiColorFillTertiary}"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+		</Style>
+	</UserControl.Styles>
+
+    <Grid>
+        <!-- 主内容 -->
+        <StackPanel Margin="20" Spacing="15">
+
+            <!-- 标题 -->
+            <TextBlock Text="🌤 实时天气"
+                       FontSize="22"
+                       FontWeight="Bold"
+                        Foreground="{DynamicResource SemiColorText2}"/>
+
+            <!-- 天气卡片 -->
+            <Border CornerRadius="15"
+                    Padding="20"
+                    Background="#33FFFFFF">
+
+                <StackPanel Spacing="10">
+
+                    <!-- 城市 + 日期 -->
+                    <TextBlock Text="{Binding DateInfo}"
+                               FontSize="16"
+                                Foreground="{DynamicResource SemiColorText2}"
+                               Opacity="0.9"/>
+
+                    <!-- 天气 -->
+                    <TextBlock Text="{Binding WeatherInfo}"
+                               FontSize="20"
+                               FontWeight="Bold"
+                                Foreground="{DynamicResource SemiColorText2}"/>
+
+                    <!-- 温度 -->
+                    <TextBlock Text="{Binding Temp}"
+                               FontSize="40"
+                               FontWeight="Bold"
+                                Foreground="{DynamicResource SemiColorText2}"/>
+
+                    <!-- 额外信息 -->
+                    <TextBlock Text="{Binding ExtraInfo}"
+                               FontSize="14"
+                                Foreground="{DynamicResource SemiColorText2}"
+                               Opacity="0.85"/>
+
+                </StackPanel>
+            </Border>
+
+            <!-- 刷新按钮 -->
+            <Button Content="🔄 刷新天气"
+                    HorizontalAlignment="Center"
+                    Command="{Binding RefreshCommand}"
+                    Classes="rank-btn"
+                    CornerRadius="20"
+                    Padding="10,5"/>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

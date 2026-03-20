@@ -1,157 +1,179 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:chat="using:AvaloniaKit.Views.UserControls.Chat"
-             xmlns:chatVm="using:AvaloniaKit.ViewModels.UserControls.Chat"
-             mc:Ignorable="d"
-             d:DesignWidth="350" d:DesignHeight="700"
-             x:Class="AvaloniaKit.Views.UserControls.Chat.ChatUserControl"
-             x:DataType="chatVm:ChatViewModel">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:chat="using:AvaloniaKit.Views.UserControls.Chat"
+			 xmlns:chatVm="using:AvaloniaKit.ViewModels.UserControls.Chat"
+			 mc:Ignorable="d"
+			 d:DesignWidth="350" d:DesignHeight="700"
+			 x:Class="AvaloniaKit.Views.UserControls.Chat.ChatUserControl"
+			 x:DataType="chatVm:ChatViewModel">
 
-    <Design.DataContext>
-        <chatVm:ChatViewModel />
-    </Design.DataContext>
+	<Design.DataContext>
+		<chatVm:ChatViewModel />
+	</Design.DataContext>
 
-    <ListBox ItemsSource="{Binding ChatList}"
-             Background="{DynamicResource SemiColorBg0}"
-             SelectionMode="Single">
+	<ListBox ItemsSource="{Binding ChatList}"
+			 Background="{DynamicResource SemiColorBg0}"
+			 SelectionMode="Single">
 
-        <ListBox.ItemTemplate>
-            <DataTemplate x:DataType="chatVm:ChatItemViewModel">
-                <StackPanel>
-                    <Button Background="Transparent"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Padding="0" Height="68"
-                            Command="{Binding $parent[ListBox].((chatVm:ChatViewModel)DataContext).OpenChatCommand}"
-                            CommandParameter="{Binding}">
-                        <Grid ColumnDefinitions="72,*,Auto" Margin="0,0,16,0">
+		<ListBox.ItemTemplate>
+			<DataTemplate x:DataType="chatVm:ChatItemViewModel">
+				<StackPanel>
+					<Button Background="Transparent"
+							HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Stretch"
+							Padding="0" Height="68"
+							Command="{Binding $parent[ListBox].((chatVm:ChatViewModel)DataContext).OpenChatCommand}"
+							CommandParameter="{Binding}">
+						<Grid ColumnDefinitions="72,*,Auto" Margin="0,0,16,0">
 
-                            <!-- ── 左列头像区 ── -->
-                            <Panel Grid.Column="0"
-                                   Width="46" Height="46"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center">
+							<!-- ── 左列头像区 ── -->
+							<Panel Grid.Column="0"
+								   Width="46" Height="46"
+								   HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                                <!-- 基金入口：红色 + 折线图 -->
-                                <Panel IsVisible="{Binding IsFundTracker}">
-                                    <Border Width="46" Height="46" CornerRadius="8" Background="#59b7c0"/>
-                                    <Viewbox Width="26" Height="26"
-                                             HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Canvas Width="24" Height="24">
-                                            <Polyline Points="2,20 6,13 10,16 15,8 22,11"
-                                                      Stroke="White" StrokeThickness="2.2"
-                                                      StrokeLineCap="Round"/>
-                                            <Polyline Points="18,6 22,6 22,10"
-                                                      Stroke="White" StrokeThickness="2"
-                                                      StrokeLineCap="Round"/>
-                                        </Canvas>
-                                    </Viewbox>
-                                </Panel>
+								<!-- ★ 天气入口：蓝色 + 太阳/云图标 -->
+								<Panel IsVisible="{Binding IsWeather}">
+									<Border Width="46" Height="46" CornerRadius="8" Background="#4FC3F7"/>
+									<Viewbox Width="26" Height="26"
+											 HorizontalAlignment="Center" VerticalAlignment="Center">
+										<Canvas Width="24" Height="24">
+											<Ellipse Canvas.Left="8" Canvas.Top="8" Width="8" Height="8" Fill="White"/>
+											<Line StartPoint="12,2"  EndPoint="12,6"  Stroke="White" StrokeThickness="1.5" StrokeLineCap="Round"/>
+											<Line StartPoint="12,18" EndPoint="12,22" Stroke="White" StrokeThickness="1.5" StrokeLineCap="Round"/>
+											<Line StartPoint="2,12"  EndPoint="6,12"  Stroke="White" StrokeThickness="1.5" StrokeLineCap="Round"/>
+											<Line StartPoint="18,12" EndPoint="22,12" Stroke="White" StrokeThickness="1.5" StrokeLineCap="Round"/>
+											<Line StartPoint="4.93,4.93"   EndPoint="7.76,7.76"   Stroke="White" StrokeThickness="1.5" StrokeLineCap="Round"/>
+											<Line StartPoint="16.24,16.24" EndPoint="19.07,19.07" Stroke="White" StrokeThickness="1.5" StrokeLineCap="Round"/>
+											<Line StartPoint="19.07,4.93"  EndPoint="16.24,7.76"  Stroke="White" StrokeThickness="1.5" StrokeLineCap="Round"/>
+											<Line StartPoint="7.76,16.24"  EndPoint="4.93,19.07"  Stroke="White" StrokeThickness="1.5" StrokeLineCap="Round"/>
+											<Ellipse Canvas.Left="8"  Canvas.Top="12" Width="14" Height="8"  Fill="White" Opacity="0.9"/>
+											<Ellipse Canvas.Left="10" Canvas.Top="10" Width="8"  Height="8"  Fill="White" Opacity="0.9"/>
+											<Ellipse Canvas.Left="15" Canvas.Top="11" Width="7"  Height="7"  Fill="White" Opacity="0.9"/>
+										</Canvas>
+									</Viewbox>
+								</Panel>
 
-                                <!-- 网易云入口：红色 + 音符图标 -->
-                                <Panel IsVisible="{Binding IsNetease}">
-                                    <Border Width="46" Height="46" CornerRadius="8" Background="#E05C5C"/>
-                                    <Viewbox Width="26" Height="26"
-                                             HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Canvas Width="24" Height="24">
-                                            <!-- 黑胶唱片图标 -->
-                                            <Ellipse Canvas.Left="2"  Canvas.Top="2"
-                                                     Width="20" Height="20"
-                                                     Stroke="White" StrokeThickness="1.5"
-                                                     Fill="Transparent"/>
-                                            <Ellipse Canvas.Left="8"  Canvas.Top="8"
-                                                     Width="8" Height="8"
-                                                     Stroke="White" StrokeThickness="1.2"
-                                                     Fill="Transparent"/>
-                                            <Ellipse Canvas.Left="10" Canvas.Top="10"
-                                                     Width="4" Height="4"
-                                                     Fill="White"/>
-                                            <!-- 音符尾巴 -->
-                                            <Line StartPoint="18,2" EndPoint="22,1"
-                                                  Stroke="White" StrokeThickness="1.5"/>
-                                            <Line StartPoint="22,1" EndPoint="22,5"
-                                                  Stroke="White" StrokeThickness="1.5"/>
-                                        </Canvas>
-                                    </Viewbox>
-                                </Panel>
+								<!-- 基金入口：红色 + 折线图 -->
+								<Panel IsVisible="{Binding IsFundTracker}">
+									<Border Width="46" Height="46" CornerRadius="8" Background="#59b7c0"/>
+									<Viewbox Width="26" Height="26"
+											 HorizontalAlignment="Center" VerticalAlignment="Center">
+										<Canvas Width="24" Height="24">
+											<Polyline Points="2,20 6,13 10,16 15,8 22,11"
+													  Stroke="White" StrokeThickness="2.2"
+													  StrokeLineCap="Round"/>
+											<Polyline Points="18,6 22,6 22,10"
+													  Stroke="White" StrokeThickness="2"
+													  StrokeLineCap="Round"/>
+										</Canvas>
+									</Viewbox>
+								</Panel>
 
-                                <!-- 普通聊天：绿色 + 微信气泡 -->
-                                <Panel IsVisible="{Binding !IsSpecialEntry}">
-                                    <Border Width="46" Height="46" CornerRadius="8" Background="#07C160"/>
-                                    <Canvas Width="28" Height="28"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Rectangle Canvas.Left="1"  Canvas.Top="1"
-                                                   Width="22" Height="17"
-                                                   RadiusX="3" RadiusY="3"
-                                                   Fill="White"/>
-                                        <Polygon Points="4,18 1,25 11,18" Fill="White"/>
-                                        <Rectangle Canvas.Left="5"  Canvas.Top="6"  Width="14" Height="2" Fill="#07C160"/>
-                                        <Rectangle Canvas.Left="5"  Canvas.Top="10" Width="10" Height="2" Fill="#07C160"/>
-                                    </Canvas>
-                                    <Border Background="#FF4444" CornerRadius="10"
-                                            MinWidth="18" Height="18"
-                                            HorizontalAlignment="Right" VerticalAlignment="Top"
-                                            Padding="3,0"
-                                            IsVisible="{Binding HasUnread}"
-                                            Margin="0,-5,-5,0">
-                                        <TextBlock Text="{Binding Unread}"
-                                                   FontSize="11" Foreground="White"
-                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </Panel>
+								<!-- 网易云入口：红色 + 音符图标 -->
+								<Panel IsVisible="{Binding IsNetease}">
+									<Border Width="46" Height="46" CornerRadius="8" Background="#E05C5C"/>
+									<Viewbox Width="26" Height="26"
+											 HorizontalAlignment="Center" VerticalAlignment="Center">
+										<Canvas Width="24" Height="24">
+											<!-- 黑胶唱片图标 -->
+											<Ellipse Canvas.Left="2"  Canvas.Top="2"
+													 Width="20" Height="20"
+													 Stroke="White" StrokeThickness="1.5"
+													 Fill="Transparent"/>
+											<Ellipse Canvas.Left="8"  Canvas.Top="8"
+													 Width="8" Height="8"
+													 Stroke="White" StrokeThickness="1.2"
+													 Fill="Transparent"/>
+											<Ellipse Canvas.Left="10" Canvas.Top="10"
+													 Width="4" Height="4"
+													 Fill="White"/>
+											<!-- 音符尾巴 -->
+											<Line StartPoint="18,2" EndPoint="22,1"
+												  Stroke="White" StrokeThickness="1.5"/>
+											<Line StartPoint="22,1" EndPoint="22,5"
+												  Stroke="White" StrokeThickness="1.5"/>
+										</Canvas>
+									</Viewbox>
+								</Panel>
 
-                            </Panel>
+								<!-- 普通聊天：绿色 + 微信气泡 -->
+								<Panel IsVisible="{Binding !IsSpecialEntry}">
+									<Border Width="46" Height="46" CornerRadius="8" Background="#07C160"/>
+									<Canvas Width="28" Height="28"
+											HorizontalAlignment="Center" VerticalAlignment="Center">
+										<Rectangle Canvas.Left="1"  Canvas.Top="1"
+												   Width="22" Height="17"
+												   RadiusX="3" RadiusY="3"
+												   Fill="White"/>
+										<Polygon Points="4,18 1,25 11,18" Fill="White"/>
+										<Rectangle Canvas.Left="5"  Canvas.Top="6"  Width="14" Height="2" Fill="#07C160"/>
+										<Rectangle Canvas.Left="5"  Canvas.Top="10" Width="10" Height="2" Fill="#07C160"/>
+									</Canvas>
+									<Border Background="#FF4444" CornerRadius="10"
+											MinWidth="18" Height="18"
+											HorizontalAlignment="Right" VerticalAlignment="Top"
+											Padding="3,0"
+											IsVisible="{Binding HasUnread}"
+											Margin="0,-5,-5,0">
+										<TextBlock Text="{Binding Unread}"
+												   FontSize="11" Foreground="White"
+												   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+									</Border>
+								</Panel>
 
-                            <!-- ── 名称 + 预览 ── -->
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
-                                <TextBlock Text="{Binding Name}"
-                                           FontSize="16"
-                                           Foreground="{DynamicResource SemiColorText0}"/>
-                                <TextBlock Text="{Binding Preview}"
-                                           FontSize="13"
-                                           Foreground="{DynamicResource SemiColorText2}"
-                                           TextTrimming="CharacterEllipsis"/>
-                            </StackPanel>
+							</Panel>
 
-                            <!-- ── 右侧 ── -->
-                            <!-- 功能入口显示箭头 -->
-                            <Viewbox Grid.Column="2"
-                                     Width="16" Height="16"
-                                     VerticalAlignment="Center"
-                                     IsVisible="{Binding IsSpecialEntry}">
-                                <Canvas Width="24" Height="24">
-                                    <Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
-                                          Fill="{DynamicResource SemiColorText2}"/>
-                                </Canvas>
-                            </Viewbox>
+							<!-- ── 名称 + 预览 ── -->
+							<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+								<TextBlock Text="{Binding Name}"
+										   FontSize="16"
+										   Foreground="{DynamicResource SemiColorText0}"/>
+								<TextBlock Text="{Binding Preview}"
+										   FontSize="13"
+										   Foreground="{DynamicResource SemiColorText2}"
+										   TextTrimming="CharacterEllipsis"/>
+							</StackPanel>
 
-                            <!-- 普通聊天显示时间 -->
-                            <TextBlock Grid.Column="2"
-                                       Text="{Binding Time}"
-                                       FontSize="12"
-                                       Foreground="{DynamicResource SemiColorText2}"
-                                       VerticalAlignment="Top" Margin="0,14,0,0"
-                                       HorizontalAlignment="Right"
-                                       IsVisible="{Binding !IsSpecialEntry}"/>
-                        </Grid>
-                    </Button>
-                    <Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="72,0,0,0"/>
-                </StackPanel>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
+							<!-- ── 右侧 ── -->
+							<!-- 功能入口显示箭头 -->
+							<Viewbox Grid.Column="2"
+									 Width="16" Height="16"
+									 VerticalAlignment="Center"
+									 IsVisible="{Binding IsSpecialEntry}">
+								<Canvas Width="24" Height="24">
+									<Path Data="M10 6L8.59 7.41 13.17 12L8.59 16.59 10 18L16 12Z"
+										  Fill="{DynamicResource SemiColorText2}"/>
+								</Canvas>
+							</Viewbox>
 
-        <ListBox.ItemContainerTheme>
-            <ControlTheme TargetType="ListBoxItem">
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="Background" Value="Transparent"/>
-                <Style Selector="^:pointerover /template/ ContentPresenter">
-                    <Setter Property="Background" Value="{DynamicResource SemiColorFillQuaternary}"/>
-                </Style>
-                <Style Selector="^:selected /template/ ContentPresenter">
-                    <Setter Property="Background" Value="{DynamicResource SemiColorFillTertiary}"/>
-                </Style>
-            </ControlTheme>
-        </ListBox.ItemContainerTheme>
-    </ListBox>
+							<!-- 普通聊天显示时间 -->
+							<TextBlock Grid.Column="2"
+									   Text="{Binding Time}"
+									   FontSize="12"
+									   Foreground="{DynamicResource SemiColorText2}"
+									   VerticalAlignment="Top" Margin="0,14,0,0"
+									   HorizontalAlignment="Right"
+									   IsVisible="{Binding !IsSpecialEntry}"/>
+						</Grid>
+					</Button>
+					<Rectangle Height="0.6" Fill="{DynamicResource SemiColorBorder}" Margin="72,0,0,0"/>
+				</StackPanel>
+			</DataTemplate>
+		</ListBox.ItemTemplate>
+
+		<ListBox.ItemContainerTheme>
+			<ControlTheme TargetType="ListBoxItem">
+				<Setter Property="Padding" Value="0"/>
+				<Setter Property="Background" Value="Transparent"/>
+				<Style Selector="^:pointerover /template/ ContentPresenter">
+					<Setter Property="Background" Value="{DynamicResource SemiColorFillQuaternary}"/>
+				</Style>
+				<Style Selector="^:selected /template/ ContentPresenter">
+					<Setter Property="Background" Value="{DynamicResource SemiColorFillTertiary}"/>
+				</Style>
+			</ControlTheme>
+		</ListBox.ItemContainerTheme>
+	</ListBox>
 </UserControl>

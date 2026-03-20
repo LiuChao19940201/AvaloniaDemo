@@ -1,4 +1,5 @@
 using AvaloniaKit.Messages;
+using AvaloniaKit.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,6 +11,8 @@ public partial class ChatViewModel : ObservableObject
 {
     public ObservableCollection<ChatItemViewModel> ChatList { get; } = new()
     {
+        // ★ 天气预报入口（排在基金上方）
+        new() { Name = "天气预报", Preview = "武汉 10° 雾 · 点击查看实时天气", Time = "昨天", Unread = 0, IsWeather = true },
         new() { Name = "基金自选跟踪", Preview = "点击查看自选基金实时净值", Time = "昨天",  Unread = 0, IsFundTracker = true  },
         new() { Name = "网易云音乐",   Preview = "私人漫游 · 推荐、排行、搜索", Time = "昨天", Unread = 0, IsNetease = true },
         new() { Name = "文件传输助手", Preview = "欢迎使用微信",             Time = "昨天",  Unread = 0  },
@@ -22,7 +25,9 @@ public partial class ChatViewModel : ObservableObject
     [RelayCommand]
     private void OpenChat(ChatItemViewModel item)
     {
-        if (item.IsFundTracker)
+        if (item.IsWeather)
+            WeakReferenceMessenger.Default.Send(new NavigateToWeatherMessage());
+        else if (item.IsFundTracker)
             WeakReferenceMessenger.Default.Send(new NavigateToFundTrackerMessage());
         else if (item.IsNetease)
             WeakReferenceMessenger.Default.Send(new NavigateToNeteaseMessage());
@@ -42,17 +47,19 @@ public partial class ChatItemViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(HasUnread))]
     private int _unread = 0;
 
+    public bool IsWeather { get; init; } = false;   // ★ 新增
     public bool IsFundTracker { get; init; } = false;
     public bool IsNetease { get; init; } = false;
 
-    // 是否是功能入口（基金 或 网易云），控制右侧箭头和 Time 显示
-    public bool IsSpecialEntry => IsFundTracker || IsNetease;
+    // 是否是功能入口（天气 / 基金 / 网易云），控制右侧箭头和 Time 显示
+    public bool IsSpecialEntry => IsWeather || IsFundTracker || IsNetease;
 
     public string AvatarLetter => Name.Length > 0 ? Name[..1] : "?";
     public bool HasUnread => Unread > 0;
 
     // 头像背景色
-    public string AvatarBg => IsFundTracker ? "#E05C5C"
+    public string AvatarBg => IsWeather ? "#4FC3F7"
+                            : IsFundTracker ? "#59b7c0"
                             : IsNetease ? "#E05C5C"
                             : "#07C160";
 }

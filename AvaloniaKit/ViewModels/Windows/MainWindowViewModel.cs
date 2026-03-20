@@ -1,4 +1,5 @@
 using AvaloniaKit.Messages;
+using AvaloniaKit.ViewModels.Messages;
 using AvaloniaKit.ViewModels.UserControls.Chat;
 using AvaloniaKit.ViewModels.UserControls.Contacts;
 using AvaloniaKit.ViewModels.UserControls.Discover;
@@ -16,22 +17,25 @@ public partial class MainWindowViewModel : ObservableObject,
     IRecipient<NavigateBackFromFundTrackerMessage>,
     IRecipient<NavigateToFundChartMessage>,
     IRecipient<NavigateBackFromFundChartMessage>,
-    // ★ 新增：网易云
     IRecipient<NavigateToNeteaseMessage>,
     IRecipient<NavigateBackFromNeteaseMessage>,
     IRecipient<NavigateToNeteasePlayerMessage>,
-    IRecipient<NavigateBackFromNeteasePlayerMessage>
+    IRecipient<NavigateBackFromNeteasePlayerMessage>,
+    // ★ 新增：天气
+    IRecipient<NavigateToWeatherMessage>,
+    IRecipient<NavigateBackFromWeatherMessage>
 {
     // ── 页面 ViewModel 实例 ──
-    private readonly ChatViewModel            _chatVm           = new();
-    private readonly ContactsViewModel        _contactsVm       = new();
-    private readonly DiscoverViewModel        _discoverVm       = new();
-    private readonly ProfileViewModel         _profileVm        = new();
-    private readonly ServiceViewModel         _serviceVm        = new();
-    private readonly FundTrackerViewModel     _fundTrackerVm    = new();
-    private readonly FundChartViewModel       _fundChartVm      = new();
-    private readonly NeteaseViewModel         _neteaseVm        = new();   // ★
-    private readonly NeteasePlayerViewModel   _neteasePlayerVm  = new();   // ★
+    private readonly ChatViewModel _chatVm = new();
+    private readonly ContactsViewModel _contactsVm = new();
+    private readonly DiscoverViewModel _discoverVm = new();
+    private readonly ProfileViewModel _profileVm = new();
+    private readonly ServiceViewModel _serviceVm = new();
+    private readonly FundTrackerViewModel _fundTrackerVm = new();
+    private readonly FundChartViewModel _fundChartVm = new();
+    private readonly NeteaseViewModel _neteaseVm = new();
+    private readonly NeteasePlayerViewModel _neteasePlayerVm = new();
+    private readonly WeatherViewModel _weatherVm = new();   // ★ 新增
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsChatActive))]
@@ -49,42 +53,45 @@ public partial class MainWindowViewModel : ObservableObject,
         WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
-    public bool IsChatActive     => CurrentPage is ChatViewModel;
+    public bool IsChatActive => CurrentPage is ChatViewModel;
     public bool IsContactsActive => CurrentPage is ContactsViewModel;
     public bool IsDiscoverActive => CurrentPage is DiscoverViewModel;
-    public bool IsProfileActive  => CurrentPage is ProfileViewModel;
+    public bool IsProfileActive => CurrentPage is ProfileViewModel;
 
     public string CurrentPageTitle => CurrentPage switch
     {
-        ChatViewModel           => "微信",
-        ContactsViewModel       => "通讯录",
-        DiscoverViewModel       => "发现",
-        ProfileViewModel        => "我",
-        ServiceViewModel        => "服务",
-        FundTrackerViewModel    => "基金自选跟踪",
-        FundChartViewModel      => "净值走势",
-        NeteaseViewModel        => "网易云音乐",
-        NeteasePlayerViewModel  => "",   // 播放器自带顶栏
-        _                       => ""
+        ChatViewModel => "微信",
+        ContactsViewModel => "通讯录",
+        DiscoverViewModel => "发现",
+        ProfileViewModel => "我",
+        ServiceViewModel => "服务",
+        FundTrackerViewModel => "基金自选跟踪",
+        FundChartViewModel => "净值走势",
+        NeteaseViewModel => "网易云音乐",
+        NeteasePlayerViewModel => "",
+        WeatherViewModel => "",   // ★ 天气页自带顶栏
+        _ => ""
     };
 
     public bool ShowTitleBar => CurrentPage is not ProfileViewModel
                                            and not ServiceViewModel
                                            and not FundTrackerViewModel
                                            and not FundChartViewModel
-                                           and not NeteaseViewModel        // ★
-                                           and not NeteasePlayerViewModel; // ★
+                                           and not NeteaseViewModel
+                                           and not NeteasePlayerViewModel
+                                           and not WeatherViewModel;   // ★
 
     public bool ShowTabBar => CurrentPage is not ServiceViewModel
                                         and not FundTrackerViewModel
                                         and not FundChartViewModel
-                                        and not NeteaseViewModel           // ★
-                                        and not NeteasePlayerViewModel;    // ★
+                                        and not NeteaseViewModel
+                                        and not NeteasePlayerViewModel
+                                        and not WeatherViewModel;      // ★
 
-    [RelayCommand] private void SwitchToChat()     => CurrentPage = _chatVm;
+    [RelayCommand] private void SwitchToChat() => CurrentPage = _chatVm;
     [RelayCommand] private void SwitchToContacts() => CurrentPage = _contactsVm;
     [RelayCommand] private void SwitchToDiscover() => CurrentPage = _discoverVm;
-    [RelayCommand] private void SwitchToProfile()  => CurrentPage = _profileVm;
+    [RelayCommand] private void SwitchToProfile() => CurrentPage = _profileVm;
 
     public void Receive(NavigateToServiceMessage message)
     {
@@ -113,7 +120,7 @@ public partial class MainWindowViewModel : ObservableObject,
     public void Receive(NavigateBackFromFundChartMessage message)
         => CurrentPage = _fundTrackerVm;
 
-    // ── ★ 网易云导航 ─────────────────────────────────────────────────────────
+    // ── 网易云导航 ────────────────────────────────────────────────────
     public void Receive(NavigateToNeteaseMessage message)
     {
         _neteaseVm.OnNavigatedTo();
@@ -133,4 +140,14 @@ public partial class MainWindowViewModel : ObservableObject,
 
     public void Receive(NavigateBackFromNeteasePlayerMessage message)
         => CurrentPage = _neteaseVm;
+
+    // ── ★ 天气导航 ────────────────────────────────────────────────────
+    public void Receive(NavigateToWeatherMessage message)
+    {
+        //_weatherVm.OnNavigatedTo();
+        CurrentPage = _weatherVm;
+    }
+
+    public void Receive(NavigateBackFromWeatherMessage message)
+        => CurrentPage = _chatVm;
 }
