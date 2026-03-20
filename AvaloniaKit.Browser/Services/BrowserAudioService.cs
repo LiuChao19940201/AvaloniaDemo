@@ -13,7 +13,7 @@ namespace AvaloniaKit.Browser.Services;
 //  依赖：Program.cs 中 await JSHost.ImportAsync("audio", "/audio.js")
 // ══════════════════════════════════════════════════════════════════════════════
 [SupportedOSPlatform("browser")]
-public class BrowserAudioService : IAudioService, IDisposable
+public partial class BrowserAudioService : IAudioService, IDisposable
 {
     // ── JSImport 声明（对应 audio.js 中的 export function）───────────────────
     [JSImport("audioPlay",          "audio")] private static partial void   JsPlay(string url);

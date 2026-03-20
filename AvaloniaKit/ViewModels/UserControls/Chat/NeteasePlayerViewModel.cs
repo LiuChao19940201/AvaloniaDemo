@@ -20,6 +20,10 @@ namespace AvaloniaKit.ViewModels.UserControls.Chat;
 
 public partial class NeteasePlayerViewModel : ObservableObject
 {
+    // ★ 修复：移除使用 HttpClientHandler 的 _coverHttp，统一使用 _http。
+    //   HttpClientHandler.MaxAutomaticRedirections 在 Browser/WASM 平台不支持，
+    //   会导致静态构造函数抛出 PlatformNotSupportedException，引发白屏。
+    //   浏览器底层 fetch API 会自动处理重定向，无需也无法在 .NET 层干预。
     private static readonly HttpClient _http = new() { Timeout = TimeSpan.FromSeconds(20) };
 
     static NeteasePlayerViewModel()
@@ -44,20 +48,18 @@ public partial class NeteasePlayerViewModel : ObservableObject
     private Bitmap? _coverBitmap;
     public bool HasLoadedCover => CoverBitmap != null;
 
-    private static readonly HttpClient _coverHttp = new(new HttpClientHandler
-    {
-        AllowAutoRedirect = true, MaxAutomaticRedirections = 5
-    }) { Timeout = TimeSpan.FromSeconds(8) };
-
     private async Task LoadCoverBitmapAsync(string url)
     {
         if (string.IsNullOrEmpty(url)) return;
         try
         {
             string thumbUrl = url.Contains('?') ? url : url + "?param=240y240";
-            byte[] bytes    = await _coverHttp.GetByteArrayAsync(thumbUrl);
-            using var ms    = new MemoryStream(bytes);
-            var bmp         = new Bitmap(ms);
+            // ★ 修复：使用公共 _http + CancellationTokenSource 控制超时，
+            //   不再单独创建带 HttpClientHandler 的实例（Browser 平台不支持）
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(8));
+            byte[] bytes  = await _http.GetByteArrayAsync(thumbUrl, cts.Token);
+            using var ms  = new MemoryStream(bytes);
+            var bmp       = new Bitmap(ms);
             await Dispatcher.UIThread.InvokeAsync(() => CoverBitmap = bmp);
         }
         catch { /* 静默忽略，保持占位 */ }
@@ -196,7 +198,6 @@ public partial class NeteasePlayerViewModel : ObservableObject
 
             StatusText = "缓冲中…";
 
-            // ★ 修复：先检查 Audio 服务是否已注册，给出明确提示
             if (Audio == null)
             {
                 StatusText = "音频服务未初始化，请检查平台配置";
@@ -479,11 +480,6 @@ public partial class NeteasePlayerViewModel : ObservableObject
 }
 
 // ── 歌词行模型 ────────────────────────────────────────────────────────────────
-// ★ 修复：歌词颜色改为主题感知（不再写死 #C0392B / #AAAAAA）
-//   激活行用强调色 #E05C5C，非激活行用动态资源——
-//   但 ObservableObject 里无法直接使用 DynamicResource，
-//   所以改为让 XAML 侧通过 DataTrigger/Style 控制，
-//   这里只保留 IsActive 状态，Foreground 交给 XAML 绑定。
 public partial class LyricLine : ObservableObject
 {
     public long   TimeMs  { get; set; }
@@ -495,8 +491,6 @@ public partial class LyricLine : ObservableObject
     [NotifyPropertyChangedFor(nameof(FontSize))]
     private bool _isActive = false;
 
-    // ★ Foreground 颜色由 AXAML Style（lyric-line / lyric-line.active）控制，
-    //   Classes.active="{Binding IsActive}" 触发，自动跟随深/浅色主题。
     public string FontWeight => IsActive ? "SemiBold" : "Normal";
     public string Foreground => IsActive ? "#C0392B" : "#AAAAAA";
     public double FontSize   => IsActive ? 18 : 15;
