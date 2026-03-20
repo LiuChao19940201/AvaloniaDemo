@@ -153,6 +153,5 @@
                 </Style>
             </ControlTheme>
         </ListBox.ItemContainerTheme>
-
     </ListBox>
 </UserControl>
