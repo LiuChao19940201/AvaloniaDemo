@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json.Nodes;
+using AvaloniaKit.ViewModels.Messages;
 
 namespace AvaloniaKit.ViewModels.UserControls.Chat;
 
@@ -22,6 +24,13 @@ public partial class WeatherViewModel : ObservableObject
     private void Refresh()
     {
         LoadWeather();
+    }
+
+    // 返回命令：发送导航消息给 MainWindowViewModel
+    [RelayCommand]
+    private void GoBack()
+    {
+        WeakReferenceMessenger.Default.Send(new NavigateBackFromWeatherMessage());
     }
 
     private void LoadWeather()

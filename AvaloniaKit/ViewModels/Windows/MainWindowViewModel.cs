@@ -144,7 +144,6 @@ public partial class MainWindowViewModel : ObservableObject,
     // ── ★ 天气导航 ────────────────────────────────────────────────────
     public void Receive(NavigateToWeatherMessage message)
     {
-        //_weatherVm.OnNavigatedTo();
         CurrentPage = _weatherVm;
     }
 

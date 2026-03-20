@@ -66,58 +66,86 @@
 		</Style>
 	</UserControl.Styles>
 
-    <Grid>
+    <!-- 使用 DockPanel 以便添加顶部导航栏 -->
+    <DockPanel Background="{DynamicResource SemiColorBg1}">
+        <!-- 顶部导航（返回按钮） -->
+        <Border DockPanel.Dock="Top"
+                Background="{DynamicResource SemiColorBg0}"
+                BorderBrush="{DynamicResource SemiColorBorder}"
+                BorderThickness="0,0,0,0.8"
+                Padding="4,8">
+            <Grid ColumnDefinitions="44,*,44">
+                <Button Grid.Column="0" Classes="icon-btn"
+                        Command="{Binding GoBackCommand}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Viewbox Width="20" Height="20">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M20 11H7.83L13.42 5.41 12 4 4 12 12 20 13.41 18.59 7.83 13H20V11Z"
+                                  Fill="{DynamicResource SemiColorText0}"/>
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+                <!-- 中间占位（可显示标题或留空） -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!-- 右侧留空以平衡布局 -->
+                <Panel Grid.Column="2"/>
+            </Grid>
+        </Border>
+
         <!-- 主内容 -->
-        <StackPanel Margin="20" Spacing="15">
+        <Grid>
+            <!-- 主内容 -->
+            <StackPanel Margin="20" Spacing="15">
 
-            <!-- 标题 -->
-            <TextBlock Text="🌤 实时天气"
-                       FontSize="22"
-                       FontWeight="Bold"
-                        Foreground="{DynamicResource SemiColorText2}"/>
+                <!-- 标题 -->
+                <TextBlock Text="🌤 实时天气"
+                           FontSize="22"
+                           FontWeight="Bold"
+                            Foreground="{DynamicResource SemiColorText2}"/>
 
-            <!-- 天气卡片 -->
-            <Border CornerRadius="15"
-                    Padding="20"
-                    Background="#33FFFFFF">
+                <!-- 天气卡片 -->
+                <Border CornerRadius="15"
+                        Padding="20" Background="{DynamicResource SemiColorBg0}">
 
-                <StackPanel Spacing="10">
+                    <StackPanel Spacing="10">
 
-                    <!-- 城市 + 日期 -->
-                    <TextBlock Text="{Binding DateInfo}"
-                               FontSize="16"
-                                Foreground="{DynamicResource SemiColorText2}"
-                               Opacity="0.9"/>
+                        <!-- 城市 + 日期 -->
+                        <TextBlock Text="{Binding DateInfo}"
+                                   FontSize="16"
+                                    Foreground="{DynamicResource SemiColorText2}"
+                                   Opacity="0.9"/>
 
-                    <!-- 天气 -->
-                    <TextBlock Text="{Binding WeatherInfo}"
-                               FontSize="20"
-                               FontWeight="Bold"
-                                Foreground="{DynamicResource SemiColorText2}"/>
+                        <!-- 天气 -->
+                        <TextBlock Text="{Binding WeatherInfo}"
+                                   FontSize="20"
+                                   FontWeight="Bold"
+                                    Foreground="{DynamicResource SemiColorText2}"/>
 
-                    <!-- 温度 -->
-                    <TextBlock Text="{Binding Temp}"
-                               FontSize="40"
-                               FontWeight="Bold"
-                                Foreground="{DynamicResource SemiColorText2}"/>
+                        <!-- 温度 -->
+                        <TextBlock Text="{Binding Temp}"
+                                   FontSize="40"
+                                   FontWeight="Bold"
+                                    Foreground="{DynamicResource SemiColorText2}"/>
 
-                    <!-- 额外信息 -->
-                    <TextBlock Text="{Binding ExtraInfo}"
-                               FontSize="14"
-                                Foreground="{DynamicResource SemiColorText2}"
-                               Opacity="0.85"/>
+                        <!-- 额外信息 -->
+                        <TextBlock Text="{Binding ExtraInfo}"
+                                   FontSize="14"
+                                    Foreground="{DynamicResource SemiColorText2}"
+                                   Opacity="0.85"/>
 
-                </StackPanel>
-            </Border>
+                    </StackPanel>
+                </Border>
 
-            <!-- 刷新按钮 -->
-            <Button Content="🔄 刷新天气"
-                    HorizontalAlignment="Center"
-                    Command="{Binding RefreshCommand}"
-                    Classes="rank-btn"
-                    CornerRadius="20"
-                    Padding="10,5"/>
+                <!-- 刷新按钮 -->
+                <Button Content="🔄 刷新天气"
+                        HorizontalAlignment="Center"
+                        Command="{Binding RefreshCommand}"
+                        Classes="rank-btn"
+                        CornerRadius="20"
+                        Padding="10,5"/>
 
-        </StackPanel>
-    </Grid>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
 </UserControl>
