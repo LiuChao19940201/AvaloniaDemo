@@ -1,7 +1,7 @@
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
+using AvaloniaKit.Messages;
 using AvaloniaKit.Tools.Extensions;
-using AvaloniaKit.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;

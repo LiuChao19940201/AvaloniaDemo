@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AvaloniaKit.Messages;
 using AvaloniaKit.Services;
-using AvaloniaKit.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System;
 
 namespace AvaloniaKit.ViewModels.UserControls.Profile;
 

@@ -1,8 +1,8 @@
+using AvaloniaKit.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using AvaloniaKit.ViewModels.Messages;
 
 namespace AvaloniaKit.ViewModels.UserControls.Chat;
 
@@ -36,23 +36,23 @@ public partial class ChatItemViewModel : ObservableObject
     private string _name = "";
 
     [ObservableProperty] private string _preview = "";
-    [ObservableProperty] private string _time    = "";
+    [ObservableProperty] private string _time = "";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasUnread))]
     private int _unread = 0;
 
     public bool IsFundTracker { get; init; } = false;
-    public bool IsNetease     { get; init; } = false;
+    public bool IsNetease { get; init; } = false;
 
     // 是否是功能入口（基金 或 网易云），控制右侧箭头和 Time 显示
     public bool IsSpecialEntry => IsFundTracker || IsNetease;
 
     public string AvatarLetter => Name.Length > 0 ? Name[..1] : "?";
-    public bool   HasUnread    => Unread > 0;
+    public bool HasUnread => Unread > 0;
 
     // 头像背景色
     public string AvatarBg => IsFundTracker ? "#E05C5C"
-                            : IsNetease     ? "#E05C5C"
+                            : IsNetease ? "#E05C5C"
                             : "#07C160";
 }

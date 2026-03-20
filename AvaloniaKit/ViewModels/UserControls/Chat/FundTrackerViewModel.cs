@@ -1,7 +1,9 @@
+using AvaloniaKit.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -10,8 +12,6 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using AvaloniaKit.ViewModels.Messages;
-using System.Collections.Generic;
 
 namespace AvaloniaKit.ViewModels.UserControls.Chat;
 
@@ -52,14 +52,14 @@ public partial class FundTrackerViewModel : ObservableObject
     private readonly ObservableCollection<string> _watchCodes = new();
 
     // ── 状态属性 ──────────────────────────────────────────────────────────────
-    [ObservableProperty] private bool   _isLoading   = false;
-    [ObservableProperty] private bool   _isOffline   = false;
-    [ObservableProperty] private string _statusText  = "";
+    [ObservableProperty] private bool _isLoading = false;
+    [ObservableProperty] private bool _isOffline = false;
+    [ObservableProperty] private string _statusText = "";
 
     // ── 搜索面板 ──────────────────────────────────────────────────────────────
-    [ObservableProperty] private bool   _showSearch   = false;
-    [ObservableProperty] private string _searchText   = "";
-    [ObservableProperty] private bool   _isSearching  = false;
+    [ObservableProperty] private bool _showSearch = false;
+    [ObservableProperty] private string _searchText = "";
+    [ObservableProperty] private bool _isSearching = false;
     [ObservableProperty] private string _searchStatus = "";
 
     // ── 自选基金列表 ──────────────────────────────────────────────────────────
@@ -78,10 +78,10 @@ public partial class FundTrackerViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(IsWatchlistActive))]
     private int _activeTab = 0;   // 0=发现  1=自选
 
-    public bool IsDiscoverActive  => ActiveTab == 0;
+    public bool IsDiscoverActive => ActiveTab == 0;
     public bool IsWatchlistActive => ActiveTab == 1;
 
-    [RelayCommand] private void SwitchToDiscover()  => ActiveTab = 0;
+    [RelayCommand] private void SwitchToDiscover() => ActiveTab = 0;
     [RelayCommand] private void SwitchToWatchlist() { ActiveTab = 1; _ = DoRefreshAsync(); }
 
     // ════════════════════════════════════════════════════════════════════════
@@ -133,9 +133,9 @@ public partial class FundTrackerViewModel : ObservableObject
             {
                 "stock" => "25",
                 "index" => "27",
-                "bond"  => "31",
-                "qdii"  => "35",
-                _       => "0"     // hot / 全部
+                "bond" => "31",
+                "qdii" => "35",
+                _ => "0"     // hot / 全部
             };
 
             // 按近1月涨幅排序，取前20条
@@ -165,12 +165,12 @@ public partial class FundTrackerViewModel : ObservableObject
                 var parts = entry.Groups[1].Value.Split(',');
                 if (parts.Length < 6) continue;
 
-                string code    = parts[0].Trim();
-                string abbr    = parts[1].Trim();
-                string name    = parts[2].Trim();
-                string navStr  = parts[3].Trim();
+                string code = parts[0].Trim();
+                string abbr = parts[1].Trim();
+                string name = parts[2].Trim();
+                string navStr = parts[3].Trim();
                 string nav2Str = parts[4].Trim();
-                string chgStr  = parts[5].Trim();
+                string chgStr = parts[5].Trim();
 
                 if (!seenCodes.Add(code)) continue;   // 跳过重复 code
 
@@ -179,11 +179,11 @@ public partial class FundTrackerViewModel : ObservableObject
 
                 DiscoverFunds.Add(new DiscoverFundItem
                 {
-                    Code      = code,
-                    Name      = string.IsNullOrWhiteSpace(name) ? abbr : name,
-                    NavStr    = nav > 0 ? nav.ToString("F4") : "--",
+                    Code = code,
+                    Name = string.IsNullOrWhiteSpace(name) ? abbr : name,
+                    NavStr = nav > 0 ? nav.ToString("F4") : "--",
                     ChangeRaw = chg,
-                    IsAdded   = _watchCodes.Contains(code),
+                    IsAdded = _watchCodes.Contains(code),
                 });
             }
 
@@ -219,11 +219,11 @@ public partial class FundTrackerViewModel : ObservableObject
             if (!existing.Add(code)) continue;   // 跳过已存在的 code
             DiscoverFunds.Add(new DiscoverFundItem
             {
-                Code      = code,
-                Name      = name,
-                NavStr    = nav,
+                Code = code,
+                Name = name,
+                NavStr = nav,
                 ChangeRaw = chg,
-                IsAdded   = _watchCodes.Contains(code),
+                IsAdded = _watchCodes.Contains(code),
             });
         }
     }
@@ -291,14 +291,14 @@ public partial class FundTrackerViewModel : ObservableObject
         _refreshCts = new CancellationTokenSource();
         var ct = _refreshCts.Token;
 
-        IsLoading  = true;
-        IsOffline  = false;
+        IsLoading = true;
+        IsOffline = false;
         StatusText = "加载中…";
         Funds.Clear();
 
         if (_watchCodes.Count == 0)
         {
-            IsLoading  = false;
+            IsLoading = false;
             StatusText = "自选列表为空，点击「+」添加基金";
             return;
         }
@@ -334,7 +334,7 @@ public partial class FundTrackerViewModel : ObservableObject
         string keyword = SearchText.Trim();
         if (string.IsNullOrEmpty(keyword)) return;
 
-        IsSearching  = true;
+        IsSearching = true;
         SearchStatus = "搜索中…";
         SearchResults.Clear();
 
@@ -352,9 +352,9 @@ public partial class FundTrackerViewModel : ObservableObject
                     int count = 0;
                     foreach (var item in doc.RootElement.EnumerateArray())
                     {
-                        string code   = item[0].GetString() ?? "";
+                        string code = item[0].GetString() ?? "";
                         string pinyin = item[1].GetString() ?? "";
-                        string name   = item[2].GetString() ?? "";
+                        string name = item[2].GetString() ?? "";
                         if (code.Contains(keyword) || name.Contains(keyword)
                             || pinyin.Contains(keyword, StringComparison.OrdinalIgnoreCase))
                         {
@@ -384,11 +384,11 @@ public partial class FundTrackerViewModel : ObservableObject
         }
         try
         {
-            long   ts  = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            long ts = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             string url = $"https://fundgz.1234567.com.cn/js/{code}.js?rt={ts}";
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            string raw   = await _http.GetStringAsync(url, cts.Token);
-            var    m     = Regex.Match(raw, @"jsonpgz\((.+)\)");
+            string raw = await _http.GetStringAsync(url, cts.Token);
+            var m = Regex.Match(raw, @"jsonpgz\((.+)\)");
             if (m.Success)
             {
                 using var doc = JsonDocument.Parse(m.Groups[1].Value);
@@ -480,16 +480,16 @@ public partial class FundTrackerViewModel : ObservableObject
                 var root = doc.RootElement;
                 return new FundItemViewModel
                 {
-                    Code      = code,
-                    Name      = root.TryGet("name")  ?? code,
-                    LastNav   = root.TryGet("dwjz")  ?? "--",
-                    EstNav    = root.TryGet("gsz")   ?? "--",
+                    Code = code,
+                    Name = root.TryGet("name") ?? code,
+                    LastNav = root.TryGet("dwjz") ?? "--",
+                    EstNav = root.TryGet("gsz") ?? "--",
                     ChangeRaw = root.TryGet("gszzl") ?? "0",
                     UpdatedAt = (root.TryGet("gztime") ?? "--").Length >= 5
                                     ? root.TryGet("gztime")![..5]
                                     : root.TryGet("gztime") ?? "--",
-                    Source    = "天天基金",
-                    IsMock    = false,
+                    Source = "天天基金",
+                    IsMock = false,
                 };
             }
         }
@@ -514,11 +514,14 @@ public partial class FundTrackerViewModel : ObservableObject
                 string nav = first.TryGet("f2") ?? "--";
                 return new FundItemViewModel
                 {
-                    Code = code, Name = first.TryGet("f14") ?? code,
-                    LastNav = nav, EstNav = nav,
+                    Code = code,
+                    Name = first.TryGet("f14") ?? code,
+                    LastNav = nav,
+                    EstNav = nav,
                     ChangeRaw = first.TryGet("f3") ?? "0",
                     UpdatedAt = DateTime.Now.ToString("HH:mm"),
-                    Source = "东方财富", IsMock = false,
+                    Source = "东方财富",
+                    IsMock = false,
                 };
             }
         }
@@ -535,9 +538,9 @@ public partial class FundTrackerViewModel : ObservableObject
 // ══════════════════════════════════════════════════════════════════════════════
 public partial class DiscoverCategory : ObservableObject
 {
-    public string Label    { get; set; } = "";
+    public string Label { get; set; } = "";
     public string FundType { get; set; } = "";
-    public int    Index    { get; set; } = 0;
+    public int Index { get; set; } = 0;
     [ObservableProperty] private bool _isSelected = false;
 }
 
@@ -546,9 +549,9 @@ public partial class DiscoverCategory : ObservableObject
 // ══════════════════════════════════════════════════════════════════════════════
 public partial class DiscoverFundItem : ObservableObject
 {
-    [ObservableProperty] private string _code      = "";
-    [ObservableProperty] private string _name      = "";
-    [ObservableProperty] private string _navStr    = "--";
+    [ObservableProperty] private string _code = "";
+    [ObservableProperty] private string _name = "";
+    [ObservableProperty] private string _navStr = "--";
     [ObservableProperty] private double _changeRaw = 0;
 
     [ObservableProperty]
@@ -557,13 +560,13 @@ public partial class DiscoverFundItem : ObservableObject
     [NotifyPropertyChangedFor(nameof(AddBtnFg))]
     private bool _isAdded = false;
 
-    public bool   IsUp         => ChangeRaw >= 0;
-    public string ChangeText   => (IsUp ? "+" : "") + ChangeRaw.ToString("F2") + "%";
-    public string ChangeColor  => IsUp ? "#C0392B" : "#18B06A";
-    public string ChangeBg     => IsUp ? "#1AE05C5C" : "#1A18B06A";
-    public string AddBtnText   => IsAdded ? "✓" : "+";
-    public string AddBtnBg     => IsAdded ? "#E8F5E9" : "#E8F0FE";
-    public string AddBtnFg     => IsAdded ? "#18B06A" : "#1565C0";
+    public bool IsUp => ChangeRaw >= 0;
+    public string ChangeText => (IsUp ? "+" : "") + ChangeRaw.ToString("F2") + "%";
+    public string ChangeColor => IsUp ? "#C0392B" : "#18B06A";
+    public string ChangeBg => IsUp ? "#1AE05C5C" : "#1A18B06A";
+    public string AddBtnText => IsAdded ? "✓" : "+";
+    public string AddBtnBg => IsAdded ? "#E8F5E9" : "#E8F0FE";
+    public string AddBtnFg => IsAdded ? "#18B06A" : "#1565C0";
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -573,22 +576,22 @@ public partial class SearchResultItem : ObservableObject
 {
     [ObservableProperty] private string _code = "";
     [ObservableProperty] private string _name = "";
-    [ObservableProperty] private bool   _isSelected = false;
+    [ObservableProperty] private bool _isSelected = false;
     public string Display => $"{Code}  {Name}";
 }
 
 public partial class FundItemViewModel : ObservableObject
 {
-    [ObservableProperty] private string _code      = "";
-    [ObservableProperty] private string _name      = "";
-    [ObservableProperty] private string _lastNav   = "--";
-    [ObservableProperty] private string _estNav    = "--";
+    [ObservableProperty] private string _code = "";
+    [ObservableProperty] private string _name = "";
+    [ObservableProperty] private string _lastNav = "--";
+    [ObservableProperty] private string _estNav = "--";
     [ObservableProperty] private string _changeRaw = "0";
     [ObservableProperty] private string _updatedAt = "--";
-    [ObservableProperty] private string _source    = "--";
-    [ObservableProperty] private bool   _isMock    = false;
+    [ObservableProperty] private string _source = "--";
+    [ObservableProperty] private bool _isMock = false;
 
-    public bool   IsUp       => double.TryParse(ChangeRaw, out double v) && v >= 0;
+    public bool IsUp => double.TryParse(ChangeRaw, out double v) && v >= 0;
     public string ChangeText
     {
         get
@@ -598,7 +601,7 @@ public partial class FundItemViewModel : ObservableObject
         }
     }
     public string ChipBackground => IsUp ? "#1AE05C5C" : "#1A18B06A";
-    public string ChipForeground => IsUp ? "#C0392B"   : "#18B06A";
+    public string ChipForeground => IsUp ? "#C0392B" : "#18B06A";
 
     private static readonly (string code, string name, double nav, double chg)[] _mocks =
     {
@@ -615,10 +618,14 @@ public partial class FundItemViewModel : ObservableObject
             if (c == code)
                 return new FundItemViewModel
                 {
-                    Code = c, Name = n,
-                    LastNav = nav.ToString("F4"), EstNav = "--",
-                    ChangeRaw = chg.ToString("F2"), UpdatedAt = "离线",
-                    Source = "本地缓存", IsMock = true,
+                    Code = c,
+                    Name = n,
+                    LastNav = nav.ToString("F4"),
+                    EstNav = "--",
+                    ChangeRaw = chg.ToString("F2"),
+                    UpdatedAt = "离线",
+                    Source = "本地缓存",
+                    IsMock = true,
                 };
         return new FundItemViewModel { Code = code, Name = code, IsMock = true };
     }

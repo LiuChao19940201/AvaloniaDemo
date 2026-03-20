@@ -1,12 +1,11 @@
 using Avalonia;
 using Avalonia.Media.Imaging;
 using Avalonia.Styling;
+using AvaloniaKit.Messages;
 using AvaloniaKit.Services;
-using AvaloniaKit.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
 using System.IO;
 using System.Threading.Tasks;
 

@@ -1,4 +1,4 @@
-using AvaloniaKit.ViewModels.Messages;
+using AvaloniaKit.Messages;
 using AvaloniaKit.ViewModels.UserControls.Chat;
 using AvaloniaKit.ViewModels.UserControls.Contacts;
 using AvaloniaKit.ViewModels.UserControls.Discover;

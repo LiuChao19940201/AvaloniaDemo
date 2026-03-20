@@ -146,7 +146,14 @@ public class AndroidAudioService : IAudioService, IDisposable
 
     public void SeekTo(long ms)
     {
-        _player?.SeekTo((int)ms, MediaPlayerSeekMode.Closest);
+        if (OperatingSystem.IsAndroidVersionAtLeast(26))
+        {
+            _player?.SeekTo((int)ms, MediaPlayerSeekMode.Closest);
+        }
+        else
+        {
+            _player?.SeekTo((int)ms); // 旧版兼容重载
+        }
         ProgressChanged?.Invoke(this, new AudioProgressEventArgs
         {
             CurrentMs = ms, DurationMs = DurationMs

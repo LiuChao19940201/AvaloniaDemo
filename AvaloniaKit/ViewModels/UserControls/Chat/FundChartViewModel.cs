@@ -1,3 +1,5 @@
+using AvaloniaKit.Messages;
+using AvaloniaKit.Tools.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -8,8 +10,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using AvaloniaKit.ViewModels.Messages;
-using AvaloniaKit.Tools.Extensions;
 
 namespace AvaloniaKit.ViewModels.UserControls.Chat;
 

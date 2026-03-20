@@ -1,6 +1,8 @@
 using Avalonia.Media.Imaging;
 using Avalonia.Threading;
+using AvaloniaKit.Messages;
 using AvaloniaKit.Services;
+using AvaloniaKit.Tools.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -13,8 +15,6 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using AvaloniaKit.ViewModels.Messages;
-using AvaloniaKit.Tools.Extensions;
 
 namespace AvaloniaKit.ViewModels.UserControls.Chat;
 
@@ -36,10 +36,10 @@ public partial class NeteasePlayerViewModel : ObservableObject
 
     private IAudioService? Audio => ServiceLocator.AudioService;
 
-    [ObservableProperty] private long   _songId   = 0;
+    [ObservableProperty] private long _songId = 0;
     [ObservableProperty] private string _songName = "";
-    [ObservableProperty] private string _artist   = "";
-    [ObservableProperty] private string _album    = "";
+    [ObservableProperty] private string _artist = "";
+    [ObservableProperty] private string _album = "";
     [ObservableProperty] private string _coverUrl = "";
 
     // ★ 播放器封面：Bitmap 绑定（Avalonia 不能直接从 http URL 渲染图片）
@@ -57,9 +57,9 @@ public partial class NeteasePlayerViewModel : ObservableObject
             // ★ 修复：使用公共 _http + CancellationTokenSource 控制超时，
             //   不再单独创建带 HttpClientHandler 的实例（Browser 平台不支持）
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(8));
-            byte[] bytes  = await _http.GetByteArrayAsync(thumbUrl, cts.Token);
-            using var ms  = new MemoryStream(bytes);
-            var bmp       = new Bitmap(ms);
+            byte[] bytes = await _http.GetByteArrayAsync(thumbUrl, cts.Token);
+            using var ms = new MemoryStream(bytes);
+            var bmp = new Bitmap(ms);
             await Dispatcher.UIThread.InvokeAsync(() => CoverBitmap = bmp);
         }
         catch { /* 静默忽略，保持占位 */ }
@@ -69,19 +69,19 @@ public partial class NeteasePlayerViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(PlayBtnIcon))]
     private bool _isPlaying = false;
 
-    [ObservableProperty] private double _progressValue  = 0;
+    [ObservableProperty] private double _progressValue = 0;
     [ObservableProperty] private string _currentTimeStr = "0:00";
-    [ObservableProperty] private string _totalTimeStr   = "0:00";
-    [ObservableProperty] private long   _durationMs     = 0;
-    [ObservableProperty] private long   _currentMs      = 0;
+    [ObservableProperty] private string _totalTimeStr = "0:00";
+    [ObservableProperty] private long _durationMs = 0;
+    [ObservableProperty] private long _currentMs = 0;
 
     public string PlayBtnIcon => IsPlaying
         ? "M6 19H10V5H6V19ZM14 5V19H18V5H14Z"
         : "M8 5V19L19 12Z";
 
     [ObservableProperty] private string _qualityText = "标准音质";
-    [ObservableProperty] private bool   _isLoading   = false;
-    [ObservableProperty] private string _statusText  = "";
+    [ObservableProperty] private bool _isLoading = false;
+    [ObservableProperty] private string _statusText = "";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(RepeatModeIcon))]
@@ -113,9 +113,9 @@ public partial class NeteasePlayerViewModel : ObservableObject
     public string CurrentLyricText => CurrentLyricIndex >= 0 && CurrentLyricIndex < LyricLines.Count
         ? LyricLines[CurrentLyricIndex].Text : "";
 
-    [ObservableProperty] private bool   _hasLyric       = false;
-    [ObservableProperty] private bool   _isLyricLoading = false;
-    [ObservableProperty] private string _lyricStatus    = "";
+    [ObservableProperty] private bool _hasLyric = false;
+    [ObservableProperty] private bool _isLyricLoading = false;
+    [ObservableProperty] private string _lyricStatus = "";
 
     private CancellationTokenSource? _loadCts;
 
@@ -129,24 +129,24 @@ public partial class NeteasePlayerViewModel : ObservableObject
         Audio?.Stop();
         UnsubscribeAudio();
 
-        SongId   = songId;
+        SongId = songId;
         SongName = songName;
-        Artist   = artist;
-        Album    = album;
-        CoverUrl    = coverUrl;
+        Artist = artist;
+        Album = album;
+        CoverUrl = coverUrl;
         CoverBitmap = null;   // 清除上一首封面，避免短暂显示旧图
 
-        IsPlaying         = false;
-        ProgressValue     = 0;
-        CurrentTimeStr    = "0:00";
-        TotalTimeStr      = "0:00";
-        CurrentMs         = 0;
-        DurationMs        = 0;
+        IsPlaying = false;
+        ProgressValue = 0;
+        CurrentTimeStr = "0:00";
+        TotalTimeStr = "0:00";
+        CurrentMs = 0;
+        DurationMs = 0;
         CurrentLyricIndex = -1;
         LyricLines.Clear();
-        HasLyric          = false;
-        IsLyricView       = true;
-        StatusText        = "";
+        HasLyric = false;
+        IsLyricView = true;
+        StatusText = "";
 
         SubscribeAudio();
 
@@ -166,14 +166,14 @@ public partial class NeteasePlayerViewModel : ObservableObject
         SubscribeAudio();
         if (Audio != null)
         {
-            IsPlaying  = Audio.IsPlaying;
-            CurrentMs  = Audio.CurrentMs;
+            IsPlaying = Audio.IsPlaying;
+            CurrentMs = Audio.CurrentMs;
             DurationMs = Audio.DurationMs;
             if (DurationMs > 0)
             {
-                ProgressValue  = CurrentMs * 100.0 / DurationMs;
+                ProgressValue = CurrentMs * 100.0 / DurationMs;
                 CurrentTimeStr = FormatTime(CurrentMs);
-                TotalTimeStr   = FormatTime(DurationMs);
+                TotalTimeStr = FormatTime(DurationMs);
             }
         }
     }
@@ -183,7 +183,7 @@ public partial class NeteasePlayerViewModel : ObservableObject
     // ══════════════════════════════════════════════════════════════════════════
     private async Task LoadAndPlayAsync(long id, CancellationToken ct)
     {
-        IsLoading  = true;
+        IsLoading = true;
         StatusText = "获取播放链接…";
         try
         {
@@ -209,7 +209,7 @@ public partial class NeteasePlayerViewModel : ObservableObject
             // PlayAsync 返回后回到 UI 线程读取状态
             await Dispatcher.UIThread.InvokeAsync(() =>
             {
-                IsPlaying  = Audio.IsPlaying;
+                IsPlaying = Audio.IsPlaying;
                 DurationMs = Audio.DurationMs;
                 if (DurationMs > 0)
                     TotalTimeStr = FormatTime(DurationMs);
@@ -241,10 +241,10 @@ public partial class NeteasePlayerViewModel : ObservableObject
         string outerUrl = $"https://music.163.com/song/media/outer/url?id={id}.mp3";
         try
         {
-            using var req  = new HttpRequestMessage(HttpMethod.Head, outerUrl);
+            using var req = new HttpRequestMessage(HttpMethod.Head, outerUrl);
             using var cts2 = CancellationTokenSource.CreateLinkedTokenSource(ct);
             cts2.CancelAfter(TimeSpan.FromSeconds(8));
-            var resp     = await _http.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cts2.Token);
+            var resp = await _http.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cts2.Token);
             string final = resp.RequestMessage?.RequestUri?.ToString() ?? outerUrl;
             if (resp.IsSuccessStatusCode &&
                 (final.Contains(".mp3") || final.Contains("music.126.net")))
@@ -295,29 +295,29 @@ public partial class NeteasePlayerViewModel : ObservableObject
     {
         if (Audio == null) return;
         Audio.ProgressChanged += OnProgressChanged;
-        Audio.PlaybackEnded   += OnPlaybackEnded;
-        Audio.PlaybackError   += OnPlaybackError;
+        Audio.PlaybackEnded += OnPlaybackEnded;
+        Audio.PlaybackError += OnPlaybackError;
     }
 
     private void UnsubscribeAudio()
     {
         if (Audio == null) return;
         Audio.ProgressChanged -= OnProgressChanged;
-        Audio.PlaybackEnded   -= OnPlaybackEnded;
-        Audio.PlaybackError   -= OnPlaybackError;
+        Audio.PlaybackEnded -= OnPlaybackEnded;
+        Audio.PlaybackError -= OnPlaybackError;
     }
 
     private void OnProgressChanged(object? _, AudioProgressEventArgs e)
     {
         Dispatcher.UIThread.Post(() =>
         {
-            CurrentMs  = e.CurrentMs;
+            CurrentMs = e.CurrentMs;
             DurationMs = e.DurationMs;
             if (DurationMs > 0)
             {
-                ProgressValue  = CurrentMs * 100.0 / DurationMs;
+                ProgressValue = CurrentMs * 100.0 / DurationMs;
                 CurrentTimeStr = FormatTime(CurrentMs);
-                TotalTimeStr   = FormatTime(DurationMs);
+                TotalTimeStr = FormatTime(DurationMs);
             }
             UpdateLyricHighlight();
             if (Audio != null) IsPlaying = Audio.IsPlaying;
@@ -328,9 +328,9 @@ public partial class NeteasePlayerViewModel : ObservableObject
     {
         Dispatcher.UIThread.Post(() =>
         {
-            IsPlaying      = false;
-            ProgressValue  = 0;
-            CurrentMs      = 0;
+            IsPlaying = false;
+            ProgressValue = 0;
+            CurrentMs = 0;
             CurrentTimeStr = "0:00";
 
             if (RepeatMode == 1)
@@ -351,7 +351,7 @@ public partial class NeteasePlayerViewModel : ObservableObject
     {
         Dispatcher.UIThread.Post(() =>
         {
-            IsPlaying  = false;
+            IsPlaying = false;
             StatusText = $"错误：{msg}";
         });
     }
@@ -391,8 +391,8 @@ public partial class NeteasePlayerViewModel : ObservableObject
     private void NextSong()
         => WeakReferenceMessenger.Default.Send(new NeteasePlayNextMessage());
 
-    [RelayCommand] private void ToggleView()       => IsLyricView = !IsLyricView;
-    [RelayCommand] private void ToggleLike()       => IsLiked = !IsLiked;
+    [RelayCommand] private void ToggleView() => IsLyricView = !IsLyricView;
+    [RelayCommand] private void ToggleLike() => IsLiked = !IsLiked;
     [RelayCommand] private void ToggleRepeatMode() => RepeatMode = (RepeatMode + 1) % 3;
 
     [RelayCommand]
@@ -408,14 +408,14 @@ public partial class NeteasePlayerViewModel : ObservableObject
     private async Task LoadLyricAsync(long id, CancellationToken ct)
     {
         IsLyricLoading = true;
-        LyricStatus    = "歌词加载中…";
+        LyricStatus = "歌词加载中…";
         try
         {
             string url = $"https://music.163.com/api/song/lyric?id={id}&lv=1&kv=1&tv=-1";
             using var cts2 = CancellationTokenSource.CreateLinkedTokenSource(ct);
             cts2.CancelAfter(TimeSpan.FromSeconds(10));
             string raw = await _http.GetStringAsync(url, cts2.Token);
-            using var doc  = JsonDocument.Parse(raw);
+            using var doc = JsonDocument.Parse(raw);
             string? lrcText = null;
             if (doc.RootElement.TryGetProperty("lrc", out var lrc))
                 lrcText = lrc.TryGetStr("lyric");
@@ -423,7 +423,7 @@ public partial class NeteasePlayerViewModel : ObservableObject
             if (!string.IsNullOrWhiteSpace(lrcText))
             {
                 ParseLrc(lrcText);
-                HasLyric    = LyricLines.Count > 0;
+                HasLyric = LyricLines.Count > 0;
                 LyricStatus = HasLyric ? "" : "纯音乐，请欣赏";
             }
             else LyricStatus = "暂无歌词";
@@ -435,7 +435,7 @@ public partial class NeteasePlayerViewModel : ObservableObject
 
     private void ParseLrc(string lrc)
     {
-        var reg   = new Regex(@"\[(\d{2}):(\d{2})[\.:](\d{2,3})\](.*)");
+        var reg = new Regex(@"\[(\d{2}):(\d{2})[\.:](\d{2,3})\](.*)");
         var lines = new List<LyricLine>();
         foreach (var line in lrc.Split('\n'))
         {
@@ -482,8 +482,8 @@ public partial class NeteasePlayerViewModel : ObservableObject
 // ── 歌词行模型 ────────────────────────────────────────────────────────────────
 public partial class LyricLine : ObservableObject
 {
-    public long   TimeMs  { get; set; }
-    public string Text    { get; set; } = "";
+    public long TimeMs { get; set; }
+    public string Text { get; set; } = "";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Foreground))]
@@ -493,5 +493,5 @@ public partial class LyricLine : ObservableObject
 
     public string FontWeight => IsActive ? "SemiBold" : "Normal";
     public string Foreground => IsActive ? "#C0392B" : "#AAAAAA";
-    public double FontSize   => IsActive ? 18 : 15;
+    public double FontSize => IsActive ? 18 : 15;
 }

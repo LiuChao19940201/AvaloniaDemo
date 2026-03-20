@@ -1,4 +1,4 @@
-namespace AvaloniaKit.ViewModels.Messages;
+namespace AvaloniaKit.Messages;
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  网易云音乐 — 导航消息
