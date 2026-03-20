@@ -3,8 +3,8 @@
 			 xmlns:vm="using:AvaloniaKit.ViewModels.UserControls"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:profile="using:AvaloniaKit.Views.UserControls.Profile"
-             xmlns:profileVm="using:AvaloniaKit.ViewModels.UserControls.Profile"
+			 xmlns:profile="using:AvaloniaKit.Views.UserControls.Profile"
+			 xmlns:profileVm="using:AvaloniaKit.ViewModels.UserControls.Profile"
 			 mc:Ignorable="d"
 			 d:DesignWidth="350" d:DesignHeight="700"
 			 x:Class="AvaloniaKit.Views.UserControls.Profile.ProfileUserControl"
@@ -33,9 +33,9 @@
 							<Panel>
 								<!-- 文字占位符：无头像时显示 -->
 								<TextBlock Text="H"
-									   FontSize="36" FontWeight="Bold" Foreground="White"
-									   HorizontalAlignment="Center" VerticalAlignment="Center"
-									   IsVisible="{Binding !HasAvatar}"/>
+										   FontSize="36" FontWeight="Bold" Foreground="White"
+										   HorizontalAlignment="Center" VerticalAlignment="Center"
+										   IsVisible="{Binding !HasAvatar}"/>
 								<!-- 实际头像：选图后显示 -->
 								<Image Source="{Binding AvatarBitmap}"
 									   Stretch="UniformToFill"
@@ -74,19 +74,29 @@
 						</StackPanel>
 					</StackPanel>
 
-					<!-- 二维码图标 -->
+					<!-- 主题切换图标 -->
 					<Button Grid.Column="2" Background="Transparent" VerticalAlignment="Center"
 							Command="{Binding OpenQrCodeCommand}"
 							Padding="0"
-							HorizontalContentAlignment="Stretch"
-							VerticalContentAlignment="Stretch"
-							Width="40" Height="40">
-						<Viewbox Stretch="Uniform">
-							<Canvas Width="24" Height="24">
-								<Path Data="M3 11H5V13H3ZM5 7H7V9H5ZM3 3V9H9V3ZM7 7H5V5H7ZM3 15H5V17H3ZM5 19H7V21H5ZM3 21V15H9V21ZM7 19H5V17H7ZM15 7H17V9H15ZM13 5V11H19V5ZM17 9H15V7H17ZM13 13H15V15H13ZM15 15H17V17H15ZM13 17H15V19H13ZM17 13H19V15H17ZM15 19H17V21H15ZM17 17H19V19H17ZM19 13H21V15H19ZM19 19H21V21H19ZM21 13V19H15V21H21V19H23V13ZM13 21H11V13H13Z"
-									  Fill="{DynamicResource SemiColorText2}"/>
-							</Canvas>
-						</Viewbox>
+							Width="60" Height="60">
+						<Panel>
+							<!-- 深色模式时显示：月亮图标 → 点击切回浅色 -->
+							<Viewbox Stretch="Uniform" Width="24" Height="24"
+									 IsVisible="{Binding IsDarkTheme}">
+								<Canvas Width="24" Height="24">
+									<Path Data="M12 3C7.03 3 3 7.03 3 12C3 16.97 7.03 21 12 21C16.97 21 21 16.97 21 12C21 7.03 16.97 3 12 3ZM12 19C8.13 19 5 15.87 5 12C5 8.13 8.13 5 12 5C12.35 5 12.69 5.03 13.03 5.07C11.22 6.24 10 8.27 10 10.5C10 14.09 12.91 17 16.5 17C17.32 17 18.1 16.84 18.82 16.55C17.54 18.06 15.88 19 12 19Z"
+										  Fill="{DynamicResource SemiColorText2}"/>
+								</Canvas>
+							</Viewbox>
+							<!-- 浅色模式时显示：太阳图标 → 点击切深色 -->
+							<Viewbox Stretch="Uniform" Width="24" Height="24"
+									 IsVisible="{Binding !IsDarkTheme}">
+								<Canvas Width="24" Height="24">
+									<Path Data="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM2 13H4C4.55 13 5 12.55 5 12C5 11.45 4.55 11 4 11H2C1.45 11 1 11.45 1 12C1 12.55 1.45 13 2 13ZM20 13H22C22.55 13 23 12.55 23 12C23 11.45 22.55 11 22 11H20C19.45 11 19 11.45 19 12C19 12.55 19.45 13 20 13ZM11 2V4C11 4.55 11.45 5 12 5C12.55 5 13 4.55 13 4V2C13 1.45 12.55 1 12 1C11.45 1 11 1.45 11 2ZM11 20V22C11 22.55 11.45 23 12 23C12.55 23 13 22.55 13 22V20C13 19.45 12.55 19 12 19C11.45 19 11 19.45 11 20ZM5.99 4.58C5.6 4.19 4.96 4.19 4.58 4.58C4.19 4.97 4.19 5.61 4.58 6L5.64 7.06C6.03 7.45 6.67 7.45 7.06 7.06C7.44 6.67 7.45 6.03 7.06 5.64L5.99 4.58ZM18.36 16.94C17.97 16.55 17.33 16.55 16.94 16.94C16.55 17.33 16.55 17.97 16.94 18.36L18 19.42C18.39 19.81 19.03 19.81 19.42 19.42C19.81 19.03 19.81 18.39 19.42 18L18.36 16.94ZM19.42 5.99C19.81 5.6 19.81 4.96 19.42 4.58C19.03 4.19 18.39 4.19 18 4.58L16.94 5.64C16.55 6.03 16.55 6.67 16.94 7.06C17.33 7.45 17.97 7.45 18.36 7.06L19.42 5.99ZM7.06 18.36C7.45 17.97 7.45 17.33 7.06 16.94C6.67 16.55 6.03 16.55 5.64 16.94L4.58 18C4.19 18.39 4.19 19.03 4.58 19.42C4.97 19.81 5.61 19.81 6 19.42L7.06 18.36Z"
+										  Fill="{DynamicResource SemiColorText2}"/>
+								</Canvas>
+							</Viewbox>
+						</Panel>
 					</Button>
 				</Grid>
 			</Border>

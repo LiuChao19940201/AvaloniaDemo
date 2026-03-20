@@ -23,9 +23,16 @@ public partial class ProfileViewModel : ObservableObject
     /// <summary>头像缩略图宽度（70dp显示 × 3倍屏 ≈ 200px 足够清晰）</summary>
     private const int AvatarDecodeWidth = 200;
 
+    [ObservableProperty] private bool _isDarkTheme;
+
     public ProfileViewModel()
     {
         _ = LoadAvatarOnStartupAsync();
+
+        // 初始化时同步当前主题
+        var app = Application.Current;
+        if (app is not null)
+            IsDarkTheme = app.ActualThemeVariant == ThemeVariant.Dark;
     }
 
     private async Task LoadAvatarOnStartupAsync()
@@ -116,9 +123,8 @@ public partial class ProfileViewModel : ObservableObject
         var app = Application.Current;
         if (app is null) return;
 
-        app.RequestedThemeVariant = app.ActualThemeVariant == ThemeVariant.Dark
-            ? ThemeVariant.Light
-            : ThemeVariant.Dark;
+        IsDarkTheme = app.ActualThemeVariant != ThemeVariant.Dark;
+        app.RequestedThemeVariant = IsDarkTheme ? ThemeVariant.Dark : ThemeVariant.Light;
     }
 
     [RelayCommand]
