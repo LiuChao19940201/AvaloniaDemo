@@ -25,7 +25,7 @@
                 BorderBrush="{DynamicResource SemiColorBorder}"
                 BorderThickness="0,0,0,0.8"
                 Padding="0,6">
-            <Grid ColumnDefinitions="48,*,48">
+            <Grid ColumnDefinitions="48,*,48,48">
 
                 <Button Grid.Column="0"
                         Background="Transparent"
@@ -53,6 +53,31 @@
                            VerticalAlignment="Center"/>
 
                 <Button Grid.Column="2"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding RestartCommand}"
+                        Padding="12,6"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        IsVisible="{Binding IsPaused}"
+                        IsTabStop="False"
+                        Focusable="False">
+                    <Panel>
+                        <Viewbox Width="20" Height="20" IsVisible="{Binding !IsPaused}">
+                            <Canvas Width="24" Height="24">
+                                 <Path Data="M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6a6 6 0 0 1-6 6 6 6 0 0 1-6-6H4a8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
+                                       Fill="{DynamicResource SemiColorText0}"/>
+                            </Canvas>
+                        </Viewbox>
+                        <Viewbox Width="20" Height="20" IsVisible="{Binding IsPaused}">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M8 5v14l11-7z" Fill="{DynamicResource SemiColorText0}"/>
+                            </Canvas>
+                        </Viewbox>
+                    </Panel>
+                </Button>
+
+                <Button Grid.Column="3"
                         Background="Transparent"
                         BorderThickness="0"
                         Command="{Binding TogglePauseCommand}"
@@ -138,6 +163,13 @@
                         </ItemsControl>
                     </StackPanel>
                 </Border>
+
+                <Border Background="{DynamicResource SemiColorBg0}" CornerRadius="8" Padding="8,6">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="幽灵" FontSize="10" Foreground="{DynamicResource SemiColorText2}" HorizontalAlignment="Center"/>
+                        <CheckBox IsChecked="{Binding IsGhost}" Margin=" 0 5 0 0" />
+                    </StackPanel>
+                </Border>
             </StackPanel>
 
             <!-- ── 游戏板 ──
@@ -210,15 +242,6 @@
                                     Background="#FF6B35" Foreground="White"
                                     FontWeight="SemiBold" FontSize="14" BorderThickness="0"
                                     IsTabStop="False" Focusable="False"/>
-
-                            <Button IsVisible="{Binding IsGameOver}"
-                                    Command="{Binding RestartCommand}"
-                                    Content="再 玩 一 局"
-                                    HorizontalAlignment="Center"
-                                    Padding="28,12" CornerRadius="24"
-                                    Background="#FF6B35" Foreground="White"
-                                    FontWeight="SemiBold" FontSize="14" BorderThickness="0"
-                                    IsTabStop="False" Focusable="False"/>
                         </StackPanel>
                     </Border>
 
@@ -283,7 +306,7 @@
                 </Button>
 
                 <!-- Row1 Col0：左移 -->
-                <Button Grid.Row="1" Grid.Column="0"
+                <RepeatButton Grid.Row="1" Grid.Column="0"
                         Command="{Binding MoveLeftCommand}"
                         Classes="Success" Theme="{DynamicResource SolidButton}"
                         CornerRadius="8"
@@ -295,10 +318,10 @@
                                   Fill="{DynamicResource SemiColorText0}"/>
                         </Canvas>
                     </Viewbox>
-                </Button>
+                </RepeatButton>
 
                 <!-- Row1 Col2：软降 -->
-                <Button Grid.Row="1" Grid.Column="2"
+                <RepeatButton Grid.Row="1" Grid.Column="2"
                         Command="{Binding SoftDropCommand}"
                         Classes="Success" Theme="{DynamicResource SolidButton}"
                         CornerRadius="8"
@@ -310,10 +333,10 @@
                                   Fill="{DynamicResource SemiColorText0}"/>
                         </Canvas>
                     </Viewbox>
-                </Button>
+                </RepeatButton>
 
                 <!-- Row1 Col4：右移 -->
-                <Button Grid.Row="1" Grid.Column="4"
+                <RepeatButton Grid.Row="1" Grid.Column="4"
                         Command="{Binding MoveRightCommand}"
                         Classes="Success" Theme="{DynamicResource SolidButton}"
                         CornerRadius="8"
@@ -325,7 +348,7 @@
                                   Fill="{DynamicResource SemiColorText0}"/>
                         </Canvas>
                     </Viewbox>
-                </Button>
+                </RepeatButton>
             </Grid>
         </Border>
     </Grid>

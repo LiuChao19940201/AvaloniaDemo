@@ -1,3 +1,4 @@
+using AvaloniaKit.Services;
 using AvaloniaKit.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -106,10 +107,10 @@ public static class TetrominoShapes
 public partial class TetrisViewModel : ObservableObject
 {
     // ── 常量 ────────────────────────────────────────────────────
-    public const int Rows   = 20;
-    public const int Cols   = 10;
+    public const int Rows = 20;
+    public const int Cols = 10;
     private const int InitMs = 800;
-    private const int MinMs  = 80;
+    private const int MinMs = 80;
 
     // ── 事件（View 订阅，触发震动 & 音效）──────────────────────
     public event EventHandler? LinesClearedEvent;
@@ -117,16 +118,17 @@ public partial class TetrisViewModel : ObservableObject
     public event EventHandler? GameOverEvent;
 
     // ── 可观察属性 ──────────────────────────────────────────────
-    [ObservableProperty] private int  _score;
-    [ObservableProperty] private int  _level  = 1;
-    [ObservableProperty] private int  _lines;
+    [ObservableProperty] private int _score;
+    [ObservableProperty] private int _level = 1;
+    [ObservableProperty] private int _lines;
     [ObservableProperty] private bool _isGameOver;
     [ObservableProperty] private bool _isPaused;
     [ObservableProperty] private bool _isRunning;
+    [ObservableProperty] private bool _isGhost;
     [ObservableProperty] private TetrominoType _nextType;
 
     // ── 格子集合（绑定给 ItemsControl）─────────────────────────
-    public ObservableCollection<CellViewModel> Cells        { get; } = new();
+    public ObservableCollection<CellViewModel> Cells { get; } = new();
     public ObservableCollection<CellViewModel> PreviewCells { get; } = new();
 
     // ── 内部状态 ────────────────────────────────────────────────
@@ -182,13 +184,20 @@ public partial class TetrisViewModel : ObservableObject
         if (!IsRunning || IsGameOver) return;
         IsPaused = !IsPaused;
         if (IsPaused) _timer?.Stop();
-        else          _timer?.Start();
+        else _timer?.Start();
     }
 
     [RelayCommand]
     public void MoveLeft()
     {
         if (!CanAct()) return;
+
+        //移动端音效
+        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
+        {
+            ServiceLocator.DeviceService!.PlaySound();
+        }
+
         if (CanPlace(_curType, _curRot, _curRow, _curCol - 1))
         {
             _curCol--;
@@ -200,6 +209,12 @@ public partial class TetrisViewModel : ObservableObject
     public void MoveRight()
     {
         if (!CanAct()) return;
+
+        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
+        {
+            ServiceLocator.DeviceService!.PlaySound();
+        }
+
         if (CanPlace(_curType, _curRot, _curRow, _curCol + 1))
         {
             _curCol++;
@@ -211,6 +226,12 @@ public partial class TetrisViewModel : ObservableObject
     public void SoftDrop()
     {
         if (!CanAct()) return;
+
+        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
+        {
+            ServiceLocator.DeviceService!.PlaySound();
+        }
+
         if (CanPlace(_curType, _curRot, _curRow + 1, _curCol))
         {
             _curRow++;
@@ -227,6 +248,12 @@ public partial class TetrisViewModel : ObservableObject
     public void Rotate()
     {
         if (!CanAct()) return;
+
+        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
+        {
+            ServiceLocator.DeviceService!.PlaySound();
+        }
+
         int nextRot = (_curRot + 1) % 4;
         // Wall-kick: 原位 → 左1 → 右1 → 左2 → 右2
         foreach (int k in new[] { 0, -1, 1, -2, 2 })
@@ -234,7 +261,7 @@ public partial class TetrisViewModel : ObservableObject
             if (CanPlace(_curType, nextRot, _curRow, _curCol + k))
             {
                 _curCol += k;
-                _curRot  = nextRot;
+                _curRot = nextRot;
                 Render();
                 return;
             }
@@ -245,10 +272,16 @@ public partial class TetrisViewModel : ObservableObject
     public void HardDrop()
     {
         if (!CanAct()) return;
+
+        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
+        {
+            ServiceLocator.DeviceService!.PlaySound();
+        }
+
         int drop = 0;
         while (CanPlace(_curType, _curRot, _curRow + 1 + drop, _curCol))
             drop++;
-        Score   += drop * 2;
+        Score += drop * 2;
         _curRow += drop;
         LockPiece();
     }
@@ -330,6 +363,13 @@ public partial class TetrisViewModel : ObservableObject
             }
             if (!full) continue;
 
+            //移动端震动和音效
+            if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
+            {
+                ServiceLocator.DeviceService!.Vibrate();
+                ServiceLocator.DeviceService!.PlaySound();
+            }
+
             // 向下移动上方所有行
             for (int rr = r; rr > 0; rr--)
                 for (int c = 0; c < Cols; c++)
@@ -360,7 +400,7 @@ public partial class TetrisViewModel : ObservableObject
     {
         _curType = _nextQueued;
         _nextQueued = RandomType();
-        NextType    = _nextQueued;
+        NextType = _nextQueued;
         _curRot = 0;
         _curRow = 0;
         _curCol = Cols / 2;
@@ -369,7 +409,7 @@ public partial class TetrisViewModel : ObservableObject
         {
             // 游戏结束
             IsGameOver = true;
-            IsRunning  = false;
+            IsRunning = false;
             _timer?.Stop();
             GameOverEvent?.Invoke(this, EventArgs.Empty);
             Render();
@@ -392,18 +432,21 @@ public partial class TetrisViewModel : ObservableObject
         if (IsGameOver) return;
 
         // 2. 幽灵：找最低可落行
-        int ghostRow = _curRow;
-        while (CanPlace(_curType, _curRot, ghostRow + 1, _curCol))
-            ghostRow++;
-
-        if (ghostRow != _curRow)
+        if (IsGhost)
         {
-            foreach (var cell in GetShape(_curType, _curRot))
+            int ghostRow = _curRow;
+            while (CanPlace(_curType, _curRot, ghostRow + 1, _curCol))
+                ghostRow++;
+
+            if (ghostRow != _curRow)
             {
-                int gr = ghostRow + cell[0];
-                int gc = _curCol  + cell[1];
-                if (InBounds(gr, gc) && _board[gr, gc] == TetrominoType.Empty)
-                    CellAt(gr, gc).Type = TetrominoType.Ghost;
+                foreach (var cell in GetShape(_curType, _curRot))
+                {
+                    int gr = ghostRow + cell[0];
+                    int gc = _curCol + cell[1];
+                    if (InBounds(gr, gc) && _board[gr, gc] == TetrominoType.Empty)
+                        CellAt(gr, gc).Type = TetrominoType.Ghost;
+                }
             }
         }
 
