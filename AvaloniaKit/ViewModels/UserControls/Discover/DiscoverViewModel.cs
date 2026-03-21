@@ -1,5 +1,8 @@
+using AvaloniaKit.Messages;
+using AvaloniaKit.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AvaloniaKit.ViewModels.UserControls.Discover;
 
@@ -48,6 +51,7 @@ public partial class DiscoverViewModel : ObservableObject
     [RelayCommand]
     private void OpenGames()
     {
+        WeakReferenceMessenger.Default.Send(new NavigateToTetrisMessages());
     }
 
     [RelayCommand]

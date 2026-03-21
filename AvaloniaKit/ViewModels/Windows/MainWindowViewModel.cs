@@ -21,26 +21,29 @@ public partial class MainWindowViewModel : ObservableObject,
     IRecipient<NavigateBackFromNeteaseMessage>,
     IRecipient<NavigateToNeteasePlayerMessage>,
     IRecipient<NavigateBackFromNeteasePlayerMessage>,
-    // ★ 新增：天气
     IRecipient<NavigateToWeatherMessage>,
-    IRecipient<NavigateBackFromWeatherMessage>
+    IRecipient<NavigateBackFromWeatherMessage>,
+    IRecipient<NavigateToTetrisMessages>,
+    IRecipient<NavigateBackFromTetrisMessage>
 {
     // ── 页面 ViewModel 实例 ──
     private readonly ChatViewModel _chatVm = new();
     private readonly ContactsViewModel _contactsVm = new();
     private readonly DiscoverViewModel _discoverVm = new();
+    private readonly TetrisViewModel _tetrisVm = new();
     private readonly ProfileViewModel _profileVm = new();
     private readonly ServiceViewModel _serviceVm = new();
     private readonly FundTrackerViewModel _fundTrackerVm = new();
     private readonly FundChartViewModel _fundChartVm = new();
     private readonly NeteaseViewModel _neteaseVm = new();
     private readonly NeteasePlayerViewModel _neteasePlayerVm = new();
-    private readonly WeatherViewModel _weatherVm = new();   // ★ 新增
+    private readonly WeatherViewModel _weatherVm = new();  
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsChatActive))]
     [NotifyPropertyChangedFor(nameof(IsContactsActive))]
     [NotifyPropertyChangedFor(nameof(IsDiscoverActive))]
+    [NotifyPropertyChangedFor(nameof(IsTetrisActive))]
     [NotifyPropertyChangedFor(nameof(IsProfileActive))]
     [NotifyPropertyChangedFor(nameof(CurrentPageTitle))]
     [NotifyPropertyChangedFor(nameof(ShowTitleBar))]
@@ -56,6 +59,7 @@ public partial class MainWindowViewModel : ObservableObject,
     public bool IsChatActive => CurrentPage is ChatViewModel;
     public bool IsContactsActive => CurrentPage is ContactsViewModel;
     public bool IsDiscoverActive => CurrentPage is DiscoverViewModel;
+    public bool IsTetrisActive => CurrentPage is TetrisViewModel;
     public bool IsProfileActive => CurrentPage is ProfileViewModel;
 
     public string CurrentPageTitle => CurrentPage switch
@@ -63,13 +67,14 @@ public partial class MainWindowViewModel : ObservableObject,
         ChatViewModel => "微信",
         ContactsViewModel => "通讯录",
         DiscoverViewModel => "发现",
+        TetrisViewModel => "俄罗斯方块",
         ProfileViewModel => "我",
         ServiceViewModel => "服务",
         FundTrackerViewModel => "基金自选跟踪",
         FundChartViewModel => "净值走势",
         NeteaseViewModel => "网易云音乐",
         NeteasePlayerViewModel => "",
-        WeatherViewModel => "",   // ★ 天气页自带顶栏
+        WeatherViewModel => "",   
         _ => ""
     };
 
@@ -79,18 +84,19 @@ public partial class MainWindowViewModel : ObservableObject,
                                            and not FundChartViewModel
                                            and not NeteaseViewModel
                                            and not NeteasePlayerViewModel
-                                           and not WeatherViewModel;   // ★
+                                           and not WeatherViewModel; 
 
     public bool ShowTabBar => CurrentPage is not ServiceViewModel
                                         and not FundTrackerViewModel
                                         and not FundChartViewModel
                                         and not NeteaseViewModel
                                         and not NeteasePlayerViewModel
-                                        and not WeatherViewModel;      // ★
+                                        and not WeatherViewModel;    
 
     [RelayCommand] private void SwitchToChat() => CurrentPage = _chatVm;
     [RelayCommand] private void SwitchToContacts() => CurrentPage = _contactsVm;
     [RelayCommand] private void SwitchToDiscover() => CurrentPage = _discoverVm;
+    [RelayCommand] private void SwitchToTetris() => CurrentPage = _tetrisVm;
     [RelayCommand] private void SwitchToProfile() => CurrentPage = _profileVm;
 
     public void Receive(NavigateToServiceMessage message)
@@ -120,7 +126,6 @@ public partial class MainWindowViewModel : ObservableObject,
     public void Receive(NavigateBackFromFundChartMessage message)
         => CurrentPage = _fundTrackerVm;
 
-    // ── 网易云导航 ────────────────────────────────────────────────────
     public void Receive(NavigateToNeteaseMessage message)
     {
         _neteaseVm.OnNavigatedTo();
@@ -149,4 +154,12 @@ public partial class MainWindowViewModel : ObservableObject,
 
     public void Receive(NavigateBackFromWeatherMessage message)
         => CurrentPage = _chatVm;
+
+    public void Receive(NavigateToTetrisMessages message)
+    {
+        CurrentPage = _tetrisVm;
+    }
+
+    public void Receive(NavigateBackFromTetrisMessage message)
+        => CurrentPage = _discoverVm;
 }

@@ -50,6 +50,9 @@
 		<DataTemplate DataType="{x:Type discoverVm:DiscoverViewModel}">
 			<discover:DiscoverUserControl />
 		</DataTemplate>
+		<DataTemplate DataType="{x:Type discoverVm:TetrisViewModel}">
+			<discover:TetrisUserControl />
+		</DataTemplate>
 		<DataTemplate DataType="{x:Type profileVm:ProfileViewModel}">
 			<profile:ProfileUserControl />
 		</DataTemplate>

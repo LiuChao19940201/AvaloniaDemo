@@ -25,4 +25,10 @@
   <ItemGroup>
     <Folder Include="Assets\weather\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\UserControls\Discover\TetrisUserControl.axaml.cs">
+      <DependentUpon>TetrisUserControl.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
