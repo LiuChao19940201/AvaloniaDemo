@@ -160,6 +160,7 @@ public partial class TetrisViewModel : ObservableObject
     [RelayCommand]
     private void GoBack()
     {
+        IsPaused = true;
         _timer?.Stop();
         WeakReferenceMessenger.Default.Send(new NavigateBackFromTetrisMessage());
     }

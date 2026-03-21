@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:AvaloniaKit.ViewModels.UserControls.Discover"
              xmlns:converters="clr-namespace:AvaloniaKit.Converters"
              x:Class="AvaloniaKit.Views.UserControls.Discover.TetrisUserControl"
-             d:DesignWidth="390" d:DesignHeight="760"
+             d:DesignWidth="390" d:DesignHeight="700"
              x:DataType="vm:TetrisViewModel">
 
     <Design.DataContext>
@@ -23,7 +23,7 @@
         <Border Grid.Row="0"
                 Background="{DynamicResource SemiColorBg0}"
                 BorderBrush="{DynamicResource SemiColorBorder}"
-                BorderThickness="0,0,0,0.8"
+                BorderThickness="0,0,0,1"
                 Padding="0,6">
             <Grid ColumnDefinitions="48,*,48,48">
 
@@ -259,15 +259,11 @@
                 </Panel>
             </Border>
         </Grid>
-
-        <!-- ══ 触摸控制区 ══
-             所有按钮 IsTabStop=False Focusable=False，
-             确保点击后键盘焦点不离开 UserControl
-        ════ -->
+      
         <Border Grid.Row="2"
                 Background="{DynamicResource SemiColorBg0}"
                 BorderBrush="{DynamicResource SemiColorBorder}"
-                BorderThickness="0,0.8,0,0"
+                BorderThickness="0,1,0,0"
                 Padding="10">
 
             <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*,*,*">
