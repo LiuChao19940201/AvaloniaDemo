@@ -46,7 +46,7 @@
 
                 <TextBlock Grid.Column="1"
                            Text="俄罗斯方块"
-                           FontSize="16"
+                           FontSize="16" Margin="80 0 0 0"
                            FontWeight="SemiBold"
                            Foreground="{DynamicResource SemiColorText0}"
                            HorizontalAlignment="Center"
@@ -142,10 +142,7 @@
                     <StackPanel HorizontalAlignment="Center" Spacing="4">
                         <TextBlock Text="NEXT" FontSize="10" FontWeight="SemiBold"
                                    Foreground="{DynamicResource SemiColorText2}" HorizontalAlignment="Center"/>
-                        <!--
-                            预览区 4×4，每格 16px，共 64px
-                            宽高固定，不依赖 Viewbox，不会有空白边距
-                        -->
+                      
                         <ItemsControl ItemsSource="{Binding PreviewCells}"
                                       Width="68" Height="68"
                                       HorizontalAlignment="Center">
@@ -172,14 +169,6 @@
                 </Border>
             </StackPanel>
 
-            <!-- ── 游戏板 ──
-                 修复核心：不使用 Viewbox，直接让 ItemsControl 填满容器。
-                 UniformGrid 宽高设为 Auto，通过 ItemsControl 的 HorizontalAlignment="Stretch"
-                 撑满右侧列；AspectRatioPanel 不可用，所以用 ViewBox + Stretch=Fill
-                 让游戏板真正填满，不留任何空白边距（Uniform 才会留边距）。
-                 注意：Stretch=Fill 会轻微拉伸，但俄罗斯方块格子本来就可以是矩形的。
-                 如果坚持要正方形格子，用下面注释掉的固定宽度方案。
-            -->
             <Border Grid.Column="1"
                     Margin="0,0,8,0"
                     CornerRadius="6"
@@ -188,10 +177,6 @@
                     ClipToBounds="True"
                     x:Name="BoardBorder">
                 <Panel>
-                    <!--
-                        方案A（当前使用）：Viewbox Stretch=Fill，完全填满容器，无空白。
-                        格子会跟随容器比例微调，整体视觉效果好。
-                    -->
                     <Viewbox Stretch="Fill">
                         <ItemsControl ItemsSource="{Binding Cells}">
                             <ItemsControl.ItemsPanel>
@@ -275,7 +260,7 @@
                         CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="旋转 (↑/W)">
-                    <Viewbox Width="22" Height="22">
+                    <Viewbox Width="40" Height="30">
                         <Canvas Width="24" Height="24">
                             <Path Data="M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6a6 6 0 0 1-6 6 6 6 0 0 1-6-6H4a8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
                                   Fill="{DynamicResource SemiColorText0}"/>
@@ -290,7 +275,7 @@
                         CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="硬降 (空格)">
-                    <Viewbox Width="22" Height="22">
+                    <Viewbox Width="40" Height="30">
                         <Canvas Width="24" Height="24">
                             <!-- 向下双箭头 -->
                             <Path Data="M7 10l5 5 5-5z" Fill="{DynamicResource SemiColorText0}"/>
@@ -308,7 +293,7 @@
                         CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="左移 (←/A)">
-                    <Viewbox Width="22" Height="22">
+                    <Viewbox Width="50" Height="40">
                         <Canvas Width="24" Height="24">
                             <Path Data="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"
                                   Fill="{DynamicResource SemiColorText0}"/>
@@ -323,7 +308,7 @@
                         CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="加速 (↓/S)">
-                    <Viewbox Width="22" Height="22">
+                    <Viewbox Width="50" Height="40">
                         <Canvas Width="24" Height="24">
                             <Path Data="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
                                   Fill="{DynamicResource SemiColorText0}"/>
@@ -338,7 +323,7 @@
                         CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="右移 (→/D)">
-                    <Viewbox Width="22" Height="22">
+                    <Viewbox Width="50" Height="40">
                         <Canvas Width="24" Height="24">
                             <Path Data="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
                                   Fill="{DynamicResource SemiColorText0}"/>

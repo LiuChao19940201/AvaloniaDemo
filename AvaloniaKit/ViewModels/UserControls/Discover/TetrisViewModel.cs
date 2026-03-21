@@ -112,11 +112,6 @@ public partial class TetrisViewModel : ObservableObject
     private const int InitMs = 800;
     private const int MinMs = 80;
 
-    // ── 事件（View 订阅，触发震动 & 音效）──────────────────────
-    public event EventHandler? LinesClearedEvent;
-    public event EventHandler? PieceLockedEvent;
-    public event EventHandler? GameOverEvent;
-
     // ── 可观察属性 ──────────────────────────────────────────────
     [ObservableProperty] private int _score;
     [ObservableProperty] private int _level = 1;
@@ -336,13 +331,10 @@ public partial class TetrisViewModel : ObservableObject
                 _board[r, c] = _curType;
         }
 
-        PieceLockedEvent?.Invoke(this, EventArgs.Empty);
-
         int cleared = ClearLines();
         if (cleared > 0)
         {
             AddScore(cleared);
-            LinesClearedEvent?.Invoke(this, EventArgs.Empty);
         }
 
         SpawnPiece();
@@ -412,7 +404,6 @@ public partial class TetrisViewModel : ObservableObject
             IsGameOver = true;
             IsRunning = false;
             _timer?.Stop();
-            GameOverEvent?.Invoke(this, EventArgs.Empty);
             Render();
             return;
         }
