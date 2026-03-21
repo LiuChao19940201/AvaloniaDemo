@@ -219,9 +219,20 @@
                                        Foreground="White"
                                        HorizontalAlignment="Center" LetterSpacing="6"/>
 
+                            <!-- Start (初始) -->
                             <Button IsVisible="{Binding !IsGameOver}"
                                     Command="{Binding StartCommand}"
                                     Content="开 始 游 戏"
+                                    HorizontalAlignment="Center"
+                                    Padding="28,12" CornerRadius="24"
+                                    Background="#FF6B35" Foreground="White"
+                                    FontWeight="SemiBold" FontSize="14" BorderThickness="0"
+                                    IsTabStop="False" Focusable="False"/>
+
+                            <!-- Restart (Game Over 后显示) -->
+                            <Button IsVisible="{Binding IsGameOver}"
+                                    Command="{Binding RestartCommand}"
+                                    Content="重新开始"
                                     HorizontalAlignment="Center"
                                     Padding="28,12" CornerRadius="24"
                                     Background="#FF6B35" Foreground="White"
@@ -254,7 +265,7 @@
             <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*,*,*">
 
                 <!-- Row0 Col1：旋转 -->
-                <Button Grid.Row="0" Grid.Column="1"
+                <RepeatButton Grid.Row="0" Grid.Column="1"
                         Command="{Binding RotateCommand}"
                         Classes="Success Warning" Theme="{DynamicResource SolidButton}"
                         CornerRadius="8"
@@ -266,10 +277,10 @@
                                   Fill="{DynamicResource SemiColorText0}"/>
                         </Canvas>
                     </Viewbox>
-                </Button>
+                </RepeatButton>
 
                 <!-- Row0 Col3：硬降 -->
-                <Button Grid.Row="0" Grid.Column="3"
+                <RepeatButton Grid.Row="0" Grid.Column="3"
                         Command="{Binding HardDropCommand}"
                         Classes="Success Warning" Theme="{DynamicResource SolidButton}"
                         CornerRadius="8"
@@ -284,7 +295,7 @@
                                        Fill="{DynamicResource SemiColorText0}"/>
                         </Canvas>
                     </Viewbox>
-                </Button>
+                </RepeatButton>
 
                 <!-- Row1 Col0：左移 -->
                 <RepeatButton Grid.Row="1" Grid.Column="0"

@@ -39,6 +39,19 @@ public partial class TetrisViewModel : ObservableObject
     private readonly Random _rng = new();
     private Timer? _timer;
 
+    private DateTime _lastInputTime = DateTime.MinValue;
+    private const int InputIntervalMs = 60; // 60~100 最合适
+
+    private bool CanInput()
+    {
+        var now = DateTime.Now;
+        if ((now - _lastInputTime).TotalMilliseconds < InputIntervalMs)
+            return false;
+
+        _lastInputTime = now;
+        return true;
+    }
+
     // ════════════════════════════════════════════════════════════
     public TetrisViewModel()
     {
@@ -94,7 +107,7 @@ public partial class TetrisViewModel : ObservableObject
     [RelayCommand]
     public void MoveLeft()
     {
-        if (!CanAct()) return;
+        if (!CanAct() || !CanInput()) return;
 
         //移动端音效
         if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
@@ -112,7 +125,7 @@ public partial class TetrisViewModel : ObservableObject
     [RelayCommand]
     public void MoveRight()
     {
-        if (!CanAct()) return;
+        if (!CanAct() || !CanInput()) return;
 
         if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
         {
@@ -129,7 +142,7 @@ public partial class TetrisViewModel : ObservableObject
     [RelayCommand]
     public void SoftDrop()
     {
-        if (!CanAct()) return;
+        if (!CanAct() || !CanInput()) return;
 
         if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
         {
@@ -151,7 +164,7 @@ public partial class TetrisViewModel : ObservableObject
     [RelayCommand]
     public void Rotate()
     {
-        if (!CanAct()) return;
+        if (!CanAct() || !CanInput()) return;
 
         if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
         {
@@ -175,7 +188,7 @@ public partial class TetrisViewModel : ObservableObject
     [RelayCommand]
     public void HardDrop()
     {
-        if (!CanAct()) return;
+        if (!CanAct() || !CanInput()) return;
 
         if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
         {
