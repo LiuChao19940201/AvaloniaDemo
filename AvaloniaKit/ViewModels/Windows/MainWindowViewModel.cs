@@ -67,7 +67,6 @@ public partial class MainWindowViewModel : ObservableObject,
         ChatViewModel => "微信",
         ContactsViewModel => "通讯录",
         DiscoverViewModel => "发现",
-        TetrisViewModel => "俄罗斯方块",
         ProfileViewModel => "我",
         ServiceViewModel => "服务",
         FundTrackerViewModel => "基金自选跟踪",
@@ -81,7 +80,8 @@ public partial class MainWindowViewModel : ObservableObject,
     public bool ShowTitleBar => CurrentPage is not ProfileViewModel
                                            and not ServiceViewModel
                                            and not FundTrackerViewModel
-                                           and not FundChartViewModel
+                                           and not TetrisViewModel
+                                           and not NeteaseViewModel
                                            and not NeteaseViewModel
                                            and not NeteasePlayerViewModel
                                            and not WeatherViewModel; 
@@ -89,6 +89,7 @@ public partial class MainWindowViewModel : ObservableObject,
     public bool ShowTabBar => CurrentPage is not ServiceViewModel
                                         and not FundTrackerViewModel
                                         and not FundChartViewModel
+                                        and not TetrisViewModel
                                         and not NeteaseViewModel
                                         and not NeteasePlayerViewModel
                                         and not WeatherViewModel;    

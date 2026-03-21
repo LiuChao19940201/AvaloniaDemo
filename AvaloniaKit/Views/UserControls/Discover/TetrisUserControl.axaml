@@ -131,7 +131,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="vm:CellViewModel">
-                                    <Border Margin="1" CornerRadius="2"
+                                    <Border Margin="1" CornerRadius="2" 
                                             Background="{Binding Type, Converter={StaticResource TypeToBrush}}"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -245,14 +245,15 @@
                 Background="{DynamicResource SemiColorBg0}"
                 BorderBrush="{DynamicResource SemiColorBorder}"
                 BorderThickness="0,0.8,0,0"
-                Padding="12,10,12,24">
+                Padding="10">
 
             <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*,*,*">
 
                 <!-- Row0 Col1：旋转 -->
                 <Button Grid.Row="0" Grid.Column="1"
                         Command="{Binding RotateCommand}"
-                        Classes="ctrl"
+                        Classes="Success Warning" Theme="{DynamicResource SolidButton}"
+                        CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="旋转 (↑/W)">
                     <Viewbox Width="22" Height="22">
@@ -266,7 +267,8 @@
                 <!-- Row0 Col3：硬降 -->
                 <Button Grid.Row="0" Grid.Column="3"
                         Command="{Binding HardDropCommand}"
-                        Classes="ctrl"
+                        Classes="Success Warning" Theme="{DynamicResource SolidButton}"
+                        CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="硬降 (空格)">
                     <Viewbox Width="22" Height="22">
@@ -283,7 +285,8 @@
                 <!-- Row1 Col0：左移 -->
                 <Button Grid.Row="1" Grid.Column="0"
                         Command="{Binding MoveLeftCommand}"
-                        Classes="ctrl"
+                        Classes="Success" Theme="{DynamicResource SolidButton}"
+                        CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="左移 (←/A)">
                     <Viewbox Width="22" Height="22">
@@ -297,7 +300,8 @@
                 <!-- Row1 Col2：软降 -->
                 <Button Grid.Row="1" Grid.Column="2"
                         Command="{Binding SoftDropCommand}"
-                        Classes="ctrl"
+                        Classes="Success" Theme="{DynamicResource SolidButton}"
+                        CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="加速 (↓/S)">
                     <Viewbox Width="22" Height="22">
@@ -311,7 +315,8 @@
                 <!-- Row1 Col4：右移 -->
                 <Button Grid.Row="1" Grid.Column="4"
                         Command="{Binding MoveRightCommand}"
-                        Classes="ctrl"
+                        Classes="Success" Theme="{DynamicResource SolidButton}"
+                        CornerRadius="8"
                         IsTabStop="False" Focusable="False"
                         ToolTip.Tip="右移 (→/D)">
                     <Viewbox Width="22" Height="22">
@@ -324,27 +329,5 @@
             </Grid>
         </Border>
     </Grid>
-
-    <UserControl.Styles>
-        <Style Selector="Button.ctrl">
-            <Setter Property="Width"           Value="54"/>
-            <Setter Property="Height"          Value="54"/>
-            <Setter Property="CornerRadius"    Value="27"/>
-            <Setter Property="Background"      Value="{DynamicResource SemiColorBg2}"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment"   Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin"          Value="2,4"/>
-            <Setter Property="Cursor"          Value="Hand"/>
-        </Style>
-        <Style Selector="Button.ctrl:pointerover">
-            <Setter Property="Background" Value="{DynamicResource SemiColorBg3}"/>
-        </Style>
-        <Style Selector="Button.ctrl:pressed">
-            <Setter Property="Background"      Value="{DynamicResource SemiColorPrimary}"/>
-            <Setter Property="RenderTransform" Value="scale(0.91)"/>
-        </Style>
-    </UserControl.Styles>
 
 </UserControl>
