@@ -1,13 +1,10 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using AvaloniaKit.ViewModels.UserControls.Discover;
 
 #if ANDROID
-using Android.App;
 using Android.OS;
-using Android.Media;
 #endif
 
 namespace AvaloniaKit.Views.UserControls.Discover;
@@ -19,17 +16,23 @@ public partial class TetrisUserControl : UserControl
     public TetrisUserControl()
     {
         InitializeComponent();
+        Focusable = true;
+        KeyboardNavigation.SetTabNavigation(this, KeyboardNavigationMode.None);
 
-        // 订阅 ViewModel 事件（震动 + 音效）
         DataContextChanged += OnDataContextChanged;
 
-        // 接收键盘焦点
-        Focusable = true;
+        // ── 关键修复 ──────────────────────────────────────────────────────
+        // 使用 Tunnel（Preview）阶段拦截键盘事件，优先于子控件的 Bubble 阶段。
+        // handledEventsToo: true 保证即使子控件已标记 Handled 也能收到。
+        // 这样 Space / Up 不会被 Button 的默认点击行为截走。
+        AddHandler(
+            KeyDownEvent,
+            OnKeyDownTunnel,
+            RoutingStrategies.Tunnel,
+            handledEventsToo: true);
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // ViewModel 事件订阅
-    // ─────────────────────────────────────────────────────────────────────────
+    // ─── ViewModel 事件订阅 ──────────────────────────────────────────────
 
     private TetrisViewModel? _prevVm;
 
@@ -41,41 +44,32 @@ public partial class TetrisUserControl : UserControl
             _prevVm.PieceLockedEvent  -= OnPieceLocked;
             _prevVm.GameOverEvent     -= OnGameOver;
         }
-
         _prevVm = Vm;
-
-        if (Vm != null)
-        {
-            Vm.LinesClearedEvent += OnLinesCleared;
-            Vm.PieceLockedEvent  += OnPieceLocked;
-            Vm.GameOverEvent     += OnGameOver;
-        }
+        if (Vm == null) return;
+        Vm.LinesClearedEvent += OnLinesCleared;
+        Vm.PieceLockedEvent  += OnPieceLocked;
+        Vm.GameOverEvent     += OnGameOver;
     }
 
-    // ── 消除行：震动 + 音效 ──────────────────────────────────────────────────
     private void OnLinesCleared(object? sender, System.EventArgs e)
     {
-        PlayVibration(VibrationKind.ClearLines);
-        PlaySound(SoundKind.ClearLines);
+        Vibrate(VibeMode.ClearLines);
+        PlaySound(SoundId.ClearLines);
     }
 
-    // ── 方块锁定：轻震动 ─────────────────────────────────────────────────────
     private void OnPieceLocked(object? sender, System.EventArgs e)
     {
-        PlayVibration(VibrationKind.PieceLock);
-        PlaySound(SoundKind.PieceLock);
+        Vibrate(VibeMode.Lock);
+        PlaySound(SoundId.Lock);
     }
 
-    // ── 游戏结束：长震动 ─────────────────────────────────────────────────────
     private void OnGameOver(object? sender, System.EventArgs e)
     {
-        PlayVibration(VibrationKind.GameOver);
-        PlaySound(SoundKind.GameOver);
+        Vibrate(VibeMode.GameOver);
+        PlaySound(SoundId.GameOver);
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 键盘输入（桌面端）
-    // ─────────────────────────────────────────────────────────────────────────
+    // ─── 焦点管理 ────────────────────────────────────────────────────────
 
     protected override void OnLoaded(RoutedEventArgs e)
     {
@@ -83,11 +77,23 @@ public partial class TetrisUserControl : UserControl
         Focus();
     }
 
-    protected override void OnKeyDown(KeyEventArgs e)
+    /// <summary>
+    /// 点击触摸按钮后，按钮会抢焦点。
+    /// 在 PointerReleased 阶段将焦点拉回 UserControl。
+    /// </summary>
+    protected override void OnPointerReleased(PointerReleasedEventArgs e)
     {
-        base.OnKeyDown(e);
+        base.OnPointerReleased(e);
+        Focus();
+    }
+
+    // ─── Tunnel 阶段键盘拦截（最先收到，阻止子控件处理）────────────────
+
+    private void OnKeyDownTunnel(object? sender, KeyEventArgs e)
+    {
         if (Vm == null) return;
 
+        // 游戏操作键一律在此处消费，阻止继续冒泡到按钮
         switch (e.Key)
         {
             case Key.Left:
@@ -110,17 +116,21 @@ public partial class TetrisUserControl : UserControl
 
             case Key.Up:
             case Key.W:
+                // ↑ / W = 旋转（注意：Up 键如果不在 Tunnel 阶段截取，
+                // 会触发焦点移动到上方按钮，然后 Space 就变成那个按钮的点击）
                 Vm.RotateCommand.Execute(null);
                 e.Handled = true;
                 break;
 
             case Key.Space:
+                // Space 在 Bubble 阶段会触发当前聚焦按钮的 Click。
+                // 在 Tunnel 阶段标记 Handled = true，阻断按钮的 Click。
                 Vm.HardDropCommand.Execute(null);
                 e.Handled = true;
                 break;
 
-            case Key.Escape:
             case Key.P:
+            case Key.Escape:
                 Vm.TogglePauseCommand.Execute(null);
                 e.Handled = true;
                 break;
@@ -133,45 +143,48 @@ public partial class TetrisUserControl : UserControl
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 震动（Android 平台）
-    // ─────────────────────────────────────────────────────────────────────────
+    // ─── 震动（Android）─────────────────────────────────────────────────
 
-    private enum VibrationKind { PieceLock, ClearLines, GameOver }
-    private enum SoundKind     { PieceLock, ClearLines, GameOver }
+    private enum VibeMode { Lock, ClearLines, GameOver }
 
-    private static void PlayVibration(VibrationKind kind)
+    private static void Vibrate(VibeMode mode)
     {
 #if ANDROID
         try
         {
-            var vibrator = (Vibrator?)Application.Context
-                .GetSystemService(Android.Content.Context.VibratorService);
-            if (vibrator == null || !vibrator.HasVibrator) return;
+            var vibrator = (Android.OS.Vibrator?)
+                Android.App.Application.Context
+                    .GetSystemService(Android.Content.Context.VibratorService);
+            if (vibrator?.HasVibrator != true) return;
 
-            if (Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.O)
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
             {
-                VibrationEffect effect = kind switch
+                var effect = mode switch
                 {
-                    VibrationKind.PieceLock  => VibrationEffect.CreateOneShot(30,  VibrationEffect.DefaultAmplitude),
-                    VibrationKind.ClearLines => VibrationEffect.CreateWaveform(
-                        new long[]  { 0, 60, 40, 60 },
-                        new int[]   { 0, 180, 0, 255 }, -1),
-                    VibrationKind.GameOver   => VibrationEffect.CreateWaveform(
-                        new long[]  { 0, 120, 80, 120, 80, 300 },
-                        new int[]   { 0, 200, 0, 200, 0, 255  }, -1),
-                    _                        => VibrationEffect.CreateOneShot(30, VibrationEffect.DefaultAmplitude)
+                    VibeMode.Lock =>
+                        Android.OS.VibrationEffect.CreateOneShot(
+                            25, Android.OS.VibrationEffect.DefaultAmplitude),
+                    VibeMode.ClearLines =>
+                        Android.OS.VibrationEffect.CreateWaveform(
+                            new long[] { 0, 50, 30, 80 },
+                            new int[]  { 0, 160,  0, 255 }, -1),
+                    VibeMode.GameOver =>
+                        Android.OS.VibrationEffect.CreateWaveform(
+                            new long[] { 0, 100, 60, 100, 60, 300 },
+                            new int[]  { 0, 200,  0, 200,  0, 255 }, -1),
+                    _ => Android.OS.VibrationEffect.CreateOneShot(
+                            25, Android.OS.VibrationEffect.DefaultAmplitude)
                 };
                 vibrator.Vibrate(effect);
             }
             else
             {
 #pragma warning disable CA1422
-                long[] pattern = kind switch
+                long[] pattern = mode switch
                 {
-                    VibrationKind.ClearLines => new long[] { 0, 60, 40, 60 },
-                    VibrationKind.GameOver   => new long[] { 0, 120, 80, 300 },
-                    _                        => new long[] { 0, 30 }
+                    VibeMode.ClearLines => new long[] { 0, 50, 30, 80 },
+                    VibeMode.GameOver   => new long[] { 0, 100, 60, 300 },
+                    _                   => new long[] { 0, 25 }
                 };
                 vibrator.Vibrate(pattern, -1);
 #pragma warning restore CA1422
@@ -181,24 +194,21 @@ public partial class TetrisUserControl : UserControl
 #endif
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 音效（跨平台，使用 Avalonia + NAudio / SkiaSharp.Extended 等）
-    // 这里提供一个可替换的桩实现；实际音效播放需视项目音频库而定。
-    // 推荐使用 Plugin.Maui.Audio 或 SimpleAudio 等库。
-    // ─────────────────────────────────────────────────────────────────────────
+    // ─── 音效（预留接口）────────────────────────────────────────────────
 
-    private static void PlaySound(SoundKind kind)
+    private enum SoundId { Lock, ClearLines, GameOver }
+
+    private static void PlaySound(SoundId id)
     {
-        // 示例：替换为实际音频播放逻辑
-        // var file = kind switch
+        // 替换为实际音频库调用，例如：
+        // var file = id switch
         // {
-        //     SoundKind.PieceLock  => "sounds/lock.wav",
-        //     SoundKind.ClearLines => "sounds/clear.wav",
-        //     SoundKind.GameOver   => "sounds/gameover.wav",
-        //     _                    => null
+        //     SoundId.Lock       => "avares://AvaloniaKit/Assets/sounds/lock.wav",
+        //     SoundId.ClearLines => "avares://AvaloniaKit/Assets/sounds/clear.wav",
+        //     SoundId.GameOver   => "avares://AvaloniaKit/Assets/sounds/gameover.wav",
+        //     _                  => null
         // };
-        // if (file != null) AudioPlayer.Play(file);
-
-        _ = kind; // 消除未使用警告
+        // if (file != null) AudioService.Play(file);
+        _ = id;
     }
 }

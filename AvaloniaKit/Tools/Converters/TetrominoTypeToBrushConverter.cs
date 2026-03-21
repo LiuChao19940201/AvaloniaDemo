@@ -7,42 +7,40 @@ using AvaloniaKit.ViewModels.UserControls.Discover;
 namespace AvaloniaKit.Converters;
 
 /// <summary>
-/// 将 TetrominoType 枚举转换为对应的 SolidColorBrush。
-/// 在 XAML ResourceDictionary 或 UserControl.Resources 中声明后即可绑定使用。
+/// TetrominoType 枚举 → SolidColorBrush
+/// 在 UserControl.Resources 中声明后通过 StaticResource 引用。
 /// </summary>
-public class TetrominoTypeToBrushConverter : IValueConverter
+public sealed class TetrominoTypeToBrushConverter : IValueConverter
 {
-    // 经典俄罗斯方块配色
-    private static readonly SolidColorBrush BrushI     = new(Color.Parse("#00BCD4")); // 青色
-    private static readonly SolidColorBrush BrushO     = new(Color.Parse("#FFD600")); // 黄色
-    private static readonly SolidColorBrush BrushT     = new(Color.Parse("#AB47BC")); // 紫色
-    private static readonly SolidColorBrush BrushS     = new(Color.Parse("#66BB6A")); // 绿色
-    private static readonly SolidColorBrush BrushZ     = new(Color.Parse("#EF5350")); // 红色
-    private static readonly SolidColorBrush BrushJ     = new(Color.Parse("#42A5F5")); // 蓝色
-    private static readonly SolidColorBrush BrushL     = new(Color.Parse("#FF7043")); // 橙色
-    private static readonly SolidColorBrush BrushGhost = new(Color.FromArgb(50, 255, 255, 255));
-    private static readonly SolidColorBrush BrushEmpty = new(Color.FromArgb(18, 255, 255, 255));
+    // 经典俄罗斯方块配色（与 Tetris Guideline 一致）
+    private static readonly SolidColorBrush I     = Brush("#00BCD4"); // 青
+    private static readonly SolidColorBrush O     = Brush("#FFD600"); // 黄
+    private static readonly SolidColorBrush T     = Brush("#AB47BC"); // 紫
+    private static readonly SolidColorBrush S     = Brush("#4CAF50"); // 绿
+    private static readonly SolidColorBrush Z     = Brush("#F44336"); // 红
+    private static readonly SolidColorBrush J     = Brush("#2196F3"); // 蓝
+    private static readonly SolidColorBrush L     = Brush("#FF7043"); // 橙
+    private static readonly SolidColorBrush Ghost = new(Color.FromArgb(55, 255, 255, 255));
+    private static readonly SolidColorBrush Empty = new(Color.FromArgb(15, 200, 200, 220));
 
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
-        if (value is TetrominoType type)
+    private static SolidColorBrush Brush(string hex) => new(Color.Parse(hex));
+
+    public object Convert(object? value, Type targetType,
+                          object? parameter, CultureInfo culture)
+        => value is TetrominoType t ? t switch
         {
-            return type switch
-            {
-                TetrominoType.I     => BrushI,
-                TetrominoType.O     => BrushO,
-                TetrominoType.T     => BrushT,
-                TetrominoType.S     => BrushS,
-                TetrominoType.Z     => BrushZ,
-                TetrominoType.J     => BrushJ,
-                TetrominoType.L     => BrushL,
-                TetrominoType.Ghost => BrushGhost,
-                _                   => BrushEmpty,
-            };
-        }
-        return BrushEmpty;
-    }
+            TetrominoType.I     => I,
+            TetrominoType.O     => O,
+            TetrominoType.T     => T,
+            TetrominoType.S     => S,
+            TetrominoType.Z     => Z,
+            TetrominoType.J     => J,
+            TetrominoType.L     => L,
+            TetrominoType.Ghost => Ghost,
+            _                   => Empty,
+        } : Empty;
 
-    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object ConvertBack(object? value, Type targetType,
+                              object? parameter, CultureInfo culture)
         => throw new NotSupportedException();
 }
