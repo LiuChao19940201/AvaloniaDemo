@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using AvaloniaKit.ViewModels.UserControls.Discover;
+using AvaloniaKit.ViewModels.UserControls.Discover.Games;
 
-namespace AvaloniaKit.Views.UserControls.Discover;
+namespace AvaloniaKit.Views.UserControls.Discover.Games;
 
 public partial class TetrisUserControl : UserControl
 {

@@ -3,6 +3,7 @@ using AvaloniaKit.ViewModels.Messages;
 using AvaloniaKit.ViewModels.UserControls.Chat;
 using AvaloniaKit.ViewModels.UserControls.Contacts;
 using AvaloniaKit.ViewModels.UserControls.Discover;
+using AvaloniaKit.ViewModels.UserControls.Discover.Games;
 using AvaloniaKit.ViewModels.UserControls.Profile;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -23,6 +24,8 @@ public partial class MainWindowViewModel : ObservableObject,
     IRecipient<NavigateBackFromNeteasePlayerMessage>,
     IRecipient<NavigateToWeatherMessage>,
     IRecipient<NavigateBackFromWeatherMessage>,
+    IRecipient<NavigateToGameBoxesMessages>,
+    IRecipient<NavigateBackFromGameBoxesMessage>,
     IRecipient<NavigateToTetrisMessages>,
     IRecipient<NavigateBackFromTetrisMessage>
 {
@@ -31,13 +34,14 @@ public partial class MainWindowViewModel : ObservableObject,
     private readonly ContactsViewModel _contactsVm = new();
     private readonly DiscoverViewModel _discoverVm = new();
     private readonly TetrisViewModel _tetrisVm = new();
+    private readonly GameBoxesViewModel _gameBoxesVm = new(); 
     private readonly ProfileViewModel _profileVm = new();
     private readonly ServiceViewModel _serviceVm = new();
     private readonly FundTrackerViewModel _fundTrackerVm = new();
     private readonly FundChartViewModel _fundChartVm = new();
     private readonly NeteaseViewModel _neteaseVm = new();
     private readonly NeteasePlayerViewModel _neteasePlayerVm = new();
-    private readonly WeatherViewModel _weatherVm = new();  
+    private readonly WeatherViewModel _weatherVm = new();
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsChatActive))]
@@ -73,7 +77,7 @@ public partial class MainWindowViewModel : ObservableObject,
         FundChartViewModel => "净值走势",
         NeteaseViewModel => "网易云音乐",
         NeteasePlayerViewModel => "",
-        WeatherViewModel => "",   
+        WeatherViewModel => "",
         _ => ""
     };
 
@@ -84,7 +88,7 @@ public partial class MainWindowViewModel : ObservableObject,
                                            and not NeteaseViewModel
                                            and not NeteaseViewModel
                                            and not NeteasePlayerViewModel
-                                           and not WeatherViewModel; 
+                                           and not WeatherViewModel;
 
     public bool ShowTabBar => CurrentPage is not ServiceViewModel
                                         and not FundTrackerViewModel
@@ -92,7 +96,8 @@ public partial class MainWindowViewModel : ObservableObject,
                                         and not TetrisViewModel
                                         and not NeteaseViewModel
                                         and not NeteasePlayerViewModel
-                                        and not WeatherViewModel;    
+                                        and not GameBoxesViewModel
+                                        and not WeatherViewModel;
 
     [RelayCommand] private void SwitchToChat() => CurrentPage = _chatVm;
     [RelayCommand] private void SwitchToContacts() => CurrentPage = _contactsVm;
@@ -147,7 +152,6 @@ public partial class MainWindowViewModel : ObservableObject,
     public void Receive(NavigateBackFromNeteasePlayerMessage message)
         => CurrentPage = _neteaseVm;
 
-    // ── ★ 天气导航 ────────────────────────────────────────────────────
     public void Receive(NavigateToWeatherMessage message)
     {
         CurrentPage = _weatherVm;
@@ -163,4 +167,14 @@ public partial class MainWindowViewModel : ObservableObject,
 
     public void Receive(NavigateBackFromTetrisMessage message)
         => CurrentPage = _discoverVm;
+
+    public void Receive(NavigateToGameBoxesMessages message)
+    {
+        CurrentPage = _gameBoxesVm;
+    }
+
+    public void Receive(NavigateBackFromGameBoxesMessage message)
+    {
+        CurrentPage = _gameBoxesVm;
+    }
 }

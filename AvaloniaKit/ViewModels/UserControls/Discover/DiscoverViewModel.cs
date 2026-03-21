@@ -51,7 +51,7 @@ public partial class DiscoverViewModel : ObservableObject
     [RelayCommand]
     private void OpenGames()
     {
-        WeakReferenceMessenger.Default.Send(new NavigateToTetrisMessages());
+        WeakReferenceMessenger.Default.Send(new NavigateToGameBoxesMessages());
     }
 
     [RelayCommand]

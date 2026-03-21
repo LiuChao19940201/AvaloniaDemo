@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using AvaloniaKit.ViewModels.UserControls.Discover;
+using AvaloniaKit.ViewModels.UserControls.Discover.Games;
 
 namespace AvaloniaKit.Converters;
 

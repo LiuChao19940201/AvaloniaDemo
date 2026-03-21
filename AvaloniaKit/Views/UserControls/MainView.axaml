@@ -6,10 +6,12 @@
 			 xmlns:chat="using:AvaloniaKit.Views.UserControls.Chat"
 			 xmlns:contacts="using:AvaloniaKit.Views.UserControls.Contacts"
 			 xmlns:discover="using:AvaloniaKit.Views.UserControls.Discover"
+			 xmlns:games="using:AvaloniaKit.Views.UserControls.Discover.Games"
 			 xmlns:profile="using:AvaloniaKit.Views.UserControls.Profile"
 			 xmlns:chatVm="using:AvaloniaKit.ViewModels.UserControls.Chat"
 			 xmlns:contactsVm="using:AvaloniaKit.ViewModels.UserControls.Contacts"
 			 xmlns:discoverVm="using:AvaloniaKit.ViewModels.UserControls.Discover"
+			 xmlns:gamesVm="using:AvaloniaKit.ViewModels.UserControls.Discover.Games"
 			 xmlns:profileVm="using:AvaloniaKit.ViewModels.UserControls.Profile"
 			 xmlns:conv="using:AvaloniaKit.Tools.Converters"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -44,21 +46,6 @@
 		<DataTemplate DataType="{x:Type chatVm:ChatViewModel}">
 			<chat:ChatUserControl />
 		</DataTemplate>
-		<DataTemplate DataType="{x:Type contactsVm:ContactsViewModel}">
-			<contacts:ContactsUserControl />
-		</DataTemplate>
-		<DataTemplate DataType="{x:Type discoverVm:DiscoverViewModel}">
-			<discover:DiscoverUserControl />
-		</DataTemplate>
-		<DataTemplate DataType="{x:Type discoverVm:TetrisViewModel}">
-			<discover:TetrisUserControl />
-		</DataTemplate>
-		<DataTemplate DataType="{x:Type profileVm:ProfileViewModel}">
-			<profile:ProfileUserControl />
-		</DataTemplate>
-		<DataTemplate DataType="{x:Type profileVm:ServiceViewModel}">
-			<profile:ServiceUserControl />
-		</DataTemplate>
 		<DataTemplate DataType="{x:Type chatVm:WeatherViewModel}">
 			<chat:WeatherUserControl/>
 		</DataTemplate>
@@ -74,6 +61,31 @@
 		<DataTemplate DataType="{x:Type chatVm:NeteasePlayerViewModel}">
 			<chat:NeteasePlayerUserControl/>
 		</DataTemplate>
+
+
+		<DataTemplate DataType="{x:Type contactsVm:ContactsViewModel}">
+			<contacts:ContactsUserControl />
+		</DataTemplate>
+
+
+		<DataTemplate DataType="{x:Type discoverVm:DiscoverViewModel}">
+			<discover:DiscoverUserControl />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type gamesVm:GameBoxesViewModel}">
+			<games:GameBoxesUserControl />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type gamesVm:TetrisViewModel}">
+			<games:TetrisUserControl />
+		</DataTemplate>
+
+		<DataTemplate DataType="{x:Type profileVm:ProfileViewModel}">
+			<profile:ProfileUserControl />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type profileVm:ServiceViewModel}">
+			<profile:ServiceUserControl />
+		</DataTemplate>
+		
+		
 
 	</UserControl.DataTemplates>
 

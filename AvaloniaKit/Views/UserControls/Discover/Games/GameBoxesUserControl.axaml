@@ -1,0 +1,172 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:AvaloniaKit.ViewModels.UserControls.Discover.Games"
+			 xmlns:converters="clr-namespace:AvaloniaKit.Converters"
+			 x:Class="AvaloniaKit.Views.UserControls.Discover.Games.GameBoxesUserControl"
+			 d:DesignWidth="350" d:DesignHeight="700"
+			 x:DataType="vm:GameBoxesViewModel">
+
+	<Design.DataContext>
+		<vm:GameBoxesViewModel/>
+	</Design.DataContext>
+
+	<Grid RowDefinitions="Auto,*"
+		  Background="{DynamicResource SemiColorBg1}">
+
+		<!-- ══ 导航栏 ══ -->
+		<Border Grid.Row="0"
+				Background="{DynamicResource SemiColorBg0}"
+				BorderBrush="{DynamicResource SemiColorBorder}"
+				BorderThickness="0,0,0,1"
+				Padding="0,6">
+			<Grid ColumnDefinitions="48,*,48,48">
+
+				<Button Grid.Column="0"
+						Background="Transparent"
+						BorderThickness="0"
+						Command="{Binding GoBackCommand}"
+						Padding="12,6"
+						VerticalAlignment="Center"
+						HorizontalAlignment="Center"
+						IsTabStop="False"
+						Focusable="False">
+					<Viewbox Width="20" Height="20">
+						<Canvas Width="24" Height="24">
+							<Path Data="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12Z"
+								  Fill="{DynamicResource SemiColorText0}"/>
+						</Canvas>
+					</Viewbox>
+				</Button>
+
+				<TextBlock Grid.Column="1"
+						   Text="游戏盒子"
+						   FontSize="16" 
+						   FontWeight="SemiBold"
+						   Foreground="{DynamicResource SemiColorText0}"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center"/>
+			</Grid>
+		</Border>
+
+		<!-- ══ 游戏主区 ══ -->
+		<ScrollViewer Grid.Row="1">
+				<WrapPanel Margin="12" ItemSpacing="10"
+						   Orientation="Horizontal"
+						   ItemWidth="80" HorizontalAlignment="Center"
+						   ItemHeight="100">
+
+					<!-- 俄罗斯方块 -->
+					<Button Background="Transparent" Command="{Binding GoTetrisCommand}">
+						<StackPanel HorizontalAlignment="Center">
+							<Border Width="64" Height="64" CornerRadius="16"
+									Background="#4CAF50">
+								<Canvas>
+									<!-- Tetris 图标 -->
+									<Rectangle Width="16" Height="16" Fill="White" Canvas.Left="24" Canvas.Top="10"/>
+									<Rectangle Width="16" Height="16" Fill="White" Canvas.Left="8" Canvas.Top="26"/>
+									<Rectangle Width="16" Height="16" Fill="White" Canvas.Left="24" Canvas.Top="26"/>
+									<Rectangle Width="16" Height="16" Fill="White" Canvas.Left="40" Canvas.Top="26"/>
+								</Canvas>
+							</Border>
+							<TextBlock Text="俄罗斯方块"
+									   FontSize="12" Margin="0 5 0 0"
+									   HorizontalAlignment="Center"/>
+						</StackPanel>
+					</Button>
+
+					<!-- 贪吃蛇 -->
+					<Button Background="Transparent">
+						<StackPanel HorizontalAlignment="Center">
+							<Border Width="64" Height="64" CornerRadius="16"
+									Background="#2ECC71">
+								<Canvas>
+									<!-- Snake 图标 -->
+									<Ellipse Width="10" Height="10" Fill="White" Canvas.Left="10" Canvas.Top="40"/>
+									<Rectangle Width="30" Height="10" Fill="White" Canvas.Left="20" Canvas.Top="40"/>
+									<Ellipse Width="10" Height="10" Fill="White" Canvas.Left="45" Canvas.Top="40"/>
+									<Ellipse Width="4" Height="4" Fill="Black" Canvas.Left="47" Canvas.Top="42"/>
+								</Canvas>
+							</Border>
+							<TextBlock Text="贪吃蛇"
+									   FontSize="12" Margin="0 5 0 0"
+									   HorizontalAlignment="Center"/>
+						</StackPanel>
+					</Button>
+
+					<!-- 飞机大战 -->
+					<Button Background="Transparent">
+						<StackPanel HorizontalAlignment="Center">
+							<Border Width="64" Height="64" CornerRadius="16"
+									Background="#3498DB">
+								<Canvas>
+									<Polygon Points="32,10 20,50 32,40 44,50"
+											 Fill="White"/>
+								</Canvas>
+							</Border>
+							<TextBlock Text="飞机大战"
+									   FontSize="12" Margin="0 5 0 0"
+									   HorizontalAlignment="Center"/>
+						</StackPanel>
+					</Button>
+
+					<!-- 数独 -->
+					<Button Background="Transparent">
+						<StackPanel HorizontalAlignment="Center">
+							<Border Width="64" Height="64" CornerRadius="16"
+									Background="#9B59B6">
+								<Canvas>
+									<Rectangle Width="40" Height="40" Stroke="White" StrokeThickness="2"
+											   Canvas.Left="12" Canvas.Top="12"/>
+									<Line StartPoint="25,12" EndPoint="25,52" Stroke="White"/>
+									<Line StartPoint="39,12" EndPoint="39,52" Stroke="White"/>
+									<Line StartPoint="12,25" EndPoint="52,25" Stroke="White"/>
+									<Line StartPoint="12,39" EndPoint="52,39" Stroke="White"/>
+								</Canvas>
+							</Border>
+							<TextBlock Text="数独"
+									   FontSize="12" Margin="0 5 0 0"
+									   HorizontalAlignment="Center"/>
+						</StackPanel>
+					</Button>
+
+					<!-- 2048 -->
+					<Button Background="Transparent">
+						<StackPanel HorizontalAlignment="Center">
+							<Border Width="64" Height="64" CornerRadius="16"
+									Background="#F39C12">
+								<TextBlock Text="2048"
+										   FontSize="18"
+										   FontWeight="Bold"
+										   HorizontalAlignment="Center"
+										   VerticalAlignment="Center"/>
+							</Border>
+							<TextBlock Text="2048"
+									   FontSize="12" Margin="0 5 0 0"
+									   HorizontalAlignment="Center"/>
+						</StackPanel>
+					</Button>
+
+					<!-- 扫雷 -->
+					<Button Background="Transparent">
+						<StackPanel HorizontalAlignment="Center">
+							<Border Width="64" Height="64" CornerRadius="16"
+									Background="#E74C3C">
+								<Canvas>
+									<Ellipse Width="20" Height="20" Fill="White"
+											 Canvas.Left="22" Canvas.Top="22"/>
+									<Line StartPoint="32,10" EndPoint="32,54" Stroke="White"/>
+									<Line StartPoint="10,32" EndPoint="54,32" Stroke="White"/>
+								</Canvas>
+							</Border>
+							<TextBlock Text="扫雷"
+									   FontSize="12" Margin="0 5 0 0"
+									   HorizontalAlignment="Center"/>
+						</StackPanel>
+					</Button>
+
+				</WrapPanel>
+			</ScrollViewer>
+	</Grid>
+</UserControl>

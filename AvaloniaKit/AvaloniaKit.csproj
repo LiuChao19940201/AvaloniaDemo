@@ -27,7 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\UserControls\Discover\TetrisUserControl.axaml.cs">
+    <Compile Update="Views\UserControls\Discover\Games\GameBoxesUserControl.axaml.cs">
+      <DependentUpon>GameBoxesUserControl.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\UserControls\Discover\Games\TetrisUserControl.axaml.cs">
       <DependentUpon>TetrisUserControl.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
