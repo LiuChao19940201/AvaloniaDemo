@@ -63,15 +63,10 @@
                         IsTabStop="False"
                         Focusable="False">
                     <Panel>
-                        <Viewbox Width="20" Height="20" IsVisible="{Binding !IsPaused}">
+                        <Viewbox Width="20" Height="20" IsVisible="{Binding IsPaused}">
                             <Canvas Width="24" Height="24">
                                  <Path Data="M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6a6 6 0 0 1-6 6 6 6 0 0 1-6-6H4a8 8 0 0 0 8 8 8 8 0 0 0 8-8 8 8 0 0 0-8-8z"
                                        Fill="{DynamicResource SemiColorText0}"/>
-                            </Canvas>
-                        </Viewbox>
-                        <Viewbox Width="20" Height="20" IsVisible="{Binding IsPaused}">
-                            <Canvas Width="24" Height="24">
-                                <Path Data="M8 5v14l11-7z" Fill="{DynamicResource SemiColorText0}"/>
                             </Canvas>
                         </Viewbox>
                     </Panel>
@@ -181,11 +176,6 @@
                         <ItemsControl ItemsSource="{Binding Cells}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <!--
-                                        固定 200×400（10列×20行，每格 20×20px）。
-                                        Viewbox 会将整个 200×400 等比填满容器，
-                                        不会留任何空白边距，所有10列都可到达。
-                                    -->
                                     <UniformGrid Rows="20" Columns="10"
                                                  Width="200" Height="400"/>
                                 </ItemsPanelTemplate>
@@ -193,7 +183,9 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="vm:CellViewModel">
                                     <Border Margin="0.5" CornerRadius="2"
-                                            Background="{Binding Type, Converter={StaticResource TypeToBrush}}"/>
+                                            Background="{Binding Type, Converter={StaticResource TypeToBrush}}"
+                                            BorderThickness="0.5"
+                                            BorderBrush="{DynamicResource SemiColorBorder}"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
