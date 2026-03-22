@@ -25,5 +25,12 @@ namespace AvaloniaKit.ViewModels.UserControls.Discover.Games
             WeakReferenceMessenger.Default.Send(new NavigateBackFromTetrisMessage());
         }
 
+
+        [RelayCommand]
+        private void GoSnake()
+        {
+            WeakReferenceMessenger.Default.Send(new NavigateToSnakeMessages());
+        }
+
     }
 }

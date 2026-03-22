@@ -27,13 +27,16 @@ public partial class MainWindowViewModel : ObservableObject,
     IRecipient<NavigateToGameBoxesMessages>,
     IRecipient<NavigateBackFromGameBoxesMessage>,
     IRecipient<NavigateToTetrisMessages>,
-    IRecipient<NavigateBackFromTetrisMessage>
+    IRecipient<NavigateBackFromTetrisMessage>,
+    IRecipient<NavigateToSnakeMessages>,
+    IRecipient<NavigateBackFromSnakeMessage>
 {
     // ── 页面 ViewModel 实例 ──
     private readonly ChatViewModel _chatVm = new();
     private readonly ContactsViewModel _contactsVm = new();
     private readonly DiscoverViewModel _discoverVm = new();
     private readonly TetrisViewModel _tetrisVm = new();
+    private readonly SnakeViewModel _snakeVm = new();
     private readonly GameBoxesViewModel _gameBoxesVm = new(); 
     private readonly ProfileViewModel _profileVm = new();
     private readonly ServiceViewModel _serviceVm = new();
@@ -85,6 +88,7 @@ public partial class MainWindowViewModel : ObservableObject,
                                            and not ServiceViewModel
                                            and not FundTrackerViewModel
                                            and not TetrisViewModel
+                                           and not SnakeViewModel
                                            and not NeteaseViewModel
                                            and not NeteaseViewModel
                                            and not NeteasePlayerViewModel
@@ -94,6 +98,7 @@ public partial class MainWindowViewModel : ObservableObject,
                                         and not FundTrackerViewModel
                                         and not FundChartViewModel
                                         and not TetrisViewModel
+                                        and not SnakeViewModel
                                         and not NeteaseViewModel
                                         and not NeteasePlayerViewModel
                                         and not GameBoxesViewModel
@@ -174,6 +179,15 @@ public partial class MainWindowViewModel : ObservableObject,
     }
 
     public void Receive(NavigateBackFromGameBoxesMessage message)
+    {
+        CurrentPage = _gameBoxesVm;
+    }
+    public void Receive(NavigateToSnakeMessages message)
+    {
+        CurrentPage = _snakeVm;
+    }
+
+    public void Receive(NavigateBackFromSnakeMessage message)
     {
         CurrentPage = _gameBoxesVm;
     }

@@ -77,6 +77,9 @@
 		<DataTemplate DataType="{x:Type gamesVm:TetrisViewModel}">
 			<games:TetrisUserControl />
 		</DataTemplate>
+		<DataTemplate DataType="{x:Type gamesVm:SnakeViewModel}">
+			<games:SnakeUserControl />
+		</DataTemplate>
 
 		<DataTemplate DataType="{x:Type profileVm:ProfileViewModel}">
 			<profile:ProfileUserControl />

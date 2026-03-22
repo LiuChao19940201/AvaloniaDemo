@@ -77,7 +77,7 @@
 					</Button>
 
 					<!-- 贪吃蛇 -->
-					<Button Background="Transparent">
+					<Button Background="Transparent"  Command="{Binding GoSnakeCommand}">
 						<StackPanel HorizontalAlignment="Center">
 							<Border Width="64" Height="64" CornerRadius="16"
 									Background="#2ECC71">
