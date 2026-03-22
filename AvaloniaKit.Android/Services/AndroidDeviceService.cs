@@ -91,8 +91,32 @@ public class AndroidDeviceService : IDeviceService
 
     public void PlaySound()
     {
-        var toneGenerator = new ToneGenerator(Stream.Music, 100);
-        toneGenerator.StartTone(Tone.PropBeep, 500);
+        // ToneGenerator 在某些设备/模拟器上可能抛出 Java.Lang.RuntimeException("Init failed")
+        // 因此这里捕获异常并提供降级处理，避免应用崩溃。
+        try
+        {
+            using var toneGenerator = new ToneGenerator(Stream.Music, 100);
+            // 使用短时长避免长时间占用资源
+            toneGenerator.StartTone(Tone.PropBeep, 150);
+        }
+        catch (Java.Lang.RuntimeException)
+        {
+            // 初始化失败：尝试降级为系统提示音（尽量不抛出）
+            try
+            {
+                var uri = RingtoneManager.GetDefaultUri(RingtoneType.Notification);
+                var ringtone = RingtoneManager.GetRingtone(_activity, uri);
+                ringtone?.Play();
+            }
+            catch
+            {
+                // 最终降级：什么都不做，避免崩溃
+            }
+        }
+        catch
+        {
+            // 兜底，确保不向外抛出异常
+        }
     }
 
     public string GetBluetoothStatus()
