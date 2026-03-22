@@ -6,7 +6,7 @@
 			 xmlns:cvt="using:AvaloniaKit.Tools.Converters"
 			 xmlns:u-semi="https://irihi.tech/ursa/themes/semi"
 			 RequestedThemeVariant="Default">
-	
+
 	<Application.Resources>
 		<ResourceDictionary>
 			<cvt:BoolToTabColorConverter x:Key="BoolToTabColorConverter" />
@@ -26,7 +26,18 @@
 				</Setter.Value>
 			</Setter>
 		</Style>
-		
+
+		<Style Selector="CheckBox">
+			<Setter Property="RenderTransform">
+				<Setter.Value>
+					<ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+				</Setter.Value>
+			</Setter>
+
+			<!-- 关键：以中心点缩放 -->
+			<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+		</Style>
+
 		<!--错误校验提示-->
 		<Style Selector="TextBox /template/ DataValidationErrors,CalendarDatePicker /template/ DataValidationErrors">
 			<Setter Property="Theme" Value="{DynamicResource TooltipDataValidationErrors}" />

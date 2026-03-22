@@ -158,7 +158,8 @@
 
                 <Border Background="{DynamicResource SemiColorBg0}" CornerRadius="8" Padding="8,6">
                     <StackPanel HorizontalAlignment="Center">
-                        <TextBlock Text="幽灵" FontSize="10" Foreground="{DynamicResource SemiColorText2}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="幽灵" FontSize="10" Foreground="{DynamicResource SemiColorText2}"
+                                   HorizontalAlignment="Center"/>
                         <CheckBox IsChecked="{Binding IsGhost}" Margin=" 0 5 0 0" />
                     </StackPanel>
                 </Border>

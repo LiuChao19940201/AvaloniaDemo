@@ -1,3 +1,4 @@
+using Avalonia.Threading;
 using AvaloniaKit.Services;
 using AvaloniaKit.ViewModels.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -5,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace AvaloniaKit.ViewModels.UserControls.Discover.Games;
@@ -105,7 +107,7 @@ public partial class TetrisViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void MoveLeft()
+    public async Task MoveLeft()
     {
         if (!CanAct() || !CanInput()) return;
 
@@ -115,78 +117,19 @@ public partial class TetrisViewModel : ObservableObject
             ServiceLocator.DeviceService!.PlaySound();
         }
 
-        if (CanPlace(_curType, _curRot, _curRow, _curCol - 1))
+        // 从游戏循环线程更新 Cells 时
+        await Dispatcher.UIThread.InvokeAsync(() =>
         {
-            _curCol--;
-            Render();
-        }
-    }
-
-    [RelayCommand]
-    public void MoveRight()
-    {
-        if (!CanAct() || !CanInput()) return;
-
-        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
-        {
-            ServiceLocator.DeviceService!.PlaySound();
-        }
-
-        if (CanPlace(_curType, _curRot, _curRow, _curCol + 1))
-        {
-            _curCol++;
-            Render();
-        }
-    }
-
-    [RelayCommand]
-    public void SoftDrop()
-    {
-        if (!CanAct() || !CanInput()) return;
-
-        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
-        {
-            ServiceLocator.DeviceService!.PlaySound();
-        }
-
-        if (CanPlace(_curType, _curRot, _curRow + 1, _curCol))
-        {
-            _curRow++;
-            Score += 1;
-            Render();
-        }
-        else
-        {
-            LockPiece();
-        }
-    }
-
-    [RelayCommand]
-    public void Rotate()
-    {
-        if (!CanAct() || !CanInput()) return;
-
-        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
-        {
-            ServiceLocator.DeviceService!.PlaySound();
-        }
-
-        int nextRot = (_curRot + 1) % 4;
-        // Wall-kick: 原位 → 左1 → 右1 → 左2 → 右2
-        foreach (int k in new[] { 0, -1, 1, -2, 2 })
-        {
-            if (CanPlace(_curType, nextRot, _curRow, _curCol + k))
+            if (CanPlace(_curType, _curRot, _curRow, _curCol - 1))
             {
-                _curCol += k;
-                _curRot = nextRot;
+                _curCol--;
                 Render();
-                return;
             }
-        }
+        });
     }
 
     [RelayCommand]
-    public void HardDrop()
+    public async Task MoveRight()
     {
         if (!CanAct() || !CanInput()) return;
 
@@ -195,12 +138,88 @@ public partial class TetrisViewModel : ObservableObject
             ServiceLocator.DeviceService!.PlaySound();
         }
 
-        int drop = 0;
-        while (CanPlace(_curType, _curRot, _curRow + 1 + drop, _curCol))
-            drop++;
-        Score += drop * 2;
-        _curRow += drop;
-        LockPiece();
+        // 从游戏循环线程更新 Cells 时
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            if (CanPlace(_curType, _curRot, _curRow, _curCol + 1))
+            {
+                _curCol++;
+                Render();
+            }
+        });
+    }
+
+    [RelayCommand]
+    public async Task SoftDrop()
+    {
+        if (!CanAct() || !CanInput()) return;
+
+        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
+        {
+            ServiceLocator.DeviceService!.PlaySound();
+        }
+
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            if (CanPlace(_curType, _curRot, _curRow + 1, _curCol))
+            {
+                _curRow++;
+                Score += 1;
+                Render();
+            }
+            else
+            {
+                LockPiece();
+            }
+        });
+    }
+
+    [RelayCommand]
+    public async Task Rotate()
+    {
+        if (!CanAct() || !CanInput()) return;
+
+        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
+        {
+            ServiceLocator.DeviceService!.PlaySound();
+        }
+
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            int nextRot = (_curRot + 1) % 4;
+            // Wall-kick: 原位 → 左1 → 右1 → 左2 → 右2
+            foreach (int k in new[] { 0, -1, 1, -2, 2 })
+            {
+                if (CanPlace(_curType, nextRot, _curRow, _curCol + k))
+                {
+                    _curCol += k;
+                    _curRot = nextRot;
+                    Render();
+                    return;
+                }
+            }
+        });
+    }
+
+    [RelayCommand]
+    public async Task HardDrop()
+    {
+        if (!CanAct() || !CanInput()) return;
+
+        if (OperatingSystem.IsAndroid() || OperatingSystem.IsIOS())
+        {
+            ServiceLocator.DeviceService!.PlaySound();
+        }
+
+        await Dispatcher.UIThread.InvokeAsync(() =>
+        {
+            int drop = 0;
+            while (CanPlace(_curType, _curRot, _curRow + 1 + drop, _curCol))
+                drop++;
+            Score += drop * 2;
+            _curRow += drop;
+            LockPiece();
+        });
     }
 
     // ════════════════════════════════════════════════════════════
